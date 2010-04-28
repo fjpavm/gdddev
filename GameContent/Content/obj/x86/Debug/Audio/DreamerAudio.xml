@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Sections>
+  <WaveBank Name="Wave Bank">Wave Bank
+{
+    Name = Wave Bank;
+    Xbox File = Xbox\Wave Bank.xwb;
+    Windows File = Win\Wave Bank.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = &lt;none&gt;;
+    Bank Last Revised Low = 380629472;
+    Bank Last Revised High = 30073093;
+
+    Wave
+    {
+        Name = GameBackgroundMusic;
+        File = GameBackgroundMusic.wav;
+        Build Settings Last Modified Low = 353939472;
+        Build Settings Last Modified High = 30073093;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 38969856;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1120283392;
+            Last Modified High = 30070948;
+        }
+    }
+
+    Wave
+    {
+        Name = MenuClick;
+        File = MenuClick.wav;
+        Build Settings Last Modified Low = 353949472;
+        Build Settings Last Modified High = 30073093;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 56;
+            Play Region Length = 63500;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 776781056;
+            Last Modified High = 30072064;
+        }
+    }
+}
+
+</WaveBank>
+</Sections>

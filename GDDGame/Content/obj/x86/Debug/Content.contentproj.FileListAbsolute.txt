@@ -1,0 +1,2 @@
+C:\Dropbox\My Dropbox\GDD\trunk\GDDGame\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\temprevision\GDDGame\Content\obj\x86\Debug\ResolveAssemblyReference.cache

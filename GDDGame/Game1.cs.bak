@@ -1,0 +1,428 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Game1.cs" company="UAD">
+//   Game Design and Development
+// </copyright>
+// <summary>
+//   This is the main type for your game
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Gdd.Game
+{
+    using System.Collections.Generic;
+
+    using Gdd.Game.Engine;
+    using Gdd.Game.Engine.AI;
+    using Gdd.Game.Engine.Input;
+    using Gdd.Game.Engine.Scenes;
+    using Gdd.Game.Engine.Scenes.Lights;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Input;
+
+    /// <summary>
+    /// This is the main type for your game
+    /// </summary>
+    public class Game1 : Game
+    {
+        #region Constants and Fields
+
+        /// <summary>
+        /// The aiManager
+        /// </summary>
+        private AIManager aiManager;
+
+        /// <summary>
+        /// The camera.
+        /// </summary>
+        private Camera camera;
+
+        /// <summary>
+        /// The graphics.
+        /// </summary>
+        private GraphicsDeviceManager graphics;
+
+        // FrankM: Just for testing;
+        /// <summary>
+        /// The monster.
+        /// </summary>
+        private AIMonster monster;
+
+        /// <summary>
+        /// The scenemanager.
+        /// </summary>
+        private SceneManager scenemanager;
+
+        /// <summary>
+        /// The sprite batch.
+        /// </summary>
+        private SpriteBatch spriteBatch;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Game1"/> class.
+        /// </summary>
+        public Game1()
+        {
+            this.graphics = new GraphicsDeviceManager(this);
+            this.aiManager = new AIManager(this);
+            this.Content.RootDirectory = "Content";
+        }
+
+        #endregion
+
+        // FrankM: just for testing
+        #region Public Methods
+
+        /// <summary>
+        /// The always true.
+        /// </summary>
+        /// <param name="msg">
+        /// The msg.
+        /// </param>
+        /// <param name="obj">
+        /// The obj.
+        /// </param>
+        /// <returns>
+        /// The always true.
+        /// </returns>
+        public static bool alwaysTrue(Message msg, object obj)
+        {
+            return true;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">
+        /// Provides a snapshot of timing values.
+        /// </param>
+        protected override void Draw(GameTime gameTime)
+        {
+            this.GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            // TODO: Add your drawing code here     
+
+            // draws all objects in the components array
+            base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// Allows the game to perform any initialization it needs to before starting to run.
+        /// This is where it can query for any required services and load any non-graphic
+        /// related content.  Calling base.Initialize will enumerate through any components
+        /// and initialize them as well.
+        /// </summary>
+        protected override void Initialize()
+        {
+            this.SetupScenes();
+            this.SetupAI();
+
+            this.scenemanager.SetCurrentScene(this.scenemanager.Scenes[0]);
+
+            this.Components.Add(this.scenemanager);
+
+            // calls initialize for all objects in the components array
+            base.Initialize();
+        }
+
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
+        protected override void LoadContent()
+        {
+            // Create a new SpriteBatch, which can be used to draw textures.
+            this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+
+            // TODO: use this.Content to load your game content here
+        }
+
+        /// <summary>
+        /// UnloadContent will be called once per game and is the place to unload
+        /// all content.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            // TODO: Unload any non ContentManager content here
+        }
+
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">
+        /// Provides a snapshot of timing values.
+        /// </param>
+        protected override void Update(GameTime gameTime)
+        {
+            Actions.InputManager.Update();
+
+            const float Delta = 0.3f;
+
+            if (Actions.CameraMoveBackward.IsPressed && !Actions.CameraMoveDown.IsPressed)
+            {
+                this.camera.MoveForwardBackward(-Delta);
+            }
+            else if (Actions.CameraMoveDown.IsPressed)
+            {
+                this.camera.MoveUpDown(-Delta);
+            }
+
+            if (Actions.CameraMoveForward.IsPressed && !Actions.CameraMoveUp.IsPressed)
+            {
+                this.camera.MoveForwardBackward(Delta);
+            }
+            else if (Actions.CameraMoveUp.IsPressed)
+            {
+                this.camera.MoveUpDown(Delta);
+            }
+
+            if (Actions.CameraTurnLeft.IsPressed && !Actions.CameraStrafeLeft.IsPressed)
+            {
+                this.camera.Yaw(-Delta);
+            }
+            else if (Actions.CameraStrafeLeft.IsPressed)
+            {
+                this.camera.StrafeRightLeft(-Delta);
+            }
+
+            if (Actions.CameraTurnRight.IsPressed && !Actions.CameraStrafeRight.IsPressed)
+            {
+                this.camera.Yaw(Delta);
+            }
+            else if (Actions.CameraStrafeRight.IsPressed)
+            {
+                this.camera.StrafeRightLeft(Delta);
+            }
+
+            // FrankM: just for testing 
+            Message m = null;
+
+            // Allows the game to exit
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                this.Exit();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D1))
+            {
+                this.scenemanager.SetCurrentScene(this.scenemanager.Scenes[0]);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D2))
+            {
+                this.scenemanager.SetCurrentScene(this.scenemanager.Scenes[1]);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D3))
+            {
+                this.scenemanager.SetCurrentScene(this.scenemanager.Scenes[2]);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D4))
+            {
+                this.scenemanager.SetCurrentScene(this.scenemanager.Scenes[3]);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D5))
+            {
+                this.scenemanager.SetCurrentScene(this.scenemanager.Scenes[4]);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.X))
+            {
+                m = new Message();
+                m.MessageType = MessageTypes.toAction;
+                m.timeDelivery = gameTime.ElapsedGameTime.TotalSeconds;
+                m.to = this.monster;
+                AIManager.messageQueue.sendMessage(m);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Z))
+            {
+                m = new Message();
+                m.MessageType = MessageTypes.toIdle;
+                m.timeDelivery = gameTime.TotalGameTime.TotalSeconds + 1;
+                m.to = this.monster;
+                AIManager.messageQueue.sendMessage(m);
+            }
+
+            this.aiManager.Update(gameTime);
+
+            // scenemanager.Update(gameTime);
+            // TODO: Add your update logic here
+
+            // updates all objects in the components array
+            base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// The setup ai.
+        /// </summary>
+        private void SetupAI()
+        {
+            // FrankM: just for testing
+            StateMachine sm;
+            var i = new State("Idle");
+            var a = new State("Action");
+            sm = new StateMachine(i, "SimpleStateMachine");
+            var t = new Transition();
+            sm.InitialState = i;
+            t.transitionTest = alwaysTrue;
+            t.nextState = a;
+            i.addTransition(MessageTypes.toAction, t);
+            t = new Transition();
+            t.transitionTest = alwaysTrue;
+            t.nextState = i;
+            a.addTransition(MessageTypes.toIdle, t);
+            this.monster = new AIMonster();
+            this.monster.MonsterStateMachine = sm;
+            sm.setThisObject(this.monster);
+            this.aiManager.objectList = new List<IAIEntity>();
+            this.aiManager.objectList.Add(this.monster);
+        }
+
+        /// <summary>
+        /// The setup scenes.
+        /// </summary>
+        private void SetupScenes()
+        {
+            this.scenemanager = new SceneManager(this);
+
+            // TODO: Add your initialization logic here
+            /* test stuff starts */
+            this.camera = new Camera(this, new Vector3(0.0f, 0.0f, 10.0f));
+            var camera2 = new Camera(this, new Vector3(0.0f, 0.0f, 10.0f));
+
+            var character1 = new Character(this, "tmpCube");
+ /*           var character2 = new Character(this, "sphere");
+            var character3 = new Character(this, "tmpCube");
+            character3.Position = new Vector3(0.0f, 0.0f, -10.0f);
+   */         var dl1 = new DirectionalLight(this, new Vector3(0.0f, 0.0f, 10.0f), Color.Green);
+            var dl2 = new DirectionalLight(this, new Vector3(0.0f, 0.0f, 10.0f), Color.Blue);
+
+            var scene1 = new MyScene(this);
+            scene1.AddComponent(character1);
+            scene1.Camera = this.camera;
+            scene1.Light = dl1;
+
+<<<<<<< TREE
+            var scene2 = new MyScene(this);
+=======
+            var scene2 = new MyScene(this);
+            scene2.AddComponent(character2);
+            scene2.AddComponent(character3);
+>>>>>>> MERGE-SOURCE
+            scene2.Light = dl2;
+            scene2.Camera = camera2;
+
+            var t = new DrawText(this, new Vector2(100, 100), "Scene 3 - transparent - non dominating");
+            var scene3 = new MyScene(this) { Transparent = true };
+            scene3.AddComponent(t);
+
+            var t2 = new DrawText(this, new Vector2(300, 300), "Scene 4 - transparent - dominating");
+            var scene4 = new MyScene(this) { Transparent = true, TopMost = true };
+            scene4.AddComponent(t2);
+
+            var t3 = new DrawText(this, new Vector2(300, 150), "Scene 5 - transparent - non dominating");
+            var scene5 = new MyScene(this) { Transparent = true };
+            scene5.AddComponent(t3);
+
+            this.scenemanager.AddScene(scene1);
+            this.scenemanager.AddScene(scene2);
+            this.scenemanager.AddScene(scene3);
+            this.scenemanager.AddScene(scene4);
+            this.scenemanager.AddScene(scene5);
+
+            /* test stuff ends*/
+        }
+
+        #endregion
+
+        /// <summary>
+        /// The actions.
+        /// </summary>
+        private static class Actions
+        {
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// Initializes static members of the <see cref="Actions"/> class.
+            /// </summary>
+            static Actions()
+            {
+                InputManager = new InputManager();
+                CameraMoveBackward = new GameAction("cameraMoveBackward");
+                InputManager.MapToKey(CameraMoveBackward, Keys.Down);
+                CameraMoveDown = new GameAction("cameraMoveDown");
+                InputManager.MapToKey(CameraMoveDown, new[] { Keys.Down, Keys.LeftShift });
+                CameraMoveForward = new GameAction("cameraMoveForward");
+                InputManager.MapToKey(CameraMoveForward, Keys.Up);
+                CameraMoveUp = new GameAction("cameraMoveUp");
+                InputManager.MapToKey(CameraMoveUp, new[] { Keys.Up, Keys.LeftShift });
+                CameraStrafeLeft = new GameAction("cameraStrafeLeft");
+                InputManager.MapToKey(CameraStrafeLeft, new[] { Keys.Left, Keys.LeftShift });
+                CameraStrafeRight = new GameAction("cameraStrafeRight");
+                InputManager.MapToKey(CameraStrafeRight, new[] { Keys.Right, Keys.LeftShift });
+                CameraTurnLeft = new GameAction("cameraTurnLeft");
+                InputManager.MapToKey(CameraTurnLeft, Keys.Left);
+                CameraTurnRight = new GameAction("cameraTurnRight");
+                InputManager.MapToKey(CameraTurnRight, Keys.Right);
+            }
+
+            #endregion
+
+            #region Properties
+
+            /// <summary>
+            /// Gets CameraMoveBackward.
+            /// </summary>
+            public static GameAction CameraMoveBackward { get; private set; }
+
+            /// <summary>
+            /// Gets CameraMoveDown.
+            /// </summary>
+            public static GameAction CameraMoveDown { get; private set; }
+
+            /// <summary>
+            /// Gets CameraMoveForward.
+            /// </summary>
+            public static GameAction CameraMoveForward { get; private set; }
+
+            /// <summary>
+            /// Gets CameraMoveUp.
+            /// </summary>
+            public static GameAction CameraMoveUp { get; private set; }
+
+            /// <summary>
+            /// Gets CameraStrafeLeft.
+            /// </summary>
+            public static GameAction CameraStrafeLeft { get; private set; }
+
+            /// <summary>
+            /// Gets CameraStrafeRight.
+            /// </summary>
+            public static GameAction CameraStrafeRight { get; private set; }
+
+            /// <summary>
+            /// Gets CameraTurnLeft.
+            /// </summary>
+            public static GameAction CameraTurnLeft { get; private set; }
+
+            /// <summary>
+            /// Gets CameraTurnRight.
+            /// </summary>
+            public static GameAction CameraTurnRight { get; private set; }
+
+            /// <summary>
+            /// Gets InputManager.
+            /// </summary>
+            public static InputManager InputManager { get; private set; }
+
+            #endregion
+        }
+    }
+}
