@@ -153,6 +153,7 @@ namespace Gdd.Game.Engine.Menu
 
             // Loading pictures(载入图片)
             backgroundTexture = this.Game.Content.Load<Texture2D>("MenuContent\\MainMenuBackground");
+            //backgroundTexture = this.Game.Content.Load<Texture2D>("MenuContent\\MainMenuBackgroundLowRes");
             menuTexture = this.Game.Content.Load<Texture2D>("MenuContent\\MainMenu");
 
         }

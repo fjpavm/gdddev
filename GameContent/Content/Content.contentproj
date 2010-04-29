@@ -304,6 +304,11 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
+    <Compile Include="MenuContent\MainMenuBackgroundLowRes.JPG">
+      <Name>MainMenuBackgroundLowRes</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="mesh\rabbitAnimation.xml">
       <Name>rabbitAnimation</Name>
       <Importer>XmlImporter</Importer>
