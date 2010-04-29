@@ -14,9 +14,8 @@ namespace Gdd.Game.LevelEditor
     using System.Linq;
     using System.Windows.Forms;
 
-    using Gdd.Game.Engine;
+    using Gdd.Game.Engine.Levels;
     using Gdd.Game.Engine.Scenes;
-    using Gdd.Game.Engine.Scenes.Lights;
 
     /// <summary>
     /// The level editor form.
@@ -24,6 +23,16 @@ namespace Gdd.Game.LevelEditor
     public partial class LevelEditorForm : Form
     {
         #region Constants and Fields
+
+        /// <summary>
+        /// The button entities.
+        /// </summary>
+        private Dictionary<ToolStripItem, LevelEntityTypeBinding> buttonEntities;
+
+        /// <summary>
+        /// The category buttons.
+        /// </summary>
+        private Dictionary<string, ToolStripDropDownButton> categoryButtons;
 
         /// <summary>
         /// The level editor pane.
@@ -40,6 +49,7 @@ namespace Gdd.Game.LevelEditor
         public LevelEditorForm()
         {
             this.InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             this.tsmiPreviewStop.Visible = false;
             this.tsmiPreviewToolStripStop.Visible = false;
             this.tsmiFileOpen.Image = Resources.openHS;
@@ -48,8 +58,7 @@ namespace Gdd.Game.LevelEditor
             this.tsmiPreviewStop.Image = Resources.StopHS;
             this.tsmiPreviewToolStripRun.Image = Resources.PlayHS;
             this.tsmiPreviewToolStripStop.Image = Resources.StopHS;
-            this.InitializeMenuItems(this.tsddbShapes, typeof(DrawableSceneComponent));
-            this.InitializeMenuItems(this.tsddbLights, typeof(Light));
+            this.InitializeMenuItems();
         }
 
         #endregion
@@ -100,26 +109,38 @@ namespace Gdd.Game.LevelEditor
         /// <summary>
         /// The initialize menu items.
         /// </summary>
-        /// <param name="toolStripDropDownButton">
-        /// The tool strip drop down button.
-        /// </param>
-        /// <param name="baseType">
-        /// The base type.
-        /// </param>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
-        private void InitializeMenuItems(ToolStripDropDownButton toolStripDropDownButton, Type baseType)
+        private void InitializeMenuItems()
         {
-            IEnumerable<ToolStripMenuItem> menuItems = from subType in baseType.GetSubTypes()
-                                                       select
-                                                           new ToolStripMenuItem(
-                                                           subType.Name, null, this.ToolbarItemClick, subType.Name)
-                                                               {
-                                                                  Tag = subType 
-                                                               };
-            foreach (ToolStripMenuItem menuItem in menuItems)
+            this.categoryButtons = new Dictionary<string, ToolStripDropDownButton>();
+            this.buttonEntities = new Dictionary<ToolStripItem, LevelEntityTypeBinding>();
+
+            foreach (LevelEntityTypeBinding levelEntityTypeBinding in LevelScene.LevelEntityTypeBindings)
             {
-                toolStripDropDownButton.DropDownItems.Add(menuItem);
+                var category =
+                    levelEntityTypeBinding.LevelEntityType.GetCustomAttributes(
+                        typeof(LevelEntityCategoryAttribute), false).FirstOrDefault() as LevelEntityCategoryAttribute;
+                if (category != null)
+                {
+                    ToolStripDropDownButton categoryButton;
+                    if (!this.categoryButtons.TryGetValue(category.Category, out categoryButton))
+                    {
+                        categoryButton = new ToolStripDropDownButton(category.Category);
+                        this.categoryButtons.Add(category.Category, categoryButton);
+                    }
+
+                    var menuItem = new ToolStripMenuItem(
+                        levelEntityTypeBinding.LevelEntityType.Name, 
+                        null, 
+                        this.ToolbarItemClick, 
+                        levelEntityTypeBinding.SceneComponentType.Name);
+                    this.buttonEntities.Add(menuItem, levelEntityTypeBinding);
+                    categoryButton.DropDownItems.Add(menuItem);
+                }
+            }
+
+            foreach (var pair in this.categoryButtons.OrderBy(cb => cb.Key))
+            {
+                this.toolStripToolbar.Items.Add(pair.Value);
             }
         }
 
@@ -210,7 +231,6 @@ namespace Gdd.Game.LevelEditor
             this.tsmiPreviewToolStripRun.Visible = false;
             this.tsmiPreviewStop.Visible = true;
             this.tsmiPreviewToolStripStop.Visible = true;
-            this.toolStripToolbar.Enabled = false;
         }
 
         /// <summary>
@@ -250,7 +270,6 @@ namespace Gdd.Game.LevelEditor
             this.tsmiPreviewToolStripRun.Visible = true;
             this.tsmiPreviewStop.Visible = false;
             this.tsmiPreviewToolStripStop.Visible = false;
-            this.toolStripToolbar.Enabled = true;
         }
 
         /// <summary>
@@ -291,15 +310,16 @@ namespace Gdd.Game.LevelEditor
                 return;
             }
 
-            var type = toolStripItem.Tag as Type;
-            if (type == null)
+            LevelEntityTypeBinding typeBinding;
+            if (!this.buttonEntities.TryGetValue(toolStripItem, out typeBinding))
             {
                 return;
             }
 
-            object component = Activator.CreateInstance(type, this.levelEditorPane);
+            object component = Activator.CreateInstance(typeBinding.SceneComponentType, this.levelEditorPane);
             if (component is SceneComponent)
             {
+                this.propertyGrid.SelectedObject = component;
                 this.levelEditorPane.AddComponent((SceneComponent)component);
             }
         }
