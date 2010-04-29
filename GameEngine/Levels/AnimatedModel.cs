@@ -1,6 +1,5 @@
-﻿using Gdd.Game.Engine.Scenes;
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AnimatedModel.cs" company="GDD">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AnimatedModel.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>
@@ -15,13 +14,10 @@ namespace Gdd.Game.Engine.Levels
 
     using FarseerGames.FarseerPhysics.Collisions;
 
-    using Animation;
-
-    using Characters;
-
-    using Physics;
-
-    using Render;
+    using Gdd.Game.Engine.Animation;
+    using Gdd.Game.Engine.Levels.Characters;
+    using Gdd.Game.Engine.Physics;
+    using Gdd.Game.Engine.Render;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -31,6 +27,15 @@ namespace Gdd.Game.Engine.Levels
     /// </summary>
     public class AnimatedModel : StaticModel
     {
+        #region Constants and Fields
+
+        /// <summary>
+        /// The offset matrix.
+        /// </summary>
+        private Matrix OffsetMatrix;
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -43,7 +48,7 @@ namespace Gdd.Game.Engine.Levels
             : base(game)
         {
             this.modelName = "mesh\\HeroAll";
-            Direction = DIRECTION.RIGHT;
+            this.Direction = DIRECTION.RIGHT;
         }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace Gdd.Game.Engine.Levels
         #endregion
 
         #region Properties
-        
+
         /// <summary>
         /// The current physics vertices.
         /// </summary>
@@ -75,8 +80,6 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         protected ModelAnimationPlayer AnimationPlayer { get; set; }
 
-        private Matrix OffsetMatrix;
-
         #endregion
 
         #region Public Methods
@@ -93,17 +96,6 @@ namespace Gdd.Game.Engine.Levels
         }
 
         // flip from left to right or right to left
-        public void Flip(){
-            if (Direction == DIRECTION.RIGHT)
-            {
-                Direction = DIRECTION.LEFT;
-                this.YawRotation = 1.5f * MathHelper.Pi;
-            }
-            else{
-                 Direction = DIRECTION.RIGHT;
-                 this.YawRotation = 0.5f * MathHelper.Pi;
-            }
-        }
 
         /// <summary>
         /// The draw with technique.
@@ -117,17 +109,18 @@ namespace Gdd.Game.Engine.Levels
         public override void DrawWithEffect(ShaderManager.EFFECT_ID effect, string technique)
         {
             int count = 0;
+
             // code from Riemers XNA tutorial
             foreach (ModelMesh mesh in this.ObjectModel.Meshes)
             {
                 foreach (ModelMeshPart mmp in mesh.MeshParts)
                 {
                     mmp.Effect.Dispose();
-                    mmp.Effect = ShaderManager.GetEffect(effect).Clone(scene.Game.GraphicsDevice);
+                    mmp.Effect = ShaderManager.GetEffect(effect).Clone(this.scene.Game.GraphicsDevice);
                 }
-                
+
                 foreach (Effect e in mesh.Effects)
-                {     
+                {
                     e.CurrentTechnique = e.Techniques[technique];
                     e.Parameters["Texture"].SetValue(this.ModelTextures[count++]);
                     e.Parameters["life"].SetValue(Hero.GetHeroLife());
@@ -138,6 +131,23 @@ namespace Gdd.Game.Engine.Levels
                 }
 
                 mesh.Draw();
+            }
+        }
+
+        /// <summary>
+        /// The flip.
+        /// </summary>
+        public void Flip()
+        {
+            if (this.Direction == DIRECTION.RIGHT)
+            {
+                this.Direction = DIRECTION.LEFT;
+                this.YawRotation = 1.5f * MathHelper.Pi;
+            }
+            else
+            {
+                this.Direction = DIRECTION.RIGHT;
+                this.YawRotation = 0.5f * MathHelper.Pi;
             }
         }
 
@@ -163,12 +173,14 @@ namespace Gdd.Game.Engine.Levels
                 this.AnimationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
             }
 
-            if (AnimationPlayer.CurrentKeyframe != 0) {
-                this.currentPhysicsVertices = AnimationPlayer.CurrentClip.vertices[(int)Direction][AnimationPlayer.CurrentKeyframe];
-                
+            if (this.AnimationPlayer.CurrentKeyframe != 0)
+            {
+                this.currentPhysicsVertices =
+                    this.AnimationPlayer.CurrentClip.vertices[(int)this.Direction][this.AnimationPlayer.CurrentKeyframe];
+
                 Matrix m = this.PhysicsGeometry.Matrix;
                 this.PhysicsGeometry.SetVertices(this.currentPhysicsVertices);
-                this.PhysicsGeometry.Matrix = m * OffsetMatrix;
+                this.PhysicsGeometry.Matrix = m * this.OffsetMatrix;
 
                 this.aabb = this.PhysicsGeometry.AABB;
             }
@@ -196,20 +208,20 @@ namespace Gdd.Game.Engine.Levels
             this.AnimationPlayer.SetClip(((SkinningData)this.ObjectModel.Tag).AnimationClips.Values.First());
             this.AnimationPlayer.StartClip();
             this.AnimationPlayer.StepClip();
-            
-            this.currentPhysicsVertices = this.AnimationPlayer.CurrentClip.vertices[(int)Direction][this.AnimationPlayer.CurrentKeyframe];
- 
+
+            this.currentPhysicsVertices =
+                this.AnimationPlayer.CurrentClip.vertices[(int)this.Direction][this.AnimationPlayer.CurrentKeyframe];
+
             this.PhysicsVertices = this.currentPhysicsVertices;
 
-            LoadCommonContent();
-            
-            OffsetMatrix = Matrix.CreateTranslation(new Vector3(-offset, 0.0f));
+            this.LoadCommonContent();
+
+            this.OffsetMatrix = Matrix.CreateTranslation(new Vector3(-this.offset, 0.0f));
 
             this.PhysicsBody.Mass = 70.0f;
             this.PhysicsBody.MomentOfInertia = float.MaxValue;
             this.PhysicsGeometry.FrictionCoefficient = 10.0f;
             this.PhysicsBody.IsStatic = false;
-             
         }
 
         #endregion

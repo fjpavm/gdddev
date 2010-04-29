@@ -100,17 +100,14 @@ namespace Gdd.Game.LevelEditor
                 this.timer -= gameTime.ElapsedGameTime.TotalMilliseconds;
             }
 
-            if (!this.invokeTarget)
+            if (!this.invokeTarget || this.timer > 0)
             {
                 return;
             }
 
-            if (this.timer <= 0)
-            {
-                this.invokeTarget = false;
-                this.timer = this.Interval;
-                this.TargetMethod.Invoke(this.Target, this.invokeParameters);
-            }
+            this.invokeTarget = false;
+            this.timer = this.Interval;
+            this.TargetMethod.Invoke(this.Target, this.invokeParameters);
         }
 
         #endregion

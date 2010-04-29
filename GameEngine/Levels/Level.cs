@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Level.cs" company="GDD">
+// <copyright file="Level.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>
@@ -14,7 +14,7 @@ namespace Gdd.Game.Engine.Levels
     using System.Linq;
     using System.Xml.Serialization;
 
-    using Scenes;
+    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework;
 

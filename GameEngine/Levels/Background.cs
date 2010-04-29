@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Background.cs" company="GDD">
+// <copyright file="Background.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>
@@ -9,9 +9,8 @@
 
 namespace Gdd.Game.Engine.Levels
 {
-    using Render;
-
-    using Scenes;
+    using Gdd.Game.Engine.Render;
+    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -56,8 +55,8 @@ namespace Gdd.Game.Engine.Levels
             // TODO: Integrate into Level Editor
             this.Backgrounds = new[]
                 {
-                    new BackgroundLayer(s) {Filename = "Levels/sky", HeightBias = 1 }, 
-                    new BackgroundLayer(s) { Filename = "Levels/cloudlayer4", HeightBias = 1 }, 
+                   new BackgroundLayer(s) { Filename = "Levels/sky", HeightBias = 1 }, 
+                  new BackgroundLayer(s) { Filename = "Levels/cloudlayer4", HeightBias = 1 }, 
                   new BackgroundLayer(s) { Filename = "Levels/hillslayer3", HeightBias = 1 }, 
                   new BackgroundLayer(s) { Filename = "Levels/hillslayer2", HeightBias = 0.8f }, 
                   new BackgroundLayer(s) { Filename = "Levels/busheslayer1", HeightBias = 0.7f }, 
@@ -122,7 +121,6 @@ namespace Gdd.Game.Engine.Levels
                     this.scene.Game.GraphicsDevice.Viewport.Height - height, 
                     this.scene.Game.GraphicsDevice.Viewport.Width, 
                     height);
-
 
                 float weight = (backgroundLayer.Image.Width / (this.max - this.min)) * backgroundLayer.WidthBias;
                 var sourceRectangle = new Rectangle(

@@ -10,11 +10,13 @@
 namespace Gdd.Game.LevelEditor
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Windows.Forms;
 
-    using Engine;
-    using Engine.Scenes;
-    using Engine.Scenes.Lights;
+    using Gdd.Game.Engine;
+    using Gdd.Game.Engine.Scenes;
+    using Gdd.Game.Engine.Scenes.Lights;
 
     /// <summary>
     /// The level editor form.
@@ -108,13 +110,15 @@ namespace Gdd.Game.LevelEditor
         /// </exception>
         private void InitializeMenuItems(ToolStripDropDownButton toolStripDropDownButton, Type baseType)
         {
-            foreach (Type subType in baseType.GetSubTypes())
+            IEnumerable<ToolStripMenuItem> menuItems = from subType in baseType.GetSubTypes()
+                                                       select
+                                                           new ToolStripMenuItem(
+                                                           subType.Name, null, this.ToolbarItemClick, subType.Name)
+                                                               {
+                                                                  Tag = subType 
+                                                               };
+            foreach (ToolStripMenuItem menuItem in menuItems)
             {
-                var menuItem = new ToolStripMenuItem(subType.Name, null, this.ToolbarItemClick, subType.Name)
-                    {
-                        Tag = subType 
-                    };
-
                 toolStripDropDownButton.DropDownItems.Add(menuItem);
             }
         }

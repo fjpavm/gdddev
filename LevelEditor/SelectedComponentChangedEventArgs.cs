@@ -11,7 +11,7 @@ namespace Gdd.Game.LevelEditor
 {
     using System;
 
-    using Engine.Scenes;
+    using Gdd.Game.Engine.Scenes;
 
     /// <summary>
     /// The selected block changed event args.

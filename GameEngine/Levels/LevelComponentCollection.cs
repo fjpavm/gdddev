@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LevelComponentCollection.cs" company="GDD">
+// <copyright file="LevelComponentCollection.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>
@@ -14,7 +14,7 @@ namespace Gdd.Game.Engine.Levels
     using System.Collections.ObjectModel;
     using System.Linq;
 
-    using Scenes;
+    using Gdd.Game.Engine.Scenes;
 
     /// <summary>
     /// The level block collection.

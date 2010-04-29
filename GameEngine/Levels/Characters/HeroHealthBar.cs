@@ -1,16 +1,15 @@
-﻿using Gdd.Game.Engine.Levels.Characters;
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DrawText.cs" company="UAD">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="HeroHealthBar.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>
-//   The draw text.
+//   The Hero health bar
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Gdd.Game.Engine
+namespace Gdd.Game.Engine.Levels.Characters
 {
-    using Scenes;
+    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -18,7 +17,7 @@ namespace Gdd.Game.Engine
     /// <summary>
     /// The Hero health bar
     /// </summary>
-    public class HeroHealthBar: DrawableSceneComponent
+    public class HeroHealthBar : DrawableSceneComponent
     {
         #region Constants and Fields
 
@@ -32,8 +31,19 @@ namespace Gdd.Game.Engine
         /// </summary>
         private SpriteFont font;
 
+        /// <summary>
+        /// The health position.
+        /// </summary>
         private Vector2 healthPosition;
+
+        /// <summary>
+        /// The health texture.
+        /// </summary>
         private Texture2D healthTexture;
+
+        /// <summary>
+        /// The texture data.
+        /// </summary>
         private Color[] textureData;
 
         #endregion
@@ -77,8 +87,20 @@ namespace Gdd.Game.Engine
 
             this.batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, SaveStateMode.SaveState);
 
-            this.batch.DrawString(font, "Health", healthPosition, Color.Black);
-            this.batch.Draw(healthTexture, new Rectangle((int)healthPosition.X + 80, (int)healthPosition.Y, (int)((this.Game.GraphicsDevice.Viewport.Width - 160) * Hero.GetHeroLife()), 20), new Rectangle((int)healthPosition.X + 80, (int)healthPosition.Y, (int)(this.Game.GraphicsDevice.Viewport.Width * Hero.GetHeroLife()), 20), Color.White);
+            this.batch.DrawString(this.font, "Health", this.healthPosition, Color.Black);
+            this.batch.Draw(
+                this.healthTexture, 
+                new Rectangle(
+                    (int)this.healthPosition.X + 80, 
+                    (int)this.healthPosition.Y, 
+                    (int)((this.Game.GraphicsDevice.Viewport.Width - 160) * Hero.GetHeroLife()), 
+                    20), 
+                new Rectangle(
+                    (int)this.healthPosition.X + 80, 
+                    (int)this.healthPosition.Y, 
+                    (int)(this.Game.GraphicsDevice.Viewport.Width * Hero.GetHeroLife()), 
+                    20), 
+                Color.White);
 
             this.batch.End();
             this.GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
@@ -104,9 +126,9 @@ namespace Gdd.Game.Engine
         /// </param>
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);            
+            base.Update(gameTime);
         }
-            
+
         #endregion
 
         #region Methods
@@ -117,25 +139,27 @@ namespace Gdd.Game.Engine
         protected override void LoadContent()
         {
             this.font = this.Game.Content.Load<SpriteFont>("font");
-            
-            textureData = new Color[this.Game.GraphicsDevice.Viewport.Width * 20];
+
+            this.textureData = new Color[this.Game.GraphicsDevice.Viewport.Width * 20];
 
             for (int i = 0; i < this.Game.GraphicsDevice.Viewport.Width; i++)
             {
-                float location = (float)i / (float)this.Game.GraphicsDevice.Viewport.Width;
+                float location = i / (float)this.Game.GraphicsDevice.Viewport.Width;
                 for (int j = 0; j < 20; j++)
                 {
-                    textureData[i + this.Game.GraphicsDevice.Viewport.Width * j] = new Color(Color.Green.ToVector3() * MathHelper.Max((0.3f - location) / -0.3f, 0.0f) +
-                        Color.Blue.ToVector3() * MathHelper.Max(MathHelper.Min((location - 1.0f) / -0.5f, -location / -0.5f), 0.0f) +
-                        Color.Red.ToVector3() * MathHelper.Max((location - 0.7f) / -0.7f, 0.0f));
-                    
+                    this.textureData[i + this.Game.GraphicsDevice.Viewport.Width * j] =
+                        new Color(
+                            Color.Green.ToVector3() * MathHelper.Max((0.3f - location) / -0.3f, 0.0f) +
+                            Color.Blue.ToVector3() *
+                            MathHelper.Max(MathHelper.Min((location - 1.0f) / -0.5f, -location / -0.5f), 0.0f) +
+                            Color.Red.ToVector3() * MathHelper.Max((location - 0.7f) / -0.7f, 0.0f));
                 }
             }
 
-            healthTexture = new Texture2D(this.Game.GraphicsDevice, this.Game.GraphicsDevice.Viewport.Width, 20);
+            this.healthTexture = new Texture2D(this.Game.GraphicsDevice, this.Game.GraphicsDevice.Viewport.Width, 20);
 
-            healthTexture.SetData<Color>(textureData);
-            
+            this.healthTexture.SetData(this.textureData);
+
             base.LoadContent();
         }
 

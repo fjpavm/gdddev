@@ -1,6 +1,5 @@
-﻿using FarseerGames.FarseerPhysics;
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Ground.cs" company="GDD">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Ground.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>
@@ -10,28 +9,40 @@
 
 namespace Gdd.Game.Engine.Levels
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
 
+    using FarseerGames.FarseerPhysics;
     using FarseerGames.FarseerPhysics.Collisions;
     using FarseerGames.FarseerPhysics.Dynamics;
     using FarseerGames.FarseerPhysics.Factories;
 
-    using Render;
-
-    using Scenes;
+    using Gdd.Game.Engine.Render;
+    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using System;
 
     /// <summary>
     /// The ground.
     /// </summary>
     public class Ground : StaticModel
     {
+        #region Constants and Fields
+
+        /// <summary>
+        /// The ground bodies.
+        /// </summary>
+        private List<Body> GroundBodies;
+
+        /// <summary>
+        /// The ground geometries.
+        /// </summary>
+        private List<Geom> GroundGeometries;
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -39,8 +50,6 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         /// <param name="game">
         /// The game.
-        private List<Body> GroundBodies;
-        private List<Geom> GroundGeometries;
         /// </param>
         public Ground(Game game)
             : base(game)
@@ -60,12 +69,15 @@ namespace Gdd.Game.Engine.Levels
 
         #region Public Methods
 
+        /// <summary>
+        /// The draw physics vertices.
+        /// </summary>
         public override void DrawPhysicsVertices()
         {
-            for (int i = 0; i < GroundBodies.Count; i++)
+            for (int i = 0; i < this.GroundBodies.Count; i++)
             {
-                this.PhysicsBody = GroundBodies[i];
-                this.PhysicsGeometry = GroundGeometries[i];
+                this.PhysicsBody = this.GroundBodies[i];
+                this.PhysicsGeometry = this.GroundGeometries[i];
                 base.DrawPhysicsVertices();
             }
         }
@@ -102,14 +114,15 @@ namespace Gdd.Game.Engine.Levels
             this.DefaultEffectID = ShaderManager.EFFECT_ID.STATICMODEL;
             this.DefaultTechnique = "StaticModelTechnique";
 
-            foreach (ModelMesh mesh in this.ObjectModel.Meshes)
+            foreach (Effect effect in this.ObjectModel.Meshes.SelectMany(mesh => mesh.Effects))
             {
-                foreach (Effect effect in mesh.Effects)
+                if (effect.Parameters["Texture"] != null)
                 {
-                    if (effect.Parameters["Texture"] != null)
-                        this.ModelTextures.Add(effect.Parameters["Texture"].GetValueTexture2D());
-                    else if (effect.Parameters["BasicTexture"] != null)
-                        this.ModelTextures.Add(effect.Parameters["BasicTexture"].GetValueTexture2D());
+                    this.ModelTextures.Add(effect.Parameters["Texture"].GetValueTexture2D());
+                }
+                else if (effect.Parameters["BasicTexture"] != null)
+                {
+                    this.ModelTextures.Add(effect.Parameters["BasicTexture"].GetValueTexture2D());
                 }
             }
 
@@ -118,8 +131,8 @@ namespace Gdd.Game.Engine.Levels
             int sizeofVertex = GetSizeOfMesh(this.ObjectModel);
 
             Vector2[] temp;
-            GroundBodies = new List<Body>();
-            GroundGeometries = new List<Geom>();
+            this.GroundBodies = new List<Body>();
+            this.GroundGeometries = new List<Geom>();
             Vertices vertices;
 
             foreach (ModelMesh mesh in this.ObjectModel.Meshes)
@@ -127,22 +140,33 @@ namespace Gdd.Game.Engine.Levels
                 var meshBuffer = new MyStruct[mesh.VertexBuffer.SizeInBytes / sizeofVertex];
                 var indexBuffer = new short[mesh.IndexBuffer.SizeInBytes / sizeof(short)];
                 mesh.VertexBuffer.GetData(meshBuffer);
-                //modelBuffer.AddRange(meshBuffer.Select(v => new Vector3(v.Position.Z, v.Position.Y, v.Position.X)));
-                mesh.IndexBuffer.GetData<short>(indexBuffer);
 
-                for(int i = 0; i<indexBuffer.Length; i+=3){
-                    if(Math.Abs(meshBuffer[indexBuffer[i]].Position.X - meshBuffer[indexBuffer[i+1]].Position.X) < 0.05f &&
-                        Math.Abs(meshBuffer[indexBuffer[i+1]].Position.X - meshBuffer[indexBuffer[i+2]].Position.X) < 0.05f) {
+                // modelBuffer.AddRange(meshBuffer.Select(v => new Vector3(v.Position.Z, v.Position.Y, v.Position.X)));
+                mesh.IndexBuffer.GetData(indexBuffer);
 
-                        temp = new Vector2[]{new Vector2(meshBuffer[indexBuffer[i]].Position.Z, meshBuffer[indexBuffer[i]].Position.Y), 
-                            new Vector2(meshBuffer[indexBuffer[i+1]].Position.Z, meshBuffer[indexBuffer[i+1]].Position.Y), 
-                            new Vector2(meshBuffer[indexBuffer[i+2]].Position.Z, meshBuffer[indexBuffer[i+2]].Position.Y)};
+                for (int i = 0; i < indexBuffer.Length; i += 3)
+                {
+                    if (Math.Abs(meshBuffer[indexBuffer[i]].Position.X - meshBuffer[indexBuffer[i + 1]].Position.X) <
+                        0.05f &&
+                        Math.Abs(meshBuffer[indexBuffer[i + 1]].Position.X - meshBuffer[indexBuffer[i + 2]].Position.X) <
+                        0.05f)
+                    {
+                        temp = new[]
+                            {
+                               new Vector2(meshBuffer[indexBuffer[i]].Position.Z, meshBuffer[indexBuffer[i]].Position.Y), 
+                              new Vector2(
+                                  meshBuffer[indexBuffer[i + 1]].Position.Z, meshBuffer[indexBuffer[i + 1]].Position.Y), 
+                              new Vector2(
+                                  meshBuffer[indexBuffer[i + 2]].Position.Z, meshBuffer[indexBuffer[i + 2]].Position.Y)
+                            };
 
-                        vertices = new Vertices(ref temp);                
+                        vertices = new Vertices(ref temp);
                         vertices.SubDivideEdges(5.0f);
 
-                        this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(SceneManager.physicsSimulator, vertices, 1);
-                        this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(SceneManager.physicsSimulator, this.PhysicsBody, vertices, 0.0f);
+                        this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
+                            SceneManager.physicsSimulator, vertices, 1);
+                        this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(
+                            SceneManager.physicsSimulator, this.PhysicsBody, vertices, 0.0f);
 
                         this.PhysicsGeometry.FrictionCoefficient = 4.0f;
 
@@ -154,14 +178,13 @@ namespace Gdd.Game.Engine.Levels
 
                         this.PhysicsBody.IsStatic = true;
 
-                        GroundGeometries.Add(PhysicsGeometry);
-                        GroundBodies.Add(PhysicsBody);
+                        this.GroundGeometries.Add(this.PhysicsGeometry);
+                        this.GroundBodies.Add(this.PhysicsBody);
                     }
                 }
             }
         }
 
         #endregion
-
     }
 }
