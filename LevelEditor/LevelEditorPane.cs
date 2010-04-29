@@ -178,6 +178,7 @@ namespace Gdd.Game.LevelEditor
         {
             this.newComponent = component;
             this.SelectedComponent = null;
+            this.InvokeSelectedComponentChanged(new SelectedComponentChangedEventArgs(component));
             this.levelEditorScene.AddComponent(component);
         }
 
@@ -340,6 +341,7 @@ namespace Gdd.Game.LevelEditor
                 {
                     Vector3 world = this.ScreenToWorld(mouseState.X, mouseState.Y);
                     this.newComponent.Position2D = new Vector2(world.X, world.Y);
+                    this.invokeSelectedContentPropertyChanged.Invoke(EventArgs.Empty);
                 }
             }
             else
