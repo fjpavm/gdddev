@@ -13,11 +13,10 @@ namespace Gdd.Game.Engine.Content.Pipeline.Processors
     using System.Linq;
     using System.Xml.Serialization;
 
-    using Levels;
+    using Gdd.Game.Engine.Levels;
+    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework.Content.Pipeline;
-
-    using Scenes;
 
     /// <summary>
     /// The level processor.
@@ -43,7 +42,8 @@ namespace Gdd.Game.Engine.Content.Pipeline.Processors
         {
             using (var memoryStream = new MemoryStream(input))
             {
-                var xmlSerializer = new XmlSerializer(typeof(Level), typeof(DrawableSceneComponent).GetSubTypes().ToArray());
+                var xmlSerializer = new XmlSerializer(
+                    typeof(Level), typeof(DrawableSceneComponent).GetSubTypes().ToArray());
                 return xmlSerializer.Deserialize(memoryStream) as Level;
             }
         }

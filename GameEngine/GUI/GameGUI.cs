@@ -42,16 +42,16 @@ namespace Gdd.Game.Engine.GUI
             pixels[0] = Color.White;
             pixel.SetData<Color>(pixels);
 
-            Button button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 0, 88, 33, "tmpCube", StaticModel.GEOMETRY_TYPE.RECTANGLE);
+            Button button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 0, 88, 33, "tmpCube", GeometryType.Rectangle);
             buttonModels.Add(button);
 
-            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 1, 88, 33, "cube", StaticModel.GEOMETRY_TYPE.RECTANGLE);
+            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 1, 88, 33, "cube", GeometryType.Rectangle);
             buttonModels.Add(button);
 
-            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 2, 88, 33, "sphere", StaticModel.GEOMETRY_TYPE.CIRCLE);
+            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 2, 88, 33, "sphere", GeometryType.Circle);
             buttonModels.Add(button);
 
-            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 3, 88, 33, "cone", StaticModel.GEOMETRY_TYPE.POLYGON);
+            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 3, 88, 33, "cone", GeometryType.Polygon);
             buttonModels.Add(button);
 
             button = new Button(this.game, "button_ok", 0, this.game.Window.ClientBounds.Height - (33 * 2), 100, 33, ButtonConfirmType.OK);
@@ -203,7 +203,7 @@ namespace Gdd.Game.Engine.GUI
                     if (buttonModels[i].IsIntersecting(currentMouseState.X, currentMouseState.Y))
                     {
                         Vector3 position = ScreenToWorld((int)(currentMouseState.X), (int)(currentMouseState.Y));
-                        model = new StaticModel(this.game) { ModelName = buttonModels[i].GuiModelName, geoType = buttonModels[i].GeometryType, Position2D = new Vector2(position.X, position.Y)};
+                        model = new StaticModel(this.game) { ModelName = buttonModels[i].GuiModelName, GeometryType = buttonModels[i].GeometryType, Position2D = new Vector2(position.X, position.Y)};
                         model.Initialize();
 
                         model.PhysicsGeometry.CollisionEnabled = false;

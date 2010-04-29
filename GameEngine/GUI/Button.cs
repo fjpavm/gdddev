@@ -22,7 +22,7 @@ namespace Gdd.Game.Engine.GUI
 
         private ButtonType bType;
         private ButtonConfirmType bConfirmType;
-        public StaticModel.GEOMETRY_TYPE GeometryType { get; private set; }
+        public GeometryType GeometryType { get; private set; }
 
         public int X { get; set; }
         public int Y { get; set; }
@@ -33,7 +33,7 @@ namespace Gdd.Game.Engine.GUI
         public ButtonType ButtonType { get { return bType; } set { bType = value; } }
         public ButtonConfirmType ButtonConfirmType { get { return bConfirmType; } set { bConfirmType = value; } }
        
-        public Button(Microsoft.Xna.Framework.Game game, string normal_image, string selected_image, int x, int y, int w, int h, string gui_model_name, StaticModel.GEOMETRY_TYPE geoType)
+        public Button(Microsoft.Xna.Framework.Game game, string normal_image, string selected_image, int x, int y, int w, int h, string gui_model_name, GeometryType geoType)
         {
             this.game = game;
 
@@ -47,7 +47,7 @@ namespace Gdd.Game.Engine.GUI
             this.GeometryType = geoType;
 
 //             this.GuiModel = null;
-//             this.GuiModel = new GUIModel(this.game) { Name = gui_model_name, geoType = geoType };
+//             this.GuiModel = new GUIModel(this.game) { Name = gui_model_name, GeometryType = GeometryType };
 //             this.GuiModel.Initialize();
              this.GuiModelName = gui_model_name;
 

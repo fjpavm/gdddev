@@ -78,7 +78,7 @@ namespace Gdd.Game.Engine.Physics
 
                     if (vertices.Count != 1)
                     {
-                         clip.vertices[(int)AnimatedModel.DIRECTION.RIGHT][player.CurrentKeyframe] = GetVertices(tex, model.ObjectModel.Meshes[0].BoundingSphere);
+                         clip.vertices[(int)ModelDirection.Right][player.CurrentKeyframe] = GetVertices(tex, model.ObjectModel.Meshes[0].BoundingSphere);
                         
                         // flip the texture and the vertices
                         tex.GetData<Color>(originalTexture);
@@ -94,7 +94,7 @@ namespace Gdd.Game.Engine.Physics
                         tex.SetData<Color>(reverseTexture);
                         vertices = GetVertices(tex, model.ObjectModel.Meshes[0].BoundingSphere);
 
-                        clip.vertices[(int)AnimatedModel.DIRECTION.LEFT][player.CurrentKeyframe] = GetVertices(tex, model.ObjectModel.Meshes[0].BoundingSphere);                    
+                        clip.vertices[(int)ModelDirection.Left][player.CurrentKeyframe] = GetVertices(tex, model.ObjectModel.Meshes[0].BoundingSphere);                    
                         lastKeyFrame = player.CurrentKeyframe;                        
                     }
                     player.StepClip();

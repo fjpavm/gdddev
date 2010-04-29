@@ -90,7 +90,7 @@ namespace Gdd.Game.Engine.Levels
 
             this.Rotation = Matrix.CreateFromYawPitchRoll(this.YawRotation, this.PitchRotation, this.RollRotation);
 
-            this.Direction = DIRECTION.RIGHT;
+            this.ModelDirection = ModelDirection.Right;
         }
 
         /// <summary>
@@ -103,54 +103,18 @@ namespace Gdd.Game.Engine.Levels
 
         #endregion
 
-        #region Enums
-
-        /// <summary>
-        /// The direction.
-        /// </summary>
-        public enum DIRECTION
-        {
-            /// <summary>
-            /// The left.
-            /// </summary>
-            LEFT, 
-
-            /// <summary>
-            /// The right.
-            /// </summary>
-            RIGHT
-        } ;
-
-        /// <summary>
-        /// The geometr y_ type.
-        /// </summary>
-        public enum GEOMETRY_TYPE
-        {
-            /// <summary>
-            /// The polygon.
-            /// </summary>
-            POLYGON, 
-
-            /// <summary>
-            /// The circle.
-            /// </summary>
-            CIRCLE, 
-
-            /// <summary>
-            /// The rectangle.
-            /// </summary>
-            RECTANGLE
-        } ;
-
-        #endregion
-
         #region Properties
+
+        /// <summary>
+        /// The geometry type of the object
+        /// </summary>
+        public GeometryType GeometryType { get; set; }
 
         /// <summary>
         /// Gets or sets Direction.
         /// </summary>
         [XmlIgnore]
-        public DIRECTION Direction { get; protected set; }
+        public ModelDirection ModelDirection { get; protected set; }
 
         /// <summary>
         /// Gets or sets ModelName.
@@ -264,11 +228,6 @@ namespace Gdd.Game.Engine.Levels
                 this.Rotation = Matrix.CreateFromYawPitchRoll(this.yawRotation, this.pitchRotation, this.rollRotation);
             }
         }
-
-        /// <summary>
-        /// The geometry type of the object
-        /// </summary>
-        public GEOMETRY_TYPE geoType { get; set; }
 
         /// <summary>
         /// Gets or sets ModelTextures.
@@ -460,7 +419,7 @@ namespace Gdd.Game.Engine.Levels
                 this.gridCellSize = 0.0f;
             }
 
-            if (this.geoType == GEOMETRY_TYPE.POLYGON)
+            if (this.GeometryType == GeometryType.Polygon)
             {
                 this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
                     SceneManager.physicsSimulator, this.PhysicsVertices, 10.0f);
@@ -468,7 +427,7 @@ namespace Gdd.Game.Engine.Levels
                 this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(
                     SceneManager.physicsSimulator, this.PhysicsBody, this.PhysicsVertices, this.gridCellSize);
             }
-            else if (this.geoType == GEOMETRY_TYPE.CIRCLE)
+            else if (this.GeometryType == GeometryType.Circle)
             {
                 this.PhysicsBody = BodyFactory.Instance.CreateCircleBody(
                     SceneManager.physicsSimulator, this.ObjectModel.Meshes[0].BoundingSphere.Radius, 10.0f);
@@ -480,7 +439,7 @@ namespace Gdd.Game.Engine.Levels
                     20, 
                     this.gridCellSize);
             }
-            else if (this.geoType == GEOMETRY_TYPE.RECTANGLE)
+            else if (this.GeometryType == GeometryType.Rectangle)
             {
                 BoundingBox box = BoundingBox.CreateFromPoints(GetModelVertices(this.ObjectModel));
                 this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(
@@ -527,7 +486,7 @@ namespace Gdd.Game.Engine.Levels
             this.DefaultEffectID = ShaderManager.EFFECT_ID.STATICMODEL;
             this.DefaultTechnique = "StaticModelTechnique";
 
-            if (this.geoType == GEOMETRY_TYPE.POLYGON)
+            if (this.GeometryType == GeometryType.Polygon)
             {
                 this.PhysicsVertices = ModelToVertices.TransformStaticModel(this, this.Game);
             }

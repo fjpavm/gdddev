@@ -118,6 +118,15 @@
     <Compile Include="Animation\SkinningData.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Levels\ModelDirection.cs" />
+    <Compile Include="Levels\Entities\DrawableSceneComponentEntity.cs" />
+    <Compile Include="Levels\Entities\DrawTextEntity.cs" />
+    <Compile Include="Levels\Entities\SceneComponentEntity.cs" />
+    <Compile Include="Levels\Entities\StaticModelEntity.cs" />
+    <Compile Include="Levels\GeometryType.cs" />
+    <Compile Include="Levels\LevelEntity.cs" />
+    <Compile Include="Levels\LevelEntityBindingAttribute.cs" />
+    <Compile Include="Levels\LevelEntityCategoryAttribute.cs" />
     <Compile Include="Scenes\CharacterFollowCamera.cs" />
     <Compile Include="Common\AdjacencyManager.cs" />
     <Compile Include="Common\ObjectManager.cs" />

@@ -6,12 +6,12 @@ namespace Gdd.Game.Engine.Scenes
 
     public class CharacterFollowCamera : Camera
     {
-        private Levels.AnimatedModel.DIRECTION lastDirection;
+        private Levels.ModelDirection lastDirection;
         private float multiplier, targetMultiplier;
         private Vector3 positionOffset, lookatOffset;
 
         public CharacterFollowCamera(Microsoft.Xna.Framework.Game game, Vector3 position) : base(game, position) { 
-            lastDirection = Levels.AnimatedModel.DIRECTION.RIGHT; 
+            lastDirection = Levels.ModelDirection.Right; 
             multiplier = 1.0f; 
             targetMultiplier = 1.0f;
             lookatOffset = new Vector3(15.0f * multiplier, 10.0f, 0.0f);

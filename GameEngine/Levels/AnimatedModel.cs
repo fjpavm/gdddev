@@ -48,7 +48,7 @@ namespace Gdd.Game.Engine.Levels
             : base(game)
         {
             this.modelName = "mesh\\HeroAll";
-            this.Direction = DIRECTION.RIGHT;
+            this.ModelDirection = ModelDirection.Right;
         }
 
         /// <summary>
@@ -139,14 +139,14 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         public void Flip()
         {
-            if (this.Direction == DIRECTION.RIGHT)
+            if (this.ModelDirection == ModelDirection.Right)
             {
-                this.Direction = DIRECTION.LEFT;
+                this.ModelDirection = ModelDirection.Left;
                 this.YawRotation = 1.5f * MathHelper.Pi;
             }
             else
             {
-                this.Direction = DIRECTION.RIGHT;
+                this.ModelDirection = ModelDirection.Right;
                 this.YawRotation = 0.5f * MathHelper.Pi;
             }
         }
@@ -176,7 +176,8 @@ namespace Gdd.Game.Engine.Levels
             if (this.AnimationPlayer.CurrentKeyframe != 0)
             {
                 this.currentPhysicsVertices =
-                    this.AnimationPlayer.CurrentClip.vertices[(int)this.Direction][this.AnimationPlayer.CurrentKeyframe];
+                    this.AnimationPlayer.CurrentClip.vertices[(int)this.ModelDirection][
+                        this.AnimationPlayer.CurrentKeyframe];
 
                 Matrix m = this.PhysicsGeometry.Matrix;
                 this.PhysicsGeometry.SetVertices(this.currentPhysicsVertices);
@@ -210,7 +211,8 @@ namespace Gdd.Game.Engine.Levels
             this.AnimationPlayer.StepClip();
 
             this.currentPhysicsVertices =
-                this.AnimationPlayer.CurrentClip.vertices[(int)this.Direction][this.AnimationPlayer.CurrentKeyframe];
+                this.AnimationPlayer.CurrentClip.vertices[(int)this.ModelDirection][this.AnimationPlayer.CurrentKeyframe
+                    ];
 
             this.PhysicsVertices = this.currentPhysicsVertices;
 

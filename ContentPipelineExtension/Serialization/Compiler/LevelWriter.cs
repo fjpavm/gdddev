@@ -13,7 +13,7 @@ namespace Gdd.Game.Engine.Content.Pipeline.Serialization.Compiler
     using System.Linq;
     using System.Xml.Serialization;
 
-    using Levels;
+    using Gdd.Game.Engine.Levels;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;

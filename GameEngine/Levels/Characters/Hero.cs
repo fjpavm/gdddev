@@ -30,7 +30,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// <summary>
         /// The hero direction.
         /// </summary>
-        private static DIRECTION HeroDirection;
+        private static ModelDirection HeroModelDirection;
 
         /// <summary>
         /// The hero position.
@@ -91,9 +91,9 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         /// <returns>
         /// </returns>
-        public static DIRECTION GetHeroDirection()
+        public static ModelDirection GetHeroDirection()
         {
-            return HeroDirection;
+            return HeroModelDirection;
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Gdd.Game.Engine.Levels.Characters
 
             this.World = this.Rotation * this.Translation;
             HeroPosition = this.Position3D;
-            HeroDirection = this.Direction;
+            HeroModelDirection = this.ModelDirection;
         }
 
         #endregion

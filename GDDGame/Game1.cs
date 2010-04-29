@@ -206,13 +206,13 @@ namespace Gdd.Game
             else if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 this.hero.Position2D = new Vector2(this.hero.Position2D.X - 0.1f, this.hero.Position2D.Y);
-                if (this.hero.Direction == AnimatedModel.DIRECTION.RIGHT)
+                if (this.hero.ModelDirection == ModelDirection.Right)
                     this.hero.Flip();
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 this.hero.Position2D = new Vector2(this.hero.Position2D.X + 0.1f, this.hero.Position2D.Y);
-                if (this.hero.Direction == AnimatedModel.DIRECTION.LEFT)
+                if (this.hero.ModelDirection == ModelDirection.Left)
                     this.hero.Flip();
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.W))
