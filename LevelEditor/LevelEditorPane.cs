@@ -16,10 +16,10 @@ namespace Gdd.Game.LevelEditor
     using System.Windows.Forms;
     using System.Xml.Serialization;
 
-    using Engine;
-    using Engine.Input;
-    using Engine.Levels;
-    using Engine.Scenes;
+    using Gdd.Game.Engine;
+    using Gdd.Game.Engine.Input;
+    using Gdd.Game.Engine.Levels;
+    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -260,7 +260,7 @@ namespace Gdd.Game.LevelEditor
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize()
-        {         
+        {
             this.levelEditorScene = new LevelEditorScene(this) { MainGameScene = true };
             this.deleteSelectedBlock = new GameAction("deleteSelectedBlock", GameActionBehavior.DetectInitialPressOnly);
             this.levelEditorScene.InputManager.MapToKey(this.deleteSelectedBlock, Keys.Delete);
@@ -319,6 +319,7 @@ namespace Gdd.Game.LevelEditor
             {
                 this.Exit();
             }
+
             SceneManager.Update(gameTime);
 
             MouseState mouseState = Mouse.GetState();
@@ -433,8 +434,9 @@ namespace Gdd.Game.LevelEditor
         /// The EventArgs.
         /// </param>
         /// ReSharper disable UnusedMember.Local
-        private void InvokeSelectedComponentPropertyChanged(EventArgs e) // ReSharper restore UnusedMember.Local
+        private void InvokeSelectedComponentPropertyChanged(EventArgs e)
         {
+            // ReSharper restore UnusedMember.Local
             EventHandler handler = this.SelectedComponentPropertyChanged;
             if (handler != null)
             {

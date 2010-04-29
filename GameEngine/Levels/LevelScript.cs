@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LevelScript.cs" company="GDD">
+// <copyright file="LevelScript.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>

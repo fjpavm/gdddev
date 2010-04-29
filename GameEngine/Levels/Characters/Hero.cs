@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Hero.cs" company="GDD">
+// <copyright file="Hero.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>
@@ -9,14 +9,11 @@
 
 namespace Gdd.Game.Engine.Levels.Characters
 {
-    using Animation;
-
-    using Render;
+    using Gdd.Game.Engine.Animation;
+    using Gdd.Game.Engine.Render;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using Scenes.Lights;
 
     /// <summary>
     /// The hero class.
@@ -26,15 +23,39 @@ namespace Gdd.Game.Engine.Levels.Characters
         #region Constants and Fields
 
         /// <summary>
+        /// The animations.
+        /// </summary>
+        private readonly string[] animations = new[] { "idle", "Act", "Move", "Reach", "Death" };
+
+        /// <summary>
+        /// The hero direction.
+        /// </summary>
+        private static DIRECTION HeroDirection;
+
+        /// <summary>
+        /// The hero position.
+        /// </summary>
+        private static Vector3 HeroPosition;
+
+        /// <summary>
         /// The life.
         /// </summary>
         private static float life = 1.0f;
-        private static Vector3 HeroPosition;
-        private static DIRECTION HeroDirection;
-        
-        private string[] animations = new string[]{"idle", "Act", "Move", "Reach", "Death"};
-        private int animationIndex = 0;
+
+        /// <summary>
+        /// The animation index.
+        /// </summary>
+        private int animationIndex;
+
+        /// <summary>
+        /// The jump impulse.
+        /// </summary>
         private Vector2 jumpImpulse = new Vector2(0.0f, 4.0f);
+
+        /// <summary>
+        /// The last state.
+        /// </summary>
+        private KeyboardState lastState;
 
         #endregion
 
@@ -66,6 +87,16 @@ namespace Gdd.Game.Engine.Levels.Characters
         #region Public Methods
 
         /// <summary>
+        /// The get hero direction.
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public static DIRECTION GetHeroDirection()
+        {
+            return HeroDirection;
+        }
+
+        /// <summary>
         /// The get hero life.
         /// </summary>
         /// <returns>
@@ -76,19 +107,26 @@ namespace Gdd.Game.Engine.Levels.Characters
             return life;
         }
 
-        public static Vector3 GetHeroPosition(){
+        /// <summary>
+        /// The get hero position.
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public static Vector3 GetHeroPosition()
+        {
             return HeroPosition;
         }
 
-        public static DIRECTION GetHeroDirection(){
-            return HeroDirection;
-        }
-
+        /// <summary>
+        /// The draw.
+        /// </summary>
+        /// <param name="gameTime">
+        /// The game time.
+        /// </param>
         public override void Draw(GameTime gameTime)
         {
             ShaderManager.SetCurrentEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL);
-            
-            
+
             base.Draw(gameTime);
         }
 
@@ -104,6 +142,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         public override void DrawWithEffect(ShaderManager.EFFECT_ID effect, string technique)
         {
             ShaderManager.SetCurrentEffect(effect);
+
             // todo - set some variables associated with this effect
             base.DrawWithEffect(effect, technique);
         }
@@ -116,16 +155,23 @@ namespace Gdd.Game.Engine.Levels.Characters
             base.Initialize();
         }
 
-        KeyboardState lastState;
+        /// <summary>
+        /// The update.
+        /// </summary>
+        /// <param name="gameTime">
+        /// The game time.
+        /// </param>
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                this.PhysicsBody.ApplyImpulse(ref jumpImpulse);
-                //this.AnimationPlayer.PauseClip();
+                this.PhysicsBody.ApplyImpulse(ref this.jumpImpulse);
+
+                // this.AnimationPlayer.PauseClip();
             }
+
             /*else if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
                 this.AnimationPlayer.ResumeClip();
@@ -147,21 +193,24 @@ namespace Gdd.Game.Engine.Levels.Characters
                     life = 1.0f;
                 }
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.V) && !lastState.IsKeyDown(Keys.V))
+            else if (Keyboard.GetState().IsKeyDown(Keys.V) && !this.lastState.IsKeyDown(Keys.V))
             {
-                animationIndex++;
-                if (animationIndex >= animations.Length)
-                    animationIndex = 0;
+                this.animationIndex++;
+                if (this.animationIndex >= this.animations.Length)
+                {
+                    this.animationIndex = 0;
+                }
 
-                //currentClip = skinningData.AnimationClips[animations[animationIndex]];
-                this.AnimationPlayer.SetClip(skinningData.AnimationClips[animations[animationIndex]]);
+                // currentClip = skinningData.AnimationClips[animations[animationIndex]];
+                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.animations[this.animationIndex]]);
                 this.AnimationPlayer.StartClip();
             }
-            lastState = Keyboard.GetState();
+
+            this.lastState = Keyboard.GetState();
 
             this.World = this.Rotation * this.Translation;
-            HeroPosition = Position3D;
-            HeroDirection = Direction;
+            HeroPosition = this.Position3D;
+            HeroDirection = this.Direction;
         }
 
         #endregion
@@ -173,21 +222,21 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         protected override void LoadContent()
         {
-            gridCellSize = 10.0f;
+            this.gridCellSize = 10.0f;
             base.LoadContent();
 
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL, "AnimatedModel", this.Game);
-            DefaultEffectID = ShaderManager.EFFECT_ID.ANIMATEDMODEL;
-            DefaultTechnique = "AnimatedModelTechnique";
-            skinningData = (SkinningData)ObjectModel.Tag;
-                        
-            //currentClip = skinningData.AnimationClips[animations[animationIndex]];
+            this.DefaultEffectID = ShaderManager.EFFECT_ID.ANIMATEDMODEL;
+            this.DefaultTechnique = "AnimatedModelTechnique";
+            this.skinningData = (SkinningData)this.ObjectModel.Tag;
 
-            AnimationPlayer.SetClip(skinningData.AnimationClips[animations[animationIndex]]);
-            AnimationPlayer.StartClip();
+            // currentClip = skinningData.AnimationClips[animations[animationIndex]];
+            this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.animations[this.animationIndex]]);
+            this.AnimationPlayer.StartClip();
 
             this.PhysicsBody.Mass = 10.0f;
         }
+
         #endregion
     }
 }

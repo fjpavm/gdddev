@@ -9,10 +9,10 @@
 
 namespace Gdd.Game.LevelEditor
 {
-    using Engine;
-    using Engine.Input;
-    using Engine.Levels;
-    using Engine.Scenes.Lights;
+    using Gdd.Game.Engine;
+    using Gdd.Game.Engine.Input;
+    using Gdd.Game.Engine.Levels;
+    using Gdd.Game.Engine.Scenes.Lights;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -74,7 +74,7 @@ namespace Gdd.Game.LevelEditor
             this.Camera = new Camera(this.Game, new Vector3(0.0f, 0.0f, 30.0f)) { FieldOfView = 70.0f };
             this.Light = new DirectionalLight(this.Game)
                 {
-                    Position3D = new Vector3(0.0f, 0.0f, 10.0f), Color = Color.CornflowerBlue 
+                   Position3D = new Vector3(0.0f, 0.0f, 10.0f), Color = Color.CornflowerBlue 
                 };
 
             this.cameraUp = new GameAction("cameraUp");

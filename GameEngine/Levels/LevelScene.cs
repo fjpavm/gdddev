@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LevelScene.cs" company="GDD">
+// <copyright file="LevelScene.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>
@@ -9,14 +9,14 @@
 
 namespace Gdd.Game.Engine.Levels
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Xml.Serialization;
 
-    using Common;
-
-    using Scenes;
-    using Scenes.Lights;
+    using Gdd.Game.Engine.Common;
+    using Gdd.Game.Engine.Scenes;
+    using Gdd.Game.Engine.Scenes.Lights;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -137,12 +137,12 @@ namespace Gdd.Game.Engine.Levels
             {
                 this.Camera = new Camera(this.Game, new Vector3(0.0f, 0.0f, 30.0f)) { FieldOfView = 70.0f };
             }
+
             if (this.Light == null)
             {
                 this.Light = new DirectionalLight(this.Game)
                     {
-                        Position3D = new Vector3(0.0f, 0.0f, 10.0f),
-                        Color = Color.CornflowerBlue
+                       Position3D = new Vector3(0.0f, 0.0f, 10.0f), Color = Color.CornflowerBlue 
                     };
             }
 
@@ -212,15 +212,21 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         protected override void DrawBackground()
         {
-            var groundObjects = from dsc in this.DrawableSceneComponents where dsc is Ground let g = (Ground)dsc select g;
+            IEnumerable<Ground> groundObjects = from dsc in this.DrawableSceneComponents
+                                                where dsc is Ground
+                                                let g = (Ground)dsc
+                                                select g;
             if (groundObjects.Count() != 0)
             {
-                this.background.SetBounds(groundObjects.Min(g => g.PhysicsGeometry.AABB.Min.X), groundObjects.Max(g => g.PhysicsGeometry.AABB.Max.X));
+                this.background.SetBounds(
+                    groundObjects.Min(g => g.PhysicsGeometry.AABB.Min.X), 
+                    groundObjects.Max(g => g.PhysicsGeometry.AABB.Max.X));
             }
             else
             {
-                //this.background.SetBounds();                
+                // this.background.SetBounds();                
             }
+
             this.background.Draw();
         }
 

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BackgroundLayer.cs" company="GDD">
+// <copyright file="BackgroundLayer.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
 // <summary>
@@ -9,7 +9,7 @@
 
 namespace Gdd.Game.Engine.Levels
 {
-    using Scenes;
+    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework.Graphics;
 
