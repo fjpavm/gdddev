@@ -12,11 +12,11 @@ namespace Gdd.Game.Engine.AI.StateMachines
         public BunnyAnimationStateMachine(object _thisObject) 
         {
             thisObject = _thisObject;
-            AnimationState skatingRight = new AnimationState(_thisObject, "Skating");
+            AnimationState skatingRight = new FlipDirectionAnimationState(_thisObject, "Skating", Levels.StaticModel.DIRECTION.RIGHT);
             skatingRight.Repeat = true;
             right = new AnimationCommandTest(AnimationCommandDictionary.register("MovingRightBunny"));
 
-            AnimationState skatingLeft = new AnimationState(_thisObject, "Skating");
+            AnimationState skatingLeft = new FlipDirectionAnimationState(_thisObject, "Skating", Levels.StaticModel.DIRECTION.LEFT);
             skatingLeft.Repeat = true;
             left = new AnimationCommandTest(AnimationCommandDictionary.register("MovingLeftBunny"));
 
