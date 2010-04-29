@@ -84,7 +84,6 @@ namespace Gdd.Game.Engine.Levels
         public StaticModel(Game game)
             : base(game)
         {
-            this.modelName = "tmpCube";
             this.YawRotation = MathHelper.PiOver2;
             this.PitchRotation = 0.0f;
             this.RollRotation = 0.0f;

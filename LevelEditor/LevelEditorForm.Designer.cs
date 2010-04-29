@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LevelEditorForm));
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,10 +46,12 @@
             this.tabPageLevelScript = new System.Windows.Forms.TabPage();
             this.textBoxLevelScript = new System.Windows.Forms.TextBox();
             this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
+            this.toolStripToolbar = new System.Windows.Forms.ToolStrip();
+            this.tsddbShapes = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddbLights = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripPreview = new System.Windows.Forms.ToolStrip();
             this.tsmiPreviewToolStripRun = new System.Windows.Forms.ToolStripButton();
             this.tsmiPreviewToolStripStop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripToolbar = new System.Windows.Forms.ToolStrip();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.splitContainer.Panel1.SuspendLayout();
@@ -60,6 +63,7 @@
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
+            this.toolStripToolbar.SuspendLayout();
             this.toolStripPreview.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +72,7 @@
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox.Location = new System.Drawing.Point(3, 3);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(401, 316);
+            this.pictureBox.Size = new System.Drawing.Size(401, 341);
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
             // 
@@ -96,14 +100,14 @@
             // tsmiFileOpen
             // 
             this.tsmiFileOpen.Name = "tsmiFileOpen";
-            this.tsmiFileOpen.Size = new System.Drawing.Size(103, 22);
+            this.tsmiFileOpen.Size = new System.Drawing.Size(152, 22);
             this.tsmiFileOpen.Text = "Open";
             this.tsmiFileOpen.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // tsmiFileSave
             // 
             this.tsmiFileSave.Name = "tsmiFileSave";
-            this.tsmiFileSave.Size = new System.Drawing.Size(103, 22);
+            this.tsmiFileSave.Size = new System.Drawing.Size(152, 22);
             this.tsmiFileSave.Text = "Save";
             this.tsmiFileSave.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
@@ -134,14 +138,14 @@
             // tsmiPreviewRun
             // 
             this.tsmiPreviewRun.Name = "tsmiPreviewRun";
-            this.tsmiPreviewRun.Size = new System.Drawing.Size(98, 22);
+            this.tsmiPreviewRun.Size = new System.Drawing.Size(152, 22);
             this.tsmiPreviewRun.Text = "Run";
             this.tsmiPreviewRun.Click += new System.EventHandler(this.RunToolStripMenuItem_Click);
             // 
             // tsmiPreviewStop
             // 
             this.tsmiPreviewStop.Name = "tsmiPreviewStop";
-            this.tsmiPreviewStop.Size = new System.Drawing.Size(98, 22);
+            this.tsmiPreviewStop.Size = new System.Drawing.Size(152, 22);
             this.tsmiPreviewStop.Text = "Stop";
             this.tsmiPreviewStop.Click += new System.EventHandler(this.StopToolStripMenuItem_Click);
             // 
@@ -160,7 +164,7 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.tabControl);
-            this.splitContainer.Size = new System.Drawing.Size(626, 348);
+            this.splitContainer.Size = new System.Drawing.Size(626, 373);
             this.splitContainer.SplitterDistance = 207;
             this.splitContainer.TabIndex = 3;
             // 
@@ -169,7 +173,7 @@
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(207, 348);
+            this.propertyGrid.Size = new System.Drawing.Size(207, 373);
             this.propertyGrid.TabIndex = 0;
             // 
             // tabControl
@@ -180,7 +184,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(415, 348);
+            this.tabControl.Size = new System.Drawing.Size(415, 373);
             this.tabControl.TabIndex = 2;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
@@ -190,7 +194,7 @@
             this.tabPageLevelEditor.Location = new System.Drawing.Point(4, 22);
             this.tabPageLevelEditor.Name = "tabPageLevelEditor";
             this.tabPageLevelEditor.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLevelEditor.Size = new System.Drawing.Size(407, 322);
+            this.tabPageLevelEditor.Size = new System.Drawing.Size(407, 347);
             this.tabPageLevelEditor.TabIndex = 0;
             this.tabPageLevelEditor.Text = "Designer";
             this.tabPageLevelEditor.UseVisualStyleBackColor = true;
@@ -201,7 +205,7 @@
             this.tabPageLevelScript.Location = new System.Drawing.Point(4, 22);
             this.tabPageLevelScript.Name = "tabPageLevelScript";
             this.tabPageLevelScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLevelScript.Size = new System.Drawing.Size(407, 322);
+            this.tabPageLevelScript.Size = new System.Drawing.Size(407, 346);
             this.tabPageLevelScript.TabIndex = 1;
             this.tabPageLevelScript.Text = "Script";
             this.tabPageLevelScript.UseVisualStyleBackColor = true;
@@ -215,7 +219,7 @@
             this.textBoxLevelScript.Location = new System.Drawing.Point(6, 6);
             this.textBoxLevelScript.Multiline = true;
             this.textBoxLevelScript.Name = "textBoxLevelScript";
-            this.textBoxLevelScript.Size = new System.Drawing.Size(395, 360);
+            this.textBoxLevelScript.Size = new System.Drawing.Size(395, 359);
             this.textBoxLevelScript.TabIndex = 0;
             // 
             // toolStripContainer
@@ -234,8 +238,33 @@
             // 
             // toolStripContainer.TopToolStripPanel
             // 
-            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStripPreview);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStripToolbar);
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStripPreview);
+            // 
+            // toolStripToolbar
+            // 
+            this.toolStripToolbar.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsddbShapes,
+            this.tsddbLights});
+            this.toolStripToolbar.Location = new System.Drawing.Point(3, 0);
+            this.toolStripToolbar.Name = "toolStripToolbar";
+            this.toolStripToolbar.Size = new System.Drawing.Size(121, 25);
+            this.toolStripToolbar.TabIndex = 0;
+            // 
+            // tsddbShapes
+            // 
+            this.tsddbShapes.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbShapes.Name = "tsddbShapes";
+            this.tsddbShapes.Size = new System.Drawing.Size(57, 22);
+            this.tsddbShapes.Text = "Shapes";
+            // 
+            // tsddbLights
+            // 
+            this.tsddbLights.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbLights.Name = "tsddbLights";
+            this.tsddbLights.Size = new System.Drawing.Size(52, 22);
+            this.tsddbLights.Text = "Lights";
             // 
             // toolStripPreview
             // 
@@ -243,34 +272,28 @@
             this.toolStripPreview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiPreviewToolStripRun,
             this.tsmiPreviewToolStripStop});
-            this.toolStripPreview.Location = new System.Drawing.Point(114, 0);
+            this.toolStripPreview.Location = new System.Drawing.Point(125, 0);
             this.toolStripPreview.Name = "toolStripPreview";
-            this.toolStripPreview.Size = new System.Drawing.Size(79, 25);
+            this.toolStripPreview.Size = new System.Drawing.Size(142, 25);
             this.toolStripPreview.TabIndex = 1;
             // 
             // tsmiPreviewToolStripRun
             // 
+            this.tsmiPreviewToolStripRun.Image = ((System.Drawing.Image)(resources.GetObject("tsmiPreviewToolStripRun.Image")));
             this.tsmiPreviewToolStripRun.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsmiPreviewToolStripRun.Name = "tsmiPreviewToolStripRun";
-            this.tsmiPreviewToolStripRun.Size = new System.Drawing.Size(32, 22);
+            this.tsmiPreviewToolStripRun.Size = new System.Drawing.Size(48, 22);
             this.tsmiPreviewToolStripRun.Text = "Run";
             this.tsmiPreviewToolStripRun.Click += new System.EventHandler(this.RunToolStripMenuItem_Click);
             // 
             // tsmiPreviewToolStripStop
             // 
+            this.tsmiPreviewToolStripStop.Image = ((System.Drawing.Image)(resources.GetObject("tsmiPreviewToolStripStop.Image")));
             this.tsmiPreviewToolStripStop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsmiPreviewToolStripStop.Name = "tsmiPreviewToolStripStop";
-            this.tsmiPreviewToolStripStop.Size = new System.Drawing.Size(35, 22);
+            this.tsmiPreviewToolStripStop.Size = new System.Drawing.Size(51, 22);
             this.tsmiPreviewToolStripStop.Text = "Stop";
             this.tsmiPreviewToolStripStop.Click += new System.EventHandler(this.StopToolStripMenuItem_Click);
-            // 
-            // toolStripToolbar
-            // 
-            this.toolStripToolbar.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStripToolbar.Location = new System.Drawing.Point(3, 0);
-            this.toolStripToolbar.Name = "toolStripToolbar";
-            this.toolStripToolbar.Size = new System.Drawing.Size(111, 25);
-            this.toolStripToolbar.TabIndex = 2;
             // 
             // LevelEditorForm
             // 
@@ -299,6 +322,8 @@
             this.toolStripContainer.TopToolStripPanel.PerformLayout();
             this.toolStripContainer.ResumeLayout(false);
             this.toolStripContainer.PerformLayout();
+            this.toolStripToolbar.ResumeLayout(false);
+            this.toolStripToolbar.PerformLayout();
             this.toolStripPreview.ResumeLayout(false);
             this.toolStripPreview.PerformLayout();
             this.ResumeLayout(false);
@@ -325,9 +350,11 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiPreviewRun;
         private System.Windows.Forms.ToolStripMenuItem tsmiPreviewStop;
         private System.Windows.Forms.ToolStripContainer toolStripContainer;
+        private System.Windows.Forms.ToolStrip toolStripToolbar;
+        private System.Windows.Forms.ToolStripDropDownButton tsddbShapes;
+        private System.Windows.Forms.ToolStripDropDownButton tsddbLights;
         private System.Windows.Forms.ToolStrip toolStripPreview;
         private System.Windows.Forms.ToolStripButton tsmiPreviewToolStripRun;
         private System.Windows.Forms.ToolStripButton tsmiPreviewToolStripStop;
-        private System.Windows.Forms.ToolStrip toolStripToolbar;
     }
 }

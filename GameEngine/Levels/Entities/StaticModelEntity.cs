@@ -13,7 +13,6 @@ namespace Gdd.Game.Engine.Levels.Entities
     /// The static model entity.
     /// </summary>
     [LevelEntityBinding("Gdd.Game.Engine.Levels.StaticModel, Gdd.Game.Engine")]
-    [LevelEntityCategory("Shapes")]
     internal class StaticModelEntity : DrawableSceneComponentEntity
     {
         #region Properties
