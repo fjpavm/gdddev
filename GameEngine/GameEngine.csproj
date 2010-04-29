@@ -95,6 +95,7 @@
     <Compile Include="AI\AnimationCommandMessage.cs" />
     <Compile Include="AI\AnimationState.cs" />
     <Compile Include="AI\FlipDirectionAnimationState.cs" />
+    <Compile Include="AI\IDebugable.cs" />
     <Compile Include="AI\IMessageProcessor.cs" />
     <Compile Include="AI\IAIEntity.cs" />
     <Compile Include="AI\IState.cs" />

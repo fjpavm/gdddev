@@ -275,10 +275,11 @@ namespace Gdd.Game
             // Testing bunny AI
             Bunny bunny = new Bunny(this) { Position2D = new Vector2(-10.0f, -10.0f) };
             Bunny secondBunny = new Bunny(this) { Position2D = new Vector2(-20.0f, 40.0f) };
-            //this.monster = bunny;
+            this.monster = bunny;
+            //bunny.Debug = true;
 
-            //aiManager.objectList.Add(bunny);
-            //aiManager.objectList.Add(secondBunny);
+            aiManager.objectList.Add(bunny);
+            aiManager.objectList.Add(secondBunny);
             scene1.AddComponent(bunny);
             scene1.AddComponent(secondBunny);
             scene1.AddComponent(lollypop);
