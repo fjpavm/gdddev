@@ -146,7 +146,7 @@
 
             // Loading Bunny State Machines
             // some test patrol points
-            Vector2 patrol1 = new Vector2(-10,0);
+            Vector2 patrol1 = new Vector2(-1000000.0f,0.0f);
             Vector2 patrol2 = new Vector2(10,0);
             AnimationStateMachine = new Gdd.Game.Engine.AI.StateMachines.BunnyAnimationStateMachine(this);
             MonsterStateMachine = new Gdd.Game.Engine.AI.StateMachines.BunnyStateMachine(this, patrol1, patrol2); 

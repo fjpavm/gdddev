@@ -10,7 +10,7 @@ namespace Gdd.Game.Engine.AI
         string animationName;
         Animation.AnimationClip animationClip;
         bool repeat = true;
-        bool first;
+        protected bool first;
         public bool Repeat 
         { 
             set
