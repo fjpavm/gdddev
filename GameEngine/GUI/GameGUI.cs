@@ -45,13 +45,13 @@ namespace Gdd.Game.Engine.GUI
             Button button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 0, 88, 33, "tmpCube", StaticModel.GEOMETRY_TYPE.RECTANGLE);
             buttonModels.Add(button);
 
-            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 1, 88, 33, "cube", StaticModel.GEOMETRY_TYPE.RECTANGLE);
+            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 1, 88, 33, "mesh//box 180", StaticModel.GEOMETRY_TYPE.RECTANGLE);
             buttonModels.Add(button);
 
-            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 2, 88, 33, "sphere", StaticModel.GEOMETRY_TYPE.CIRCLE);
+            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 2, 88, 33, "mesh//sphere 180", StaticModel.GEOMETRY_TYPE.CIRCLE);
             buttonModels.Add(button);
 
-            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 3, 88, 33, "cone", StaticModel.GEOMETRY_TYPE.POLYGON);
+            button = new Button(this.game, "button_apply_normal", "button_apply_selected", 0, 33 * 3, 88, 33, "mesh//pyramid 180", StaticModel.GEOMETRY_TYPE.POLYGON);
             buttonModels.Add(button);
 
             button = new Button(this.game, "button_ok", 0, this.game.Window.ClientBounds.Height - (33 * 2), 100, 33, ButtonConfirmType.OK);

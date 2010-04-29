@@ -152,6 +152,7 @@ namespace Gdd.Game.Engine.Levels
         [XmlIgnore]
         public DIRECTION Direction { get; protected set; }
 
+
         /// <summary>
         /// Gets or sets ModelName.
         /// </summary>
@@ -264,6 +265,11 @@ namespace Gdd.Game.Engine.Levels
                 this.Rotation = Matrix.CreateFromYawPitchRoll(this.yawRotation, this.pitchRotation, this.rollRotation);
             }
         }
+
+        /// <summary>
+        /// The Offset matrix
+        /// </summary>
+        protected Matrix OffsetMatrix;
 
         /// <summary>
         /// The geometry type of the object
@@ -436,9 +442,7 @@ namespace Gdd.Game.Engine.Levels
                 this.Rotation = Matrix.CreateFromYawPitchRoll(this.YawRotation, this.PitchRotation, this.RollRotation) *
                                 this.PhysicsBody.GetBodyRotationMatrix();
 
-                this.World =
-                    Matrix.CreateTranslation(new Vector3(-this.PhysicsGeometry.LocalVertices.GetCentroid(), 0.0f)) *
-                    this.Rotation * this.Translation;
+                this.World = this.Rotation * this.Translation;
             }
             else
             {
@@ -449,6 +453,27 @@ namespace Gdd.Game.Engine.Levels
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// The load content.
+        /// </summary>
+        protected override void LoadContent()
+        {
+            this.ObjectModel = this.Game.Content.Load<Model>(this.modelName);
+
+            ShaderManager.AddEffect(ShaderManager.EFFECT_ID.STATICMODEL, "Effects\\StaticModel", this.Game);
+            this.DefaultEffectID = ShaderManager.EFFECT_ID.STATICMODEL;
+            this.DefaultTechnique = "StaticModelTechnique";
+
+            if (geoType == GEOMETRY_TYPE.POLYGON)
+            {
+                this.PhysicsVertices = ModelToVertices.TransformStaticModel(this, this.Game);
+            }
+
+            LoadCommonContent();
+
+            this.PhysicsBody.IsStatic = true;
+        }
 
         /// <summary>
         /// The load common content.
@@ -477,7 +502,7 @@ namespace Gdd.Game.Engine.Levels
                     SceneManager.physicsSimulator, 
                     this.PhysicsBody, 
                     this.ObjectModel.Meshes[0].BoundingSphere.Radius, 
-                    20, 
+                    20,
                     this.gridCellSize);
             }
             else if (this.geoType == GEOMETRY_TYPE.RECTANGLE)
@@ -494,49 +519,35 @@ namespace Gdd.Game.Engine.Levels
                     this.gridCellSize);
             }
 
-            this.offset = this.PhysicsBody.Position;
+            this.offset = this.PhysicsBody.Position + this.PhysicsGeometry.LocalVertices.GetCentroid( );
+            this.OffsetMatrix = Matrix.CreateTranslation(new Vector3(this.offset, 0.0f));
+
             this.PhysicsBody.Position = this.Position2D + this.offset;
 
             this.aabb = this.PhysicsGeometry.AABB;
 
-            // FieldInfo fi = typeof(Body).GetField("_previousPosition", BindingFlags.Instance | BindingFlags.NonPublic);
-            // fi.SetValue(this.PhysicsBody, this.PhysicsBody.Position);
-            foreach (Effect effect in this.ObjectModel.Meshes.SelectMany(mesh => mesh.Effects))
-            {
-                if (effect.Parameters["Texture"] != null)
-                {
-                    this.ModelTextures.Add(effect.Parameters["Texture"].GetValueTexture2D());
-                }
-                else if (effect.Parameters["BasicTexture"] != null)
-                {
-                    this.ModelTextures.Add(effect.Parameters["BasicTexture"].GetValueTexture2D());
-                }
-            }
+            //FieldInfo fi = typeof(Body).GetField("_previousPosition", BindingFlags.Instance | BindingFlags.NonPublic);
+            //fi.SetValue(this.PhysicsBody, this.PhysicsBody.Position);
+
+            LoadTextures();
+
 
             base.LoadContent();
         }
 
-        /// <summary>
-        /// The load content.
-        /// </summary>
-        protected override void LoadContent()
+        protected void LoadTextures()
         {
-            this.ObjectModel = this.Game.Content.Load<Model>(this.modelName);
-
-            ShaderManager.AddEffect(ShaderManager.EFFECT_ID.STATICMODEL, "Effects\\StaticModel", this.Game);
-            this.DefaultEffectID = ShaderManager.EFFECT_ID.STATICMODEL;
-            this.DefaultTechnique = "StaticModelTechnique";
-
-            if (this.geoType == GEOMETRY_TYPE.POLYGON)
+            foreach (ModelMesh mesh in this.ObjectModel.Meshes)
             {
-                this.PhysicsVertices = ModelToVertices.TransformStaticModel(this, this.Game);
+                foreach (Effect effect in mesh.Effects)
+                {
+                    if (effect.Parameters["Texture"] != null)
+                        this.ModelTextures.Add(effect.Parameters["Texture"].GetValueTexture2D());
+                    else if (effect.Parameters["BasicTexture"] != null)
+                        this.ModelTextures.Add(effect.Parameters["BasicTexture"].GetValueTexture2D());
+                }
             }
-
-            this.LoadCommonContent();
-
-            this.PhysicsBody.IsStatic = true;
         }
-
         #endregion
 
         /// <summary>
@@ -547,14 +558,14 @@ namespace Gdd.Game.Engine.Levels
             #region Constants and Fields
 
             /// <summary>
-            /// The normal.
-            /// </summary>
-            public Vector3 Normal;
-
-            /// <summary>
             /// The position.
             /// </summary>
             public Vector3 Position;
+            
+            /// <summary>
+            /// The normal.
+            /// </summary>
+            public Vector3 Normal;
 
             /// <summary>
             /// The texture uv.
