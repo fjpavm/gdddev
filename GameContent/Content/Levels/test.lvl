@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Components>
-    <SceneComponent xsi:type="StaticModel">
+  <!--  <SceneComponent xsi:type="StaticModel">
       <Enabled>true</Enabled>
       <UpdateOrder>0</UpdateOrder>
       <Position2D>
@@ -23,7 +23,7 @@
       <DrawOrder>0</DrawOrder>
       <Visible>false</Visible>
       <ModelName>tmpCube</ModelName>
-    </SceneComponent>
+    </SceneComponent>-->
     <SceneComponent xsi:type="DrawText">
       <Enabled>true</Enabled>
       <UpdateOrder>0</UpdateOrder>

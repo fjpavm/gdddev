@@ -359,6 +359,21 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="mesh\box 180.fbx">
+      <Name>box 180</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="mesh\pyramid 180.fbx">
+      <Name>pyramid 180</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="mesh\sphere 180.fbx">
+      <Name>sphere 180</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Textures\lollypop.jpg">
       <Name>lollypop</Name>
       <Importer>TextureImporter</Importer>
