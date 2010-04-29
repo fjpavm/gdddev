@@ -8,9 +8,15 @@ using Gdd.Game.Engine.Levels;
 namespace Gdd.Game.Engine.AI
 {
     using Microsoft.Xna.Framework;
-    public class AIMonster : AnimatedModel, IAIEntity
+    public class AIMonster : AnimatedModel, IAIEntity, IDebugable
     {
         StateMachine stateMachine;
+        private bool debug;
+        public bool Debug 
+        {
+            get { return debug; }
+            set { debug = value; }
+        }
 
         // to manage animation transitions
         StateMachine animationStateMachine;
@@ -37,8 +43,8 @@ namespace Gdd.Game.Engine.AI
         }
 
         public AIMonster(Game game) : base(game)
-        { 
-
+        {
+            debug = false;  
         }
 
         protected AIMonster() : this(null) 

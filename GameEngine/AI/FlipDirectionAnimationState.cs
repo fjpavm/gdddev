@@ -12,6 +12,7 @@ namespace Gdd.Game.Engine.AI
         public FlipDirectionAnimationState(object _thisObject, string _animationName, Levels.StaticModel.DIRECTION _wantedDirection) : base(_thisObject, _animationName)
         {
             wantedDirection = _wantedDirection;
+            this.name = _animationName + wantedDirection + "_FlipAnimationState";
         }
 
         public override void Update()
