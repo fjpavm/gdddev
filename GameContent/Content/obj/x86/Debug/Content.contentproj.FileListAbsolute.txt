@@ -1,4 +1,0 @@
-C:\Dropbox\My Dropbox\GDD\trunk\GameContent\Content\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Dropbox\My Dropbox\GDD\trunk\GameContent\Content\obj\x86\Debug\Audio\DreamerAudio.xml
-C:\temprevision\GameContent\Content\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\temprevision\GameContent\Content\obj\x86\Debug\Audio\DreamerAudio.xml
