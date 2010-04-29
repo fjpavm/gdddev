@@ -1,0 +1,9 @@
+glob:Settings.StyleCop
+glob:*.ReSharper.user
+glob:*.suo
+glob:StyleCop.Cache
+glob:_ReSharper.*
+glob:*/bin/x86/Debug/
+glob:*/obj/x86/Debug/
+glob:*.csproj.Debug.cachefile
+glob:*.contentproj.XactOutput.FileList.txt
