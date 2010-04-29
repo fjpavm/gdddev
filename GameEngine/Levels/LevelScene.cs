@@ -9,7 +9,6 @@
 
 namespace Gdd.Game.Engine.Levels
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -35,11 +34,6 @@ namespace Gdd.Game.Engine.Levels
         private readonly Background background;
 
         /// <summary>
-        /// The level entity type bindings.
-        /// </summary>
-        private static List<LevelEntityTypeBinding> levelEntityTypeBindings;
-
-        /// <summary>
         /// The current level.
         /// </summary>
         private Level currentLevel;
@@ -52,29 +46,6 @@ namespace Gdd.Game.Engine.Levels
         #endregion
 
         #region Constructors and Destructors
-
-        /// <summary>
-        /// Initializes static members of the <see cref="LevelScene"/> class.
-        /// </summary>
-        static LevelScene()
-        {
-            levelEntityTypeBindings = new List<LevelEntityTypeBinding>();
-
-            foreach (Type subType in typeof(LevelEntity).GetSubTypes())
-            {
-                var bindingAttribute =
-                    subType.GetCustomAttributes(typeof(LevelEntityBindingAttribute), false).FirstOrDefault() as
-                    LevelEntityBindingAttribute;
-                if (bindingAttribute == null)
-                {
-                    continue;
-                }
-
-                Type sceneComponentType = Type.GetType(bindingAttribute.ClassName);
-                var binding = new LevelEntityTypeBinding(subType, sceneComponentType);
-                levelEntityTypeBindings.Add(binding);
-            }
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LevelScene"/> class.
@@ -93,17 +64,6 @@ namespace Gdd.Game.Engine.Levels
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Gets LevelEntityTypeBindings.
-        /// </summary>
-        public static IEnumerable<LevelEntityTypeBinding> LevelEntityTypeBindings
-        {
-            get
-            {
-                return levelEntityTypeBindings;
-            }
-        }
 
         /// <summary>
         /// Gets or sets CurrentLevel.

@@ -96,10 +96,10 @@ namespace Gdd.Game.Engine.Levels
             return (from block in this.Components
                     let boundingBox = block.aabb
                     where
-                        boundingBox.Min.X + block.Position2D.X <= vector3.X &&
-                        boundingBox.Min.Y + block.Position2D.Y <= vector3.Y &&
-                        boundingBox.Max.X + block.Position2D.X >= vector3.X &&
-                        boundingBox.Max.Y + block.Position2D.Y >= vector3.Y
+                        boundingBox.Min.X + boundingBox.Position.X <= vector3.X &&
+                        boundingBox.Min.Y + boundingBox.Position.Y <= vector3.Y &&
+                        boundingBox.Max.X + boundingBox.Position.X >= vector3.X &&
+                        boundingBox.Max.Y + boundingBox.Position.Y >= vector3.Y
                     select block).FirstOrDefault();
         }
 
