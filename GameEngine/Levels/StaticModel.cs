@@ -507,14 +507,14 @@ namespace Gdd.Game.Engine.Levels
             #region Constants and Fields
 
             /// <summary>
-            /// The normal.
-            /// </summary>
-            public Vector3 Normal;
-
-            /// <summary>
             /// The position.
             /// </summary>
             public Vector3 Position;
+
+            /// <summary>
+            /// The normal.
+            /// </summary>
+            public Vector3 RNormal;
 
             /// <summary>
             /// The texture uv.
