@@ -30,14 +30,14 @@ namespace Gdd.Game.Engine.Levels
         #region Constants and Fields
 
         /// <summary>
+        /// The level entity type bindings.
+        /// </summary>
+        private static readonly IEnumerable<LevelEntityTypeBinding> levelEntityTypeBindings;
+
+        /// <summary>
         /// The background.
         /// </summary>
         private readonly Background background;
-
-        /// <summary>
-        /// The level entity type bindings.
-        /// </summary>
-        private static List<LevelEntityTypeBinding> levelEntityTypeBindings;
 
         /// <summary>
         /// The current level.
@@ -58,22 +58,11 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         static LevelScene()
         {
-            levelEntityTypeBindings = new List<LevelEntityTypeBinding>();
-
-            foreach (Type subType in typeof(LevelEntity).GetSubTypes())
-            {
-                var bindingAttribute =
-                    subType.GetCustomAttributes(typeof(LevelEntityBindingAttribute), false).FirstOrDefault() as
-                    LevelEntityBindingAttribute;
-                if (bindingAttribute == null)
-                {
-                    continue;
-                }
-
-                Type sceneComponentType = Type.GetType(bindingAttribute.ClassName);
-                var binding = new LevelEntityTypeBinding(subType, sceneComponentType);
-                levelEntityTypeBindings.Add(binding);
-            }
+            levelEntityTypeBindings = from subType in typeof(LevelEntity).GetSubTypes()
+                                      let bindingAttribute = subType.GetCustomAttributes(typeof(LevelEntityBindingAttribute), false).FirstOrDefault() as LevelEntityBindingAttribute
+                                      where bindingAttribute != null
+                                      let sceneComponentType = Type.GetType(bindingAttribute.ClassName)
+                                      select new LevelEntityTypeBinding(subType, sceneComponentType);
         }
 
         /// <summary>
