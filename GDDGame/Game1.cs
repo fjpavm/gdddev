@@ -186,6 +186,7 @@ namespace Gdd.Game
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 SceneManager.ChangeScene(SceneManager.SCENE_ID.IN_GAME_MENU);
+                Audio.PauseBackgroundMusic();
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.X))
             {
