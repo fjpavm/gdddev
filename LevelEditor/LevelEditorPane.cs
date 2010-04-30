@@ -11,10 +11,8 @@ namespace Gdd.Game.LevelEditor
 {
     using System;
     using System.IO;
-    using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
-    using System.Xml.Serialization;
 
     using Gdd.Game.Engine;
     using Gdd.Game.Engine.Input;
@@ -216,9 +214,10 @@ namespace Gdd.Game.LevelEditor
             {
                 var serializer = new LevelSerializer();
                 serializer.Serialize(fileStream, this.levelEditorScene.CurrentLevel);
-                //var xmlSerializer = new XmlSerializer(
-                //    typeof(Level), this.levelEditorScene.CurrentLevel.Components.GetBlockTypes().ToArray());
-                //xmlSerializer.Serialize(fileStream, this.levelEditorScene.CurrentLevel);
+
+                // var xmlSerializer = new XmlSerializer(
+                // typeof(Level), this.levelEditorScene.CurrentLevel.Components.GetBlockTypes().ToArray());
+                // xmlSerializer.Serialize(fileStream, this.levelEditorScene.CurrentLevel);
             }
         }
 

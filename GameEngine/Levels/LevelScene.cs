@@ -13,7 +13,6 @@ namespace Gdd.Game.Engine.Levels
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Xml.Serialization;
 
     using Gdd.Game.Engine.Common;
     using Gdd.Game.Engine.Scenes;
@@ -59,7 +58,9 @@ namespace Gdd.Game.Engine.Levels
         static LevelScene()
         {
             levelEntityTypeBindings = from subType in typeof(LevelEntity).GetSubTypes()
-                                      let bindingAttribute = subType.GetCustomAttributes(typeof(LevelEntityBindingAttribute), false).FirstOrDefault() as LevelEntityBindingAttribute
+                                      let bindingAttribute =
+                                          subType.GetCustomAttributes(typeof(LevelEntityBindingAttribute), false).
+                                              FirstOrDefault() as LevelEntityBindingAttribute
                                       where bindingAttribute != null
                                       let sceneComponentType = Type.GetType(bindingAttribute.ClassName)
                                       select new LevelEntityTypeBinding(subType, sceneComponentType);
@@ -191,7 +192,9 @@ namespace Gdd.Game.Engine.Levels
         /// </param>
         public void LoadContent(string levelName)
         {
-            this.CurrentLevel = this.Game.Content.Load<Level>(levelName);
+            var levelEntityCollection = this.Game.Content.Load<LevelEntityCollection>(levelName);
+            var levelSerializer = new LevelSerializer();
+            this.CurrentLevel = levelSerializer.ConvertToLevel(levelEntityCollection, this);
             this.background.LoadContent();
         }
 
@@ -205,9 +208,8 @@ namespace Gdd.Game.Engine.Levels
         {
             using (var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
-                var xmlSerializer = new XmlSerializer(
-                    typeof(Level), typeof(DrawableSceneComponent).GetSubTypes().ToArray());
-                this.CurrentLevel = xmlSerializer.Deserialize(fileStream) as Level;
+                var levelSerializer = new LevelSerializer();
+                this.CurrentLevel = levelSerializer.Deserialize(fileStream, this);
             }
         }
 
@@ -244,16 +246,13 @@ namespace Gdd.Game.Engine.Levels
             IEnumerable<Ground> groundObjects = from dsc in this.DrawableSceneComponents
                                                 where dsc is Ground
                                                 let g = (Ground)dsc
+                                                where g.PhysicsGeometry != null
                                                 select g;
             if (groundObjects.Count() != 0)
             {
                 this.background.SetBounds(
                     groundObjects.Min(g => g.PhysicsGeometry.AABB.Min.X), 
                     groundObjects.Max(g => g.PhysicsGeometry.AABB.Max.X));
-            }
-            else
-            {
-                // this.background.SetBounds();                
             }
 
             this.background.Draw();

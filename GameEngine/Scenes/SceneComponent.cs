@@ -1,4 +1,3 @@
-using FarseerGames.FarseerPhysics.Collisions;
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SceneComponent.cs" company="UAD">
 //   Game Design and Development
@@ -13,6 +12,7 @@ namespace Gdd.Game.Engine.Scenes
     using System;
     using System.Reflection;
     using System.Xml.Serialization;
+    using FarseerGames.FarseerPhysics.Collisions;
 
     using Microsoft.Xna.Framework;
 
@@ -74,19 +74,16 @@ namespace Gdd.Game.Engine.Scenes
         ///<summary>
         /// Gets and sets the World matrix
         ///</summary>
-        [XmlIgnore]
         public Matrix World { get; protected set; }
 
-        ///<summary>
+        /// <summary>
         /// Gets and sets the Translation matrix
-        ///</summary>
-        [XmlIgnore]
+        /// </summary>
         public Matrix Translation { get; protected set; }
 
-        ///<summary>
+        /// <summary>
         /// Gets and sets the Rotation matrix
-        ///</summary>
-        [XmlIgnore]
+        /// </summary>
         public Matrix Rotation { get; protected set; }
 
         /// <summary>
@@ -97,7 +94,6 @@ namespace Gdd.Game.Engine.Scenes
         /// <summary>
         /// The axis aligned bounding box.
         /// </summary>
-        [XmlIgnore]
         public AABB aabb { get; set; }
 
         /// <summary>
@@ -129,7 +125,6 @@ namespace Gdd.Game.Engine.Scenes
         /// <summary>
         /// Gets Position3D.
         /// </summary>
-        [XmlIgnore]
         public virtual Vector3 Position3D
         {
             get
@@ -171,14 +166,6 @@ namespace Gdd.Game.Engine.Scenes
         /// </param>
         public SceneComponent(Game game)
             : base(game)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SceneComponent"/> class.
-        /// </summary>
-        protected SceneComponent()
-            : base(null)
         {
         }
 

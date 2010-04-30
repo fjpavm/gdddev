@@ -12,7 +12,6 @@ namespace Gdd.Game.Engine.Levels
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.InteropServices;
-    using System.Xml.Serialization;
 
     using FarseerGames.FarseerPhysics.Collisions;
     using FarseerGames.FarseerPhysics.Factories;
@@ -50,25 +49,21 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// The rotation along the X axis
         /// </summary>
-        [XmlIgnore]
         protected float pitchRotation;
 
         /// <summary>
         /// The rotation along the X axis
         /// </summary>
-        [XmlIgnore]
         protected float rollRotation;
 
         /// <summary>
         /// The rotation along the X axis
         /// </summary>
-        [XmlIgnore]
         protected float yawRotation;
 
         /// <summary>
         /// Gets or sets ModelTexture.
         /// </summary>
-        [XmlIgnore]
         private List<Texture2D> textures;
 
         #endregion
@@ -94,14 +89,6 @@ namespace Gdd.Game.Engine.Levels
             this.ModelDirection = ModelDirection.Right;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StaticModel"/> class.
-        /// </summary>
-        protected StaticModel()
-            : this(null)
-        {
-        }
-
         #endregion
 
         #region Properties
@@ -114,7 +101,6 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// Gets or sets Direction.
         /// </summary>
-        [XmlIgnore]
         public ModelDirection ModelDirection { get; protected set; }
 
         /// <summary>
@@ -141,25 +127,21 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// Gets or sets ObjectModel.
         /// </summary>
-        [XmlIgnore]
         public Model ObjectModel { get; protected set; }
 
         /// <summary>
         /// Gets or sets PhysicsTexture.
         /// </summary>
-        [XmlIgnore]
         public Texture2D PhysicsTexture { get; protected set; }
 
         /// <summary>
         /// Gets or sets PhysicsVertices.
         /// </summary>
-        [XmlIgnore]
         public Vertices PhysicsVertices { get; protected set; }
 
         /// <summary>
         /// Gets or sets PitchRotation.
         /// </summary>
-        [XmlIgnore]
         public float PitchRotation
         {
             get
@@ -197,7 +179,6 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// Gets or sets RollRotation.
         /// </summary>
-        [XmlIgnore]
         public float RollRotation
         {
             get
@@ -215,7 +196,6 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// Gets or sets YawRotation.
         /// </summary>
-        [XmlIgnore]
         public float YawRotation
         {
             get
@@ -233,7 +213,6 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// Gets or sets ModelTextures.
         /// </summary>
-        [XmlIgnore]
         protected List<Texture2D> ModelTextures
         {
             get

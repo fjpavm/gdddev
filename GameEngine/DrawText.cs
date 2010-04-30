@@ -47,14 +47,6 @@ namespace Gdd.Game.Engine
             this.Text = "text";
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DrawText"/> class.
-        /// </summary>
-        protected DrawText()
-            : this(null)
-        {
-        }
-
         #endregion
 
         #region Properties

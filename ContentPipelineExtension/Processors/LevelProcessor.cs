@@ -10,19 +10,16 @@
 namespace Gdd.Game.Engine.Content.Pipeline.Processors
 {
     using System.IO;
-    using System.Linq;
-    using System.Xml.Serialization;
 
     using Gdd.Game.Engine.Levels;
-    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework.Content.Pipeline;
 
     /// <summary>
     /// The level processor.
     /// </summary>
-    [ContentProcessor(DisplayName = "Level Processor")]
-    internal class LevelProcessor : ContentProcessor<byte[], Level>
+    [ContentProcessor(DisplayName = "Level Processor - GddGame")]
+    internal class LevelProcessor : ContentProcessor<byte[], LevelEntityCollection>
     {
         #region Public Methods
 
@@ -38,13 +35,12 @@ namespace Gdd.Game.Engine.Content.Pipeline.Processors
         /// <returns>
         /// Returns the Level instance.
         /// </returns>
-        public override Level Process(byte[] input, ContentProcessorContext context)
+        public override LevelEntityCollection Process(byte[] input, ContentProcessorContext context)
         {
             using (var memoryStream = new MemoryStream(input))
             {
-                var xmlSerializer = new XmlSerializer(
-                    typeof(Level), typeof(DrawableSceneComponent).GetSubTypes().ToArray());
-                return xmlSerializer.Deserialize(memoryStream) as Level;
+                var levelSerializer = new LevelSerializer();
+                return levelSerializer.Deserialize(memoryStream);
             }
         }
 

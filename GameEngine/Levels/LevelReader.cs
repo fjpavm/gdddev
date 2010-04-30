@@ -9,17 +9,12 @@
 
 namespace Gdd.Game.Engine.Levels
 {
-    using System.Linq;
-    using System.Xml.Serialization;
-
-    using Gdd.Game.Engine.Scenes;
-
     using Microsoft.Xna.Framework.Content;
 
     /// <summary>
     /// The level reader.
     /// </summary>
-    internal class LevelReader : ContentTypeReader<Level>
+    internal class LevelReader : ContentTypeReader<LevelEntityCollection>
     {
         #region Methods
 
@@ -35,10 +30,10 @@ namespace Gdd.Game.Engine.Levels
         /// <returns>
         /// Level instance.
         /// </returns>
-        protected override Level Read(ContentReader input, Level existingInstance)
+        protected override LevelEntityCollection Read(ContentReader input, LevelEntityCollection existingInstance)
         {
-            var xmlSerializer = new XmlSerializer(typeof(Level), typeof(DrawableSceneComponent).GetSubTypes().ToArray());
-            return xmlSerializer.Deserialize(input.BaseStream) as Level;
+            var levelSerializer = new LevelSerializer();
+            return levelSerializer.Deserialize(input.BaseStream);
         }
 
         #endregion

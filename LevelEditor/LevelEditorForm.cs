@@ -129,7 +129,7 @@ namespace Gdd.Game.LevelEditor
                     }
 
                     var menuItem = new ToolStripMenuItem(
-                        levelEntityTypeBinding.LevelEntityType.Name, 
+                        levelEntityTypeBinding.SceneComponentType.Name, 
                         null, 
                         this.ToolbarItemClick, 
                         levelEntityTypeBinding.SceneComponentType.Name);

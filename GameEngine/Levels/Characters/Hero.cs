@@ -74,14 +74,6 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.Position2D = new Vector2(0.0f, 0.0f);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Hero"/> class.
-        /// </summary>
-        protected Hero()
-            : this(null)
-        {
-        }
-
         #endregion
 
         #region Public Methods
