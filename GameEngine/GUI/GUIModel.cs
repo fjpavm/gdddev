@@ -33,14 +33,6 @@ namespace Gdd.Game.Engine.GUI
         /// <summary>
         /// Initializes a new instance of the <see cref="LevelModel"/> class.
         /// </summary>
-        public GUIModel()
-        {
-            this.ModelSituation = ModelSituation.NotDrawing;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LevelModel"/> class.
-        /// </summary>
         /// <param name="game">
         /// The game.
         /// </param>

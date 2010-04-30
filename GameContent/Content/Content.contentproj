@@ -225,13 +225,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Levels\test.lvl">
-      <Name>test</Name>
-      <Importer>LevelImporter</Importer>
-      <Processor>LevelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="mesh\heroAnimation.xml">
       <Name>heroAnimation</Name>
       <Importer>XmlImporter</Importer>
@@ -353,6 +346,11 @@
       <Name>Final terrian</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Levels\test.lvl">
+      <Name>test</Name>
+      <Importer>LevelImporter</Importer>
+      <Processor>LevelProcessor</Processor>
     </Compile>
     <None Include="Textures\lollypop.jpg">
       <Name>lollypop</Name>

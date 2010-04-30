@@ -57,14 +57,6 @@ namespace Gdd.Game.Engine.Levels
             // this.Rotation = Matrix.Identity;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Ground"/> class.
-        /// </summary>
-        protected Ground()
-            : this(null)
-        {
-        }
-
         #endregion
 
         #region Public Methods

@@ -62,14 +62,6 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.healthPosition = new Vector2(0.0f, this.Game.GraphicsDevice.Viewport.Height - 30.0f);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HeroHealthBar"/> class.
-        /// </summary>
-        protected HeroHealthBar()
-            : this(null)
-        {
-        }
-
         #endregion
 
         #region Public Methods

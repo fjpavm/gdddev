@@ -10,7 +10,6 @@
 namespace Gdd.Game.Engine.Levels.Information
 {
     using System;
-    using System.Xml.Serialization;
 
     using Gdd.Game.Engine.Render;
     using Gdd.Game.Engine.Render.Shadow;
@@ -44,7 +43,6 @@ namespace Gdd.Game.Engine.Levels.Information
         /// <summary>
         /// The text sprite.
         /// </summary>
-        [XmlIgnore]
         private TextureSprite[] textSprite;
 
         #endregion
@@ -54,27 +52,14 @@ namespace Gdd.Game.Engine.Levels.Information
         /// <summary>
         /// Initializes a new instance of the <see cref="TutorialText"/> class.
         /// </summary>
-        public TutorialText()
-            : base(null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TutorialText"/> class.
-        /// </summary>
         /// <param name="game">
         /// The game.
         /// </param>
-        /// <param name="textBoxSize">
-        /// The text box size.
-        /// </param>
         /// <exception cref="ArgumentNullException">
         /// </exception>
-        public TutorialText(Game game, Vector2 textBoxSize)
+        public TutorialText(Game game)
             : base(game)
         {
-            this.TextBoxSize = textBoxSize;
-
             if (TextureSpriteVertexDeclaration == null)
             {
                 TextureSpriteVertexDeclaration = new VertexDeclaration(
@@ -94,31 +79,26 @@ namespace Gdd.Game.Engine.Levels.Information
         /// <summary>
         /// Gets or sets BodyText.
         /// </summary>
-        [XmlIgnore]
         public string BodyText { get; set; }
 
         /// <summary>
         /// Gets or sets HeaderText.
         /// </summary>
-        [XmlIgnore]
         public string HeaderText { get; set; }
 
         /// <summary>
         /// Gets or sets TextBoxSize.
         /// </summary>
-        [XmlIgnore]
         public Vector2 TextBoxSize { get; set; }
 
         /// <summary>
         /// Gets or sets DialogTexture.
         /// </summary>
-        [XmlIgnore]
         private Texture2D DialogTexture { get; set; }
 
         /// <summary>
         /// Gets or sets TextTexture.
         /// </summary>
-        [XmlIgnore]
         private Texture2D TextTexture { get; set; }
 
         #endregion

@@ -10,8 +10,6 @@
 namespace Gdd.Game.Engine.Content.Pipeline.Serialization.Compiler
 {
     using System.IO;
-    using System.Linq;
-    using System.Xml.Serialization;
 
     using Gdd.Game.Engine.Levels;
 
@@ -22,7 +20,7 @@ namespace Gdd.Game.Engine.Content.Pipeline.Serialization.Compiler
     /// The level writer.
     /// </summary>
     [ContentTypeWriter]
-    internal class LevelWriter : ContentTypeWriter<Level>
+    internal class LevelWriter : ContentTypeWriter<LevelEntityCollection>
     {
         #region Public Methods
 
@@ -53,12 +51,12 @@ namespace Gdd.Game.Engine.Content.Pipeline.Serialization.Compiler
         /// <param name="value">
         /// The value.
         /// </param>
-        protected override void Write(ContentWriter output, Level value)
+        protected override void Write(ContentWriter output, LevelEntityCollection value)
         {
             using (var memoryStream = new MemoryStream())
             {
-                var xmlSerializer = new XmlSerializer(typeof(Level), value.Components.GetBlockTypes().ToArray());
-                xmlSerializer.Serialize(memoryStream, value);
+                var levelSerializer = new LevelSerializer();
+                levelSerializer.Serialize(memoryStream, value);
                 output.Write(memoryStream.ToArray());
             }
         }

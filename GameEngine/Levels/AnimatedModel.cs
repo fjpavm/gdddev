@@ -10,7 +10,6 @@
 namespace Gdd.Game.Engine.Levels
 {
     using System.Linq;
-    using System.Xml.Serialization;
 
     using FarseerGames.FarseerPhysics.Collisions;
 
@@ -51,14 +50,6 @@ namespace Gdd.Game.Engine.Levels
             this.ModelDirection = ModelDirection.Right;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnimatedModel"/> class.
-        /// </summary>
-        protected AnimatedModel()
-            : this(null)
-        {
-        }
-
         #endregion
 
         #region Properties
@@ -66,13 +57,11 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// The current physics vertices.
         /// </summary>
-        [XmlIgnore]
         public Vertices currentPhysicsVertices { get; protected set; }
 
         /// <summary>
         /// The skinning data.
         /// </summary>
-        [XmlIgnore]
         public SkinningData skinningData { get; protected set; }
 
         /// <summary>

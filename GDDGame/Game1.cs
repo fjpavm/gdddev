@@ -1,7 +1,3 @@
-using Gdd.Game.Engine.Levels.Characters;
-using Gdd.Game.Engine.Scenes;
-using Gdd.Game.Engine.Levels;
-using Gdd.Game.Engine.Levels.Information;
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Game1.cs" company="UAD">
 //   Game Design and Development
@@ -26,6 +22,7 @@ namespace Gdd.Game
     using Engine.Render.Shadow;
     using Engine.Scenes;
     using Engine.Scenes.Lights;
+    using Gdd.Game.Engine.Levels.Information;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -283,8 +280,24 @@ namespace Gdd.Game
             scene1.AddComponent(candy);
             scene1.AddComponent(new HeroHealthBar(this));
 
-            scene1.AddComponent(new TutorialText(this, new Vector2(30.0f, 25.0f)) { HeaderText = "Disable normal drawing", BodyText = "Put SHOW_ONLY_PHYSICS into the \n conditional compilation symbols \n To disable normal drawing", Position2D = new Vector2(0.0f, 0.0f) });
-            scene1.AddComponent(new TutorialText(this, new Vector2(15.0f, 15.0f)) { HeaderText = "Enable physics drawing", BodyText = "Put SHOW_PHYSICS into the \n conditional compilation symbols \n To enable physics drawing", Position2D = new Vector2(5.0f, 10.0f) });
+            scene1.AddComponent(
+                new TutorialText(this)
+                    {
+                        HeaderText = "Disable normal drawing",
+                        BodyText =
+                            "Put SHOW_ONLY_PHYSICS into the \n conditional compilation symbols \n To disable normal drawing",
+                        Position2D = new Vector2(0.0f, 0.0f),
+                        TextBoxSize = new Vector2(30.0f, 25.0f)
+                    });
+            scene1.AddComponent(
+                new TutorialText(this)
+                    {
+                        HeaderText = "Enable physics drawing",
+                        BodyText =
+                            "Put SHOW_PHYSICS into the \n conditional compilation symbols \n To enable physics drawing",
+                        Position2D = new Vector2(5.0f, 10.0f),
+                        TextBoxSize = new Vector2(15.0f, 15.0f)
+                    });
             scene1.Camera = camera;
             scene1.Light = dl1;
 

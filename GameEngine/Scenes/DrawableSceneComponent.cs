@@ -55,7 +55,6 @@ namespace Gdd.Game.Engine.Scenes
         /// <summary>
         /// The DrawableObjects ID 
         /// </summary>
-        [XmlIgnore]
         public int ID{get; private set;}
 
         // start at 1
@@ -100,14 +99,6 @@ namespace Gdd.Game.Engine.Scenes
             this.ID = ID_ROLLER++;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DrawableSceneComponent"/> class.
-        /// </summary>
-        protected DrawableSceneComponent()
-            : this(null)
-        {
-        }
-
         #endregion
 
         #region Events
@@ -126,25 +117,20 @@ namespace Gdd.Game.Engine.Scenes
 
         #region Properties
 
-        [XmlIgnore]
         public Texture2D texture { get; protected set; }
         
         /// <summary>
         /// Gets or sets PhysicsBody.
         /// </summary>
-        [XmlIgnore]
         public Body PhysicsBody { get; protected set; }
 
         /// <summary>
         /// Gets or sets PhysicsGeometry.
         /// </summary>
-        [XmlIgnore]
         public Geom PhysicsGeometry { get; protected set; }
 
-        [XmlIgnore]
         public ShaderManager.EFFECT_ID DefaultEffectID { get; protected set; }
         
-        [XmlIgnore]
         public String DefaultTechnique { get; protected set; }
 
         /// <summary>
@@ -188,7 +174,6 @@ namespace Gdd.Game.Engine.Scenes
         /// <summary>
         /// Gets or sets Texture.
         /// </summary>
-        [XmlIgnore]
         public Texture2D Texture { get; protected set; }
 
         /// <summary>

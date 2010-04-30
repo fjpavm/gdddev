@@ -1,4 +1,3 @@
-using Gdd.Game.Engine.Render.Shadow;
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Scene.cs" company="UAD">
 //   Game Design and Development
@@ -12,7 +11,6 @@ namespace Gdd.Game.Engine.Scenes
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Gdd.Game.Engine.Physics;
 
     using Common;
 
@@ -21,13 +19,11 @@ namespace Gdd.Game.Engine.Scenes
     using Levels.Characters;
 
     using Scenes.Lights;
-    using Levels;
 
     using Render;
     using Render.Shadow;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Input;
 
     using Microsoft.Xna.Framework.Graphics;
     using Gdd.Game.Engine.GUI;
