@@ -120,6 +120,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Levels\LevelEntityCollection.cs" />
     <Compile Include="Levels\LevelEntityTypeBinding.cs" />
+    <Compile Include="Levels\LevelSerializer.cs" />
     <Compile Include="Levels\ModelDirection.cs" />
     <Compile Include="Levels\Entities\DrawableSceneComponentEntity.cs" />
     <Compile Include="Levels\Entities\DrawTextEntity.cs" />

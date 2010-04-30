@@ -214,9 +214,11 @@ namespace Gdd.Game.LevelEditor
         {
             using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
-                var xmlSerializer = new XmlSerializer(
-                    typeof(Level), this.levelEditorScene.CurrentLevel.Components.GetBlockTypes().ToArray());
-                xmlSerializer.Serialize(fileStream, this.levelEditorScene.CurrentLevel);
+                var serializer = new LevelSerializer();
+                serializer.Serialize(fileStream, this.levelEditorScene.CurrentLevel);
+                //var xmlSerializer = new XmlSerializer(
+                //    typeof(Level), this.levelEditorScene.CurrentLevel.Components.GetBlockTypes().ToArray());
+                //xmlSerializer.Serialize(fileStream, this.levelEditorScene.CurrentLevel);
             }
         }
 

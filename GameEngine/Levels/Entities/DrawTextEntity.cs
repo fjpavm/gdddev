@@ -13,7 +13,7 @@ namespace Gdd.Game.Engine.Levels.Entities
     /// The draw text entity.
     /// </summary>
     [LevelEntityBinding("Gdd.Game.Engine.DrawText, Gdd.Game.Engine")]
-    internal class DrawTextEntity : DrawableSceneComponentEntity
+    public class DrawTextEntity : DrawableSceneComponentEntity
     {
     }
 }
