@@ -363,7 +363,11 @@ namespace Gdd.Game.Engine.Scenes
         public override void Update(GameTime gameTime)
         {
             AdjacencyManager.PopulateAdjacency(this.ID);
-            
+
+            if (this.mainGameScene)
+            {
+                Audio.RepeatPlayBackgroundMusic();
+            }
             if (this.InputManager != null)
             {
                 this.InputManager.Update();

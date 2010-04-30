@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Gdd.Game.Engine
 {
-    class Audio
+    public class Audio
     {
         #region Variables
         /// <summary>
@@ -28,19 +28,16 @@ namespace Gdd.Game.Engine
         /// </summary>
         static SoundBank soundBank;
 
-        #endregion
-
-        #region Enums
         /// <summary>
-        /// Sounds we use in this game.
+        /// Background music cue, used for several methods here.
         /// </summary>
-        /// <returns>Enum</returns>
-        public enum Sounds
-        {
-            MenuClick,
-            GameBackgroundMusic,
-        }//enum Sounds
-        #endregion 
+        static Cue backgroundMusic;
+
+        /// <summary>
+        /// Menu click music cue, used for several methods here.
+        /// </summary>
+        static Cue menuClick;
+        #endregion
 
         #region Constructor
         /// <summary>
@@ -49,42 +46,29 @@ namespace Gdd.Game.Engine
         static Audio()
         {
             // Loading audio
-             string dir = "Content\\Audio";
-             audioEngine = new AudioEngine(
-                 Path.Combine(dir, "DreamerAudio.xgs"));
-             waveBank = new WaveBank(audioEngine, 
-                 Path.Combine(dir, "Wave Bank.xwb"));
-             if (waveBank != null)
-                 soundBank = new SoundBank(audioEngine, 
-                    Path.Combine(dir, "Sound Bank.xsb"));
+            audioEngine = new AudioEngine("Content\\Audio\\DreamerAudio.xgs");
+            waveBank = new WaveBank(audioEngine, "Content\\Audio\\Wave Bank.xwb");
+            soundBank = new SoundBank(audioEngine, "Content\\Audio\\Sound Bank.xsb");
+
+            // Get background music cue
+            backgroundMusic = soundBank.GetCue("GameBackgroundMusic");
+            menuClick = soundBank.GetCue("MenuClick");
+
         }
         #endregion
 
-        #region Play and Stop
-        /// <summary>
-        /// Play
-        /// </summary>
-        /// <param name="soundName">Sound name</param>
-        public static void Play(string soundName)
-        {
-          soundBank.PlayCue(soundName);
-        } // Play(soundName)
-        
-        /// <summary>
-        /// Play
-        /// </summary>
-        /// <param name="sound">Sound</param>
-        public static void Play(Sounds sound)
-        {
-            Play(sound.ToString());
-        } // Play(sound)
+        #region Play
 
         /// <summary>
         /// Play click sound
         /// </summary>
         public static void PlayClickSound()
         {
-            Play(Sounds.MenuClick);
+            if (!menuClick.IsPrepared)
+            {
+                menuClick = soundBank.GetCue("MenuClick");
+            }
+            menuClick.Play();
         }
 
         /// <summary>
@@ -92,7 +76,59 @@ namespace Gdd.Game.Engine
         /// </summary>
         public static void PlayBackgroundMusic()
         {
-            Play(Sounds.GameBackgroundMusic);
+            if (!backgroundMusic.IsPrepared)
+            {
+                backgroundMusic = soundBank.GetCue("GameBackgroundMusic");
+            }
+            backgroundMusic.Play();
+        }
+        #endregion
+
+        #region Stop, Pause and Resume background music
+        /// <summary>
+        /// Stop background music
+        /// </summary>
+        public static void StopBackgroundMusic()
+        {
+            if (backgroundMusic.IsPlaying)
+            {
+                backgroundMusic.Stop(AudioStopOptions.Immediate);
+            }
+        }
+
+        /// <summary>
+        /// Pause background music
+        /// </summary>
+        public static void PauseBackgroundMusic()
+        {
+            if (backgroundMusic.IsPlaying)
+            {
+                backgroundMusic.Pause();
+            }
+        }
+
+        /// <summary>
+        /// Resume background music
+        /// </summary>
+        public static void ResumeBackgroundMusic()
+        {
+            if (backgroundMusic.IsPaused)
+            {
+                backgroundMusic.Resume();
+            }
+        }
+        #endregion
+
+        #region Play Background Music Repeated
+        /// <summary>
+        /// Play Background Music Repeated
+        /// </summary>
+        public static void RepeatPlayBackgroundMusic()
+        {
+            if (backgroundMusic.IsStopped)
+            {
+                PlayBackgroundMusic();
+            }
         }
         #endregion
     }

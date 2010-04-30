@@ -22,7 +22,7 @@ namespace Gdd.Game.Engine.Menu
 
         // Rectangles used in pictures(图片所使用的矩形)
         static readonly Rectangle
-            MainMenuLogoRect = new Rectangle(0, 0, 512, 110),
+          //  MainMenuLogoRect = new Rectangle(0, 0, 512, 110),
             MainMenuPlayRect = new Rectangle(0, 110, 512, 38),
             //  MainMenuLoadRect = new Rectangle(0, 148, 512, 38),
             //  MainMenuConfigureRect = new Rectangle(0, 186, 512, 38),
@@ -238,7 +238,7 @@ namespace Gdd.Game.Engine.Menu
                     SceneManager.ChangeScene(Scenes.SceneManager.SCENE_ID.MAIN_GAME);
                     
                     // ohh, cant stand this music
-                    //Audio.PlayBackgroundMusic();
+                    Audio.PlayBackgroundMusic();
                 }
             }
 
@@ -255,8 +255,8 @@ namespace Gdd.Game.Engine.Menu
             spriteBatch.End();
 
             // Draw menu(显示菜单)
-            RenderSprite(menuTexture,
-                    512 - MainMenuLogoRect.Width / 2, 150, MainMenuLogoRect);
+          //  RenderSprite(menuTexture,
+            //        512 - MainMenuLogoRect.Width / 2, 150, MainMenuLogoRect);
             RenderSprite(menuTexture,
                     512 - MainMenuPlayRect.Width / 2, 350, MainMenuPlayRect,
                     currentMenuItem == 0 ? Color.Orange : Color.White);

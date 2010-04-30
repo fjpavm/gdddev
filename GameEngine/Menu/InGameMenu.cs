@@ -230,14 +230,11 @@ namespace Gdd.Game.Engine.Menu
                 {
                     this.Game.Exit();
                 }
-                else if (currentMenuItem == 1)
-                {
-                    //Run game
-                }
                 else if (currentMenuItem == 0)
                 {
                     // resume game
                     this.Visible = false;
+                    Audio.ResumeBackgroundMusic();
                 }
             }
 
