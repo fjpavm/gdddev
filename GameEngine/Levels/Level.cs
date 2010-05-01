@@ -12,7 +12,6 @@ namespace Gdd.Game.Engine.Levels
     using System;
     using System.IO;
     using System.Linq;
-    using System.Xml.Serialization;
 
     using Gdd.Game.Engine.Scenes;
 
@@ -29,6 +28,11 @@ namespace Gdd.Game.Engine.Levels
         /// The components.
         /// </summary>
         private readonly LevelComponentCollection components;
+
+        /// <summary>
+        /// The level scene.
+        /// </summary>
+        private LevelScene levelScene;
 
         #endregion
 
@@ -101,6 +105,17 @@ namespace Gdd.Game.Engine.Levels
                     select block).FirstOrDefault();
         }
 
+        /// <summary>
+        /// The set scene.
+        /// </summary>
+        /// <param name="levelScene">
+        /// The level scene.
+        /// </param>
+        public void SetScene(LevelScene levelScene)
+        {
+            this.levelScene = levelScene;
+        }
+
         #endregion
 
         #region Implemented Interfaces
@@ -117,10 +132,10 @@ namespace Gdd.Game.Engine.Levels
         {
             using (var memoryStream = new MemoryStream())
             {
-                var xmlSerializer = new XmlSerializer(typeof(Level), this.Components.GetBlockTypes().ToArray());
-                xmlSerializer.Serialize(memoryStream, this);
+                var levelSerializer = new LevelSerializer();
+                levelSerializer.Serialize(memoryStream, this);
                 memoryStream.Seek(0, SeekOrigin.Begin);
-                return xmlSerializer.Deserialize(memoryStream);
+                return levelSerializer.Deserialize(memoryStream, this.levelScene);
             }
         }
 

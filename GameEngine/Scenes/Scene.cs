@@ -115,6 +115,7 @@ namespace Gdd.Game.Engine.Scenes
             this.TopMost = false;
             this.ID = ID_ROLLER++;
             ObjectManager.SetUpLists(this.ID);
+            this.EnablePhysics = true;
         }
 
         #endregion
@@ -349,6 +350,8 @@ namespace Gdd.Game.Engine.Scenes
 
         }
 
+        public bool EnablePhysics { get; set; }
+
 
         /// <summary>
         /// The update.
@@ -386,7 +389,7 @@ namespace Gdd.Game.Engine.Scenes
                 this.gameGUI.Update();
             }
             
-            if (this.mainGameScene)
+            if (this.mainGameScene && this.EnablePhysics)
             {
                 SceneManager.physicsSimulator.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
             }

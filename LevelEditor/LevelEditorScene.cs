@@ -59,6 +59,7 @@ namespace Gdd.Game.LevelEditor
             : base(game)
         {
             this.InputManager = new InputManager();
+            this.EnablePhysics = false;
         }
 
         #endregion

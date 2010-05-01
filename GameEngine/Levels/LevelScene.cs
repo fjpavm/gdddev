@@ -76,6 +76,7 @@ namespace Gdd.Game.Engine.Levels
             : base(game)
         {
             this.currentLevel = new Level(true);
+            this.currentLevel.SetScene(this);
             ObjectManager.SetUpLists(this.ID);
             this.background = new Background(this);
         }
@@ -119,6 +120,7 @@ namespace Gdd.Game.Engine.Levels
                     value.Components.AutoInitialize = true;
 
                     this.currentLevel = value;
+                    this.currentLevel.SetScene(this);
                     this.Initialize();
                 }
             }

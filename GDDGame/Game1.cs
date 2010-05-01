@@ -148,10 +148,6 @@ namespace Gdd.Game
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), this.spriteBatch);
 
-            SpriteFont headerFont = Content.Load<SpriteFont>("Font//TutorialHeader");
-            SpriteFont bodyFont = Content.Load<SpriteFont>("Font//TutorialBody");
-
-            TutorialText.SetFonts(headerFont, bodyFont);
             this.graphics.GraphicsDevice.PresentationParameters.IsFullScreen = true;
             // TODO: use this.Content to load your game content here
         }

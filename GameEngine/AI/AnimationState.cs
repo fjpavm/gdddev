@@ -45,8 +45,8 @@ namespace Gdd.Game.Engine.AI
         {
             base.OnEnter();
             AIMonster thisMonster = thisObject as AIMonster;
-            bool playingPrevious = !thisMonster.getPlayer().IsStopped;
-            if (playingPrevious) thisMonster.getPlayer().RunUntilEnd();
+            bool playingPrevious = !thisMonster.Player.IsStopped;
+            if (playingPrevious) thisMonster.Player.RunUntilEnd();
             first = true;
         }
 
@@ -54,17 +54,17 @@ namespace Gdd.Game.Engine.AI
         {
             base.Update();
             AIMonster thisMonster = thisObject as AIMonster;
-            if ( first && thisMonster.getPlayer().IsStopped) 
+            if ( first && thisMonster.Player.IsStopped) 
             {
-                thisMonster.getPlayer().SetClip(animationClip);
+                thisMonster.Player.SetClip(animationClip);
                 first = false;
                 if (repeat)
                 {
-                    thisMonster.getPlayer().StartClip();
+                    thisMonster.Player.StartClip();
                 }
                 else 
                 {
-                    thisMonster.getPlayer().RunOnce();
+                    thisMonster.Player.RunOnce();
                 }
                 return;
             }
