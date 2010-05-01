@@ -46,7 +46,7 @@ namespace Gdd.Game.Engine.Levels
         public AnimatedModel(Game game)
             : base(game)
         {
-            this.modelName = "mesh\\HeroAll";
+            this.modelName = "mesh\\Hero";
             this.ModelDirection = ModelDirection.Right;
         }
 

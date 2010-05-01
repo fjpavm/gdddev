@@ -59,12 +59,12 @@ namespace Gdd.Game.Engine.AI
             return ret;
         }
 
-        //FrankM: Just a hack to get things working without worring about serialing error
-        public Animation.ModelAnimationPlayer getPlayer()
+        public Animation.ModelAnimationPlayer Player
         {
-            return AnimationPlayer;
+            get
+            {
+                return AnimationPlayer;
+            }
         }
-
-
     }
 }

@@ -26,16 +26,6 @@ namespace Gdd.Game.Engine.Levels.Information
         #region Constants and Fields
 
         /// <summary>
-        /// The body font.
-        /// </summary>
-        private static SpriteFont BodyFont;
-
-        /// <summary>
-        /// The header font.
-        /// </summary>
-        private static SpriteFont HeaderFont;
-
-        /// <summary>
         /// The texture sprite vertex declaration.
         /// </summary>
         private static VertexDeclaration TextureSpriteVertexDeclaration;
@@ -66,10 +56,9 @@ namespace Gdd.Game.Engine.Levels.Information
                     game.GraphicsDevice, TextureSprite.VertexElements);
             }
 
-            if (HeaderFont == null)
-            {
-                throw new ArgumentNullException("Font has not been set, call TutorialText.SetFonts before drawing");
-            }
+            this.HeaderText = string.Empty;
+            this.BodyText = string.Empty;
+            this.TextBoxSize = new Vector2(100);
         }
 
         #endregion
@@ -77,9 +66,19 @@ namespace Gdd.Game.Engine.Levels.Information
         #region Properties
 
         /// <summary>
+        /// Gets or sets BodyFont.
+        /// </summary>
+        public SpriteFont BodyFont { get; set; }
+
+        /// <summary>
         /// Gets or sets BodyText.
         /// </summary>
         public string BodyText { get; set; }
+
+        /// <summary>
+        /// The header font.
+        /// </summary>
+        public SpriteFont HeaderFont { get; set; }
 
         /// <summary>
         /// Gets or sets HeaderText.
@@ -104,21 +103,6 @@ namespace Gdd.Game.Engine.Levels.Information
         #endregion
 
         #region Public Methods
-
-        /// <summary>
-        /// The set fonts.
-        /// </summary>
-        /// <param name="headerFont">
-        /// The header font.
-        /// </param>
-        /// <param name="bodyFont">
-        /// The body font.
-        /// </param>
-        public static void SetFonts(SpriteFont headerFont, SpriteFont bodyFont)
-        {
-            HeaderFont = headerFont;
-            BodyFont = bodyFont;
-        }
 
         /// <summary>
         /// The draw.
@@ -188,6 +172,8 @@ namespace Gdd.Game.Engine.Levels.Information
         /// </summary>
         protected override void LoadContent()
         {
+            this.HeaderFont = this.Game.Content.Load<SpriteFont>("Font//TutorialHeader");
+            this.BodyFont = this.Game.Content.Load<SpriteFont>("Font//TutorialBody");
             this.DialogTexture = this.Game.Content.Load<Texture2D>("Textures\\DialogTexture");
 
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.TEXTURE, "TextureEffect", this.Game);
@@ -218,23 +204,23 @@ namespace Gdd.Game.Engine.Levels.Information
                 Color.White);
 
             spriteBatch.DrawString(
-                HeaderFont, 
+                this.HeaderFont, 
                 this.HeaderText, 
                 new Vector2(renderTarget.Width / 2.0f, renderTarget.Height / 10.0f + 30), 
                 Color.Black, 
                 0.0f, 
-                HeaderFont.MeasureString(this.HeaderText) / 2.0f, 
+                this.HeaderFont.MeasureString(this.HeaderText) / 2.0f, 
                 1.0f, 
                 SpriteEffects.None, 
                 1.0f);
             spriteBatch.DrawString(
-                BodyFont, 
+                this.BodyFont, 
                 this.BodyText, 
                 new Vector2(renderTarget.Width / 2.0f, renderTarget.Height / 10.0f) +
-                new Vector2(0.0f, 2 * HeaderFont.MeasureString(this.HeaderText).Y + 30), 
+                new Vector2(0.0f, 2 * this.HeaderFont.MeasureString(this.HeaderText).Y + 30), 
                 Color.Black, 
                 0.0f, 
-                BodyFont.MeasureString(this.BodyText) / 2.0f, 
+                this.BodyFont.MeasureString(this.BodyText) / 2.0f, 
                 1.0f, 
                 SpriteEffects.None, 
                 1.0f);
