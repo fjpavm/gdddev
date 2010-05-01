@@ -1,4 +1,4 @@
-﻿﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DirectionalLight.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
@@ -9,10 +9,7 @@
 
 namespace Gdd.Game.Engine.Scenes.Lights
 {
-    using System;
-
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     /// <summary>
     /// The directional light.
@@ -20,8 +17,6 @@ namespace Gdd.Game.Engine.Scenes.Lights
     public class DirectionalLight : Light
     {
         #region Constructors and Destructors
-
-        public Vector3 Direction { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DirectionalLight"/> class.
@@ -41,6 +36,15 @@ namespace Gdd.Game.Engine.Scenes.Lights
             : base(null)
         {
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets Direction.
+        /// </summary>
+        public Vector3 Direction { get; set; }
 
         #endregion
     }

@@ -301,10 +301,12 @@ namespace Gdd.Game
             scene1.AddComponent(new PointLight(this) { Position2D = new Vector2(10.0f, 0.0f), Radius = 10.0f, Color = Color.Yellow });
 
             this.IsMouseVisible = true;
-            scene1.GameGUI = new GameGUI(this);
-            scene1.GameGUI.LoadContent();
-            scene1.GameGUI.Scene = scene1;
-            scene1.GameGUIRun = true;
+            var gameGui = new GameGUI(this) { DrawOrder = int.MaxValue };
+            scene1.AddComponent(gameGui);
+            //scene1.GameGUI = new GameGUI(this);
+            //scene1.GameGUI.LoadContent();
+            //scene1.GameGUI.Scene = scene1;
+            //scene1.GameGUIRun = true;);
             
             this.mainMenu = new MainMenu(this);
             

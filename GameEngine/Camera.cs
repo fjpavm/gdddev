@@ -9,10 +9,9 @@
 
 namespace Gdd.Game.Engine
 {
-    using Scenes;
+    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework;
-    using Gdd.Game.Engine.Levels.Characters;
 
     /// <summary>
     /// The camera.
@@ -20,6 +19,16 @@ namespace Gdd.Game.Engine
     public class Camera : SceneComponent
     {
         #region Constants and Fields
+
+        /// <summary>
+        /// The look vector.
+        /// </summary>
+        protected Vector3 lookVector;
+
+        /// <summary>
+        /// The position.
+        /// </summary>
+        protected Vector3 position;
 
         /// <summary>
         /// The aspect ratio.
@@ -42,19 +51,9 @@ namespace Gdd.Game.Engine
         private bool hasChanged;
 
         /// <summary>
-        /// The look vector.
-        /// </summary>
-        protected Vector3 lookVector;
-
-        /// <summary>
         /// The near plane distance.
         /// </summary>
         private float nearPlaneDistance;
-
-        /// <summary>
-        /// The position.
-        /// </summary>
-        protected Vector3 position;
 
         /// <summary>
         /// The right vector.
@@ -92,7 +91,6 @@ namespace Gdd.Game.Engine
             this.position = pos;
 
             this.hasChanged = true;
-
 
             this.UpdatePerspective();
         }
@@ -295,6 +293,25 @@ namespace Gdd.Game.Engine
         {
             this.rotationRadian.Z = MathHelper.WrapAngle(this.rotationRadian.Z + degrees);
             this.hasChanged = true;
+        }
+
+        /// <summary>
+        /// The screen to world.
+        /// </summary>
+        /// <param name="x">
+        /// The x.
+        /// </param>
+        /// <param name="y">
+        /// The y.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public Vector3 ScreenToWorld(int x, int y)
+        {
+            var p = new Plane(-Vector3.UnitZ, -10f);
+
+            Vector3? point = this.Unproject(x, y).IntersectsAt(p);
+            return point ?? Vector3.Zero;
         }
 
         /// <summary>

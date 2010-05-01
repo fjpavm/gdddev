@@ -11,7 +11,7 @@ namespace Gdd.Game.Engine.Scenes
 {
     using System;
     using System.Reflection;
-    using System.Xml.Serialization;
+
     using FarseerGames.FarseerPhysics.Collisions;
 
     using Microsoft.Xna.Framework;
@@ -24,9 +24,48 @@ namespace Gdd.Game.Engine.Scenes
         #region Constants and Fields
 
         /// <summary>
+        ///  world inverse transpose 
+        /// </summary>
+        protected Matrix InverseTransposeWorld;
+
+        /// <summary>
+        /// The is changed.
+        /// </summary>
+        protected bool isChanged;
+
+        /// <summary>
+        /// The 2D position
+        /// </summary>
+        protected Vector2 pos2D;
+
+        /// <summary>
+        /// The 3D position.
+        /// </summary>
+        protected Vector3 pos3D;
+
+        /// <summary>
+        /// The prev pos 2 d.
+        /// </summary>
+        protected Vector2 prevPos2D;
+
+        /// <summary>
+        /// The prev pos 3 d.
+        /// </summary>
+        protected Vector3 prevPos3D;
+
+        /// <summary>
+        /// The s.
+        /// </summary>
+        protected Scene scene;
+
+        /// <summary>
         /// The game field info.
         /// </summary>
         private static readonly FieldInfo GameFieldInfo;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>
         /// Initializes static members of the <see cref="SceneComponent"/> class.
@@ -37,64 +76,24 @@ namespace Gdd.Game.Engine.Scenes
         }
 
         /// <summary>
-        /// The set game.
+        /// Initializes a new instance of the <see cref="SceneComponent"/> class.
         /// </summary>
         /// <param name="game">
         /// The game.
         /// </param>
-        public void SetGame(Game game)
+        public SceneComponent(Game game)
+            : base(game)
         {
-            GameFieldInfo.SetValue(this, game);
         }
 
-        /// <summary>
-        /// The s.
-        /// </summary>
-        protected Scene scene;
+        #endregion
+
+        #region Properties
 
         /// <summary>
-        /// The 3D position.
+        /// Gets or sets Name.
         /// </summary>
-        protected Vector3 pos3D;
-
-        protected Vector3 prevPos3D;
-
-        /// <summary>
-        /// The 2D position
-        /// </summary>
-        protected Vector2 pos2D;
-
-        protected Vector2 prevPos2D;
-
-        /// <summary>
-        ///  world inverse transpose 
-        /// </summary>
-        protected Matrix InverseTransposeWorld;
-
-        ///<summary>
-        /// Gets and sets the World matrix
-        ///</summary>
-        public Matrix World { get; protected set; }
-
-        /// <summary>
-        /// Gets and sets the Translation matrix
-        /// </summary>
-        public Matrix Translation { get; protected set; }
-
-        /// <summary>
-        /// Gets and sets the Rotation matrix
-        /// </summary>
-        public Matrix Rotation { get; protected set; }
-
-        /// <summary>
-        /// The is changed.
-        /// </summary>
-        protected bool isChanged;
-
-        /// <summary>
-        /// The axis aligned bounding box.
-        /// </summary>
-        public AABB aabb { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The Position in 2D, setting it will change the Position in 3D as well
@@ -116,7 +115,7 @@ namespace Gdd.Game.Engine.Scenes
                 this.pos3D.Z = SceneManager.Z_POSITION;
                 this.Translation = Matrix.CreateTranslation(this.pos3D);
 
-                InverseTransposeWorld = Matrix.Invert(Matrix.Transpose(Translation));
+                this.InverseTransposeWorld = Matrix.Invert(Matrix.Transpose(this.Translation));
 
                 this.isChanged = true;
             }
@@ -138,6 +137,9 @@ namespace Gdd.Game.Engine.Scenes
             }
         }
 
+        /// <summary>
+        /// Gets PrevPos2D.
+        /// </summary>
         public Vector2 PrevPos2D
         {
             get
@@ -146,6 +148,9 @@ namespace Gdd.Game.Engine.Scenes
             }
         }
 
+        /// <summary>
+        /// Gets PrevPos3D.
+        /// </summary>
         public Vector3 PrevPos3D
         {
             get
@@ -154,29 +159,40 @@ namespace Gdd.Game.Engine.Scenes
             }
         }
 
-        #endregion
-
-        #region Constructors and Destructors
+        /// <summary>
+        /// Gets and sets the Rotation matrix
+        /// </summary>
+        public Matrix Rotation { get; protected set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SceneComponent"/> class.
+        /// Gets and sets the Translation matrix
+        /// </summary>
+        public Matrix Translation { get; protected set; }
+
+        /// <summary>
+        /// Gets and sets the World matrix
+        /// </summary>
+        public Matrix World { get; protected set; }
+
+        /// <summary>
+        /// The axis aligned bounding box.
+        /// </summary>
+        public AABB aabb { get; set; }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// The set game.
         /// </summary>
         /// <param name="game">
         /// The game.
         /// </param>
-        public SceneComponent(Game game)
-            : base(game)
+        public void SetGame(Game game)
         {
+            GameFieldInfo.SetValue(this, game);
         }
-
-        #endregion
-
-        /// <summary>
-        /// Gets or sets Name.
-        /// </summary>
-        public string Name { get; set; }
-
-        #region Public Methods
 
         /// <summary>
         /// The set s.

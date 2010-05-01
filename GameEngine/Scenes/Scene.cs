@@ -9,26 +9,22 @@
 
 namespace Gdd.Game.Engine.Scenes
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Common;
-
     using FarseerGames.FarseerPhysics;
 
-    using Input;
-
-    using Levels.Characters;
-
-    using Scenes.Lights;
-
-    using Render;
-    using Render.Shadow;
+    using Gdd.Game.Engine.Common;
+    using Gdd.Game.Engine.GUI;
+    using Gdd.Game.Engine.Input;
+    using Gdd.Game.Engine.Levels.Characters;
+    using Gdd.Game.Engine.Render;
+    using Gdd.Game.Engine.Render.Shadow;
+    using Gdd.Game.Engine.Scenes.Lights;
 
     using Microsoft.Xna.Framework;
-
     using Microsoft.Xna.Framework.Graphics;
-    using Gdd.Game.Engine.GUI;
 
     /// <summary>
     /// The s.
@@ -48,9 +44,24 @@ namespace Gdd.Game.Engine.Scenes
         protected DirectionalLight directionalLight;
 
         /// <summary>
+        /// The light ambient.
+        /// </summary>
+        private readonly Vector4 LightAmbient = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+
+        /// <summary>
+        /// The light diffuse.
+        /// </summary>
+        private readonly Vector4 LightDiffuse = Color.White.ToVector4();
+
+        /// <summary>
+        /// The physics simulator.
+        /// </summary>
+        private readonly PhysicsSimulator physicsSimulator;
+
+        /// <summary>
         /// The i d_ roller.
         /// </summary>
-        private static int ID_ROLLER = 0;
+        private static int ID_ROLLER;
 
         /// <summary>
         /// The pip view port.
@@ -78,6 +89,16 @@ namespace Gdd.Game.Engine.Scenes
         private DepthStencilBuffer depthBuffer;
 
         /// <summary>
+        /// The game gui.
+        /// </summary>
+        private GameGUI gameGUI;
+
+        /// <summary>
+        /// The game gu i_ run.
+        /// </summary>
+        private bool gameGUI_Run;
+
+        /// <summary>
         /// Is this Scene the main game s (for shadowmapping)
         /// </summary>
         private bool mainGameScene;
@@ -96,11 +117,6 @@ namespace Gdd.Game.Engine.Scenes
         /// The sprite batch.
         /// </summary>
         private SpriteBatch spriteBatch;
-
-        private GameGUI gameGUI = null;
-        private bool gameGUI_Run = false;
-
-        private PhysicsSimulator physicsSimulator;
 
         #endregion
 
@@ -123,9 +139,6 @@ namespace Gdd.Game.Engine.Scenes
             this.physicsSimulator = new PhysicsSimulator(new Vector2(0.0f, -10.0f));
         }
 
-        public PhysicsSimulator PhysicsSimulator { get {
-            return this.physicsSimulator; } }
-
         #endregion
 
         #region Properties
@@ -146,14 +159,9 @@ namespace Gdd.Game.Engine.Scenes
             }
         }
 
-        public List<SceneComponent> SceneComponents
-        {
-            get
-            {
-                return ObjectManager.sceneComponents[this.ID];
-            }
-        }
-
+        /// <summary>
+        /// Gets DrawableSceneComponents.
+        /// </summary>
         public List<DrawableSceneComponent> DrawableSceneComponents
         {
             get
@@ -161,6 +169,11 @@ namespace Gdd.Game.Engine.Scenes
                 return ObjectManager.drawableSceneComponents[this.ID];
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether EnablePhysics.
+        /// </summary>
+        public bool EnablePhysics { get; set; }
 
         /// <summary>
         /// Gets or sets InputManager.
@@ -203,14 +216,17 @@ namespace Gdd.Game.Engine.Scenes
                     /*this.renderTarget = GfxComponent.CreateRenderTarget(
                         this.Game.GraphicsDevice, 1, SurfaceFormat.Single);
                     */
-                    this.renderTarget = GfxComponent.CreateCustomRenderTarget(this.Game.GraphicsDevice, 1, SurfaceFormat.Single, MultiSampleType.None, 1500, 1500);
+                    this.renderTarget = GfxComponent.CreateCustomRenderTarget(
+                        this.Game.GraphicsDevice, 1, SurfaceFormat.Single, MultiSampleType.None, 1500, 1500);
+
                     // Create a depth stencil buffer to match our render target.
                     // The Xbox supports Depth24Stencil8Single but 
                     // PC video cards may not.
                     /*this.depthBuffer = GfxComponent.CreateDepthStencil(
                         this.renderTarget, DepthFormat.Depth24Stencil8Single);
                     */
-                    this.depthBuffer = GfxComponent.CreateDepthStencil(this.renderTarget, DepthFormat.Depth24Stencil8Single);
+                    this.depthBuffer = GfxComponent.CreateDepthStencil(
+                        this.renderTarget, DepthFormat.Depth24Stencil8Single);
 
                     ShaderManager.AddEffect(ShaderManager.EFFECT_ID.SHADOWMAP, "ShadowMap", this.Game);
                     this.spriteBatch = new SpriteBatch(this.Game.GraphicsDevice);
@@ -225,6 +241,28 @@ namespace Gdd.Game.Engine.Scenes
         }
 
         /// <summary>
+        /// Gets PhysicsSimulator.
+        /// </summary>
+        public PhysicsSimulator PhysicsSimulator
+        {
+            get
+            {
+                return this.physicsSimulator;
+            }
+        }
+
+        /// <summary>
+        /// Gets SceneComponents.
+        /// </summary>
+        public List<SceneComponent> SceneComponents
+        {
+            get
+            {
+                return ObjectManager.sceneComponents[this.ID];
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether TopMost.
         /// </summary>
         public bool TopMost { get; set; }
@@ -234,27 +272,6 @@ namespace Gdd.Game.Engine.Scenes
         /// </summary>
         public bool Transparent { get; set; }
 
-        public GameGUI GameGUI { get { return this.gameGUI; } set { this.gameGUI = value; } }
-
-        public bool GameGUIRun
-        {
-            get { return gameGUI_Run; }
-            set
-            {
-                this.gameGUI_Run = value;
-                if (this.gameGUI_Run)
-                {
-                    gameGUI.Run();
-                }
-                else
-                {
-                    gameGUI.Stop();
-                }
-            }
-        }
-
-        private Vector4 LightAmbient = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-        private Vector4 LightDiffuse = Color.White.ToVector4();
         #endregion
 
         #region Public Methods
@@ -272,40 +289,14 @@ namespace Gdd.Game.Engine.Scenes
             {
                 var dsc = (DrawableSceneComponent)sceneComponent;
                 ObjectManager.AddDrawableSceneComponent(this.ID, ref dsc);
+                dsc.DrawOrderChanged += this.ComponentDrawOrderChanged;
             }
             else
             {
                 ObjectManager.AddSceneComponent(this.ID, ref sceneComponent);
             }
-        }
 
-        public bool IsGameComponentAddAlready(SceneComponent sceneComponent)
-        {
-            if (sceneComponent is DrawableSceneComponent)
-            {
-                var dsc = (DrawableSceneComponent)sceneComponent;
-                return ObjectManager.drawableSceneComponents[this.ID].Contains(dsc);
-            }
-            else
-            {
-                return ObjectManager.sceneComponents[this.ID].Contains(sceneComponent);
-            }
-        }
-
-        public void RemoveComponent(SceneComponent sceneComponent)
-        {
-            if (sceneComponent is DrawableSceneComponent)
-            {
-                DrawableSceneComponent dsc = (DrawableSceneComponent)sceneComponent;
-                ObjectManager.RemoveDrawableSceneComponent(this.ID, ref dsc);
-                //this.drawableSceneComponents.Add((DrawableSceneComponent)sceneComponent);
-            }
-            else
-            {
-                ObjectManager.RemoveSceneComponent(this.ID, ref sceneComponent);
-                //this.sceneComponents.Add(sceneComponent);
-            }
-            this.Game.Components.Remove(sceneComponent);
+            sceneComponent.UpdateOrderChanged += this.ComponentUpdateOrderChanged;
         }
 
         /// <summary>
@@ -316,11 +307,11 @@ namespace Gdd.Game.Engine.Scenes
             IEnumerable<SceneComponent> sceneComponents =
                 ObjectManager.drawableSceneComponents[this.ID].Select(c => (SceneComponent)c).Union(
                     ObjectManager.sceneComponents[this.ID]);
+
             /*  foreach (SceneComponent sceneComponent in sceneComponents)
               {
                   this.Game.Components.Remove(sceneComponent);
               }*/
-
             ObjectManager.ClearSceneComponents(this.ID);
         }
 
@@ -335,7 +326,13 @@ namespace Gdd.Game.Engine.Scenes
             // Calculate the shadowMap
             if (this.MainGameScene)
             {
-                this.shadowMap = ShadowMapManager.CalculateShadowMapForScene(this.Game.GraphicsDevice, renderTarget, depthBuffer, -this.directionalLight.Direction, bounds, this.ID);
+                this.shadowMap = ShadowMapManager.CalculateShadowMapForScene(
+                    this.Game.GraphicsDevice, 
+                    this.renderTarget, 
+                    this.depthBuffer, 
+                    -this.directionalLight.Direction, 
+                    this.bounds, 
+                    this.ID);
                 this.Game.GraphicsDevice.Clear(Color.CornflowerBlue);
             }
 
@@ -343,23 +340,80 @@ namespace Gdd.Game.Engine.Scenes
 
             if (this.MainGameScene)
             {
-                DrawSceneComponent(gameTime);
-              //  DrawSecondViewport(this.shadowMap);
-            }
+                this.DrawSceneComponent(gameTime);
 
-            if (gameGUI_Run)
-            {
-                gameGUI.Draw();
+                // DrawSecondViewport(this.shadowMap);
             }
         }
 
-        protected virtual void DrawBackground()
+        /// <summary>
+        /// The initialize.
+        /// </summary>
+        public override void Initialize()
         {
+            // Calculate bounds of scene
+            this.bounds = new BoundingSphere();
+            foreach (DrawableSceneComponent dsc in ObjectManager.drawableSceneComponents[this.ID])
+            {
+                dsc.Initialize();
+            }
 
+            this.bounds.Radius = 120.0f;
+
+            foreach (SceneComponent sc in ObjectManager.sceneComponents[this.ID])
+            {
+                sc.Initialize();
+            }
+
+            this.LoadContent();
         }
 
-        public bool EnablePhysics { get; set; }
+        /// <summary>
+        /// The is game component add already.
+        /// </summary>
+        /// <param name="sceneComponent">
+        /// The scene component.
+        /// </param>
+        /// <returns>
+        /// The is game component add already.
+        /// </returns>
+        public bool IsGameComponentAddAlready(SceneComponent sceneComponent)
+        {
+            if (sceneComponent is DrawableSceneComponent)
+            {
+                var dsc = (DrawableSceneComponent)sceneComponent;
+                return ObjectManager.drawableSceneComponents[this.ID].Contains(dsc);
+            }
+            else
+            {
+                return ObjectManager.sceneComponents[this.ID].Contains(sceneComponent);
+            }
+        }
 
+        /// <summary>
+        /// The remove component.
+        /// </summary>
+        /// <param name="sceneComponent">
+        /// The scene component.
+        /// </param>
+        public void RemoveComponent(SceneComponent sceneComponent)
+        {
+            if (sceneComponent is DrawableSceneComponent)
+            {
+                var dsc = (DrawableSceneComponent)sceneComponent;
+                ObjectManager.RemoveDrawableSceneComponent(this.ID, ref dsc);
+
+                // this.drawableSceneComponents.Add((DrawableSceneComponent)sceneComponent);
+            }
+            else
+            {
+                ObjectManager.RemoveSceneComponent(this.ID, ref sceneComponent);
+
+                // this.sceneComponents.Add(sceneComponent);
+            }
+
+            this.Game.Components.Remove(sceneComponent);
+        }
 
         /// <summary>
         /// The update.
@@ -370,42 +424,111 @@ namespace Gdd.Game.Engine.Scenes
         public override void Update(GameTime gameTime)
         {
             AdjacencyManager.PopulateAdjacency(this.ID);
-            
+
             if (this.InputManager != null)
             {
                 this.InputManager.Update();
             }
 
-            foreach (DrawableSceneComponent dsc in ObjectManager.drawableSceneComponents[this.ID])
+            if (this.mainGameScene && this.EnablePhysics)
             {
+                this.physicsSimulator.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
+            }
+
+            for (int index = 0; index < ObjectManager.drawableSceneComponents[this.ID].Count; index++)
+            {
+                DrawableSceneComponent dsc = ObjectManager.drawableSceneComponents[this.ID][index];
                 dsc.Update(gameTime);
             }
 
-            foreach (SceneComponent sc in ObjectManager.sceneComponents[this.ID])
+            for (int index = 0; index < ObjectManager.sceneComponents[this.ID].Count; index++)
             {
+                SceneComponent sc = ObjectManager.sceneComponents[this.ID][index];
                 sc.Update(gameTime);
             }
 
             if (this.camera != null)
             {
-                bounds.Center = camera.LookAt;
+                this.bounds.Center = this.camera.LookAt;
                 this.camera.Update(gameTime);
-            }
-
-            if (gameGUI_Run)
-            {
-                this.gameGUI.Update();
-            }
-            
-            if (this.mainGameScene && this.EnablePhysics)
-            {
-                this.physicsSimulator.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
             }
         }
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// The draw background.
+        /// </summary>
+        protected virtual void DrawBackground()
+        {
+        }
+
+        /// <summary>
+        /// The component draw order changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void ComponentDrawOrderChanged(object sender, EventArgs e)
+        {
+            ObjectManager.DrawOrderChanged(this.ID, (DrawableSceneComponent)sender);
+        }
+
+        /// <summary>
+        /// The component update order changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void ComponentUpdateOrderChanged(object sender, EventArgs e)
+        {
+            ObjectManager.UpdateOrderChanged(this.ID, (SceneComponent)sender);
+        }
+
+        /// <summary>
+        /// Draw the scene components
+        /// </summary>
+        /// <param name="gameTime">
+        /// The game Time.
+        /// </param>
+        private void DrawSceneComponent(GameTime gameTime)
+        {
+            foreach (DrawableSceneComponent dsc in ObjectManager.drawableSceneComponents[this.ID])
+            {
+                ShaderManager.SetCurrentEffect(dsc.DefaultEffectID);
+                ShaderManager.SetValue("Texture", dsc.texture);
+                ShaderManager.SetValue("life", Hero.GetHeroLife());
+                ShaderManager.SetValue("ID", dsc.ID);
+                ShaderManager.SetValue("LightDir", -this.directionalLight.Direction);
+                ShaderManager.SetValue(
+                    "LightProj", 
+                    ShadowMapManager.CalcLightProjection(
+                        this.bounds, -this.directionalLight.Direction, this.Game.GraphicsDevice.Viewport));
+                ShaderManager.SetValue(
+                    "LightView", 
+                    Matrix.CreateLookAt(
+                        -this.directionalLight.Direction * this.bounds.Radius + this.bounds.Center, 
+                        this.bounds.Center, 
+                        Vector3.Up));
+                
+                ShaderManager.SetValue("LightDiffuse", this.LightDiffuse);
+                ShaderManager.SetValue("LightAmbient", this.LightAmbient);
+                ShaderManager.SetValue("ShadowMapTexture", this.shadowMap);
+
+                ShaderManager.SetValue("View", this.Camera.View);
+                ShaderManager.SetValue("Projection", this.Camera.Perspective);
+
+                dsc.Draw(gameTime);
+            }
+        }
 
         /// <summary>
         /// The draw second viewport.
@@ -420,59 +543,13 @@ namespace Gdd.Game.Engine.Scenes
                 return;
             }
 
-            var rect = new Rectangle(
-                0, 0, 300, 300);
+            var rect = new Rectangle(0, 0, 300, 300);
 
             this.spriteBatch.Begin(SpriteBlendMode.None);
             this.spriteBatch.Draw(sprite, rect, Color.White);
             this.spriteBatch.End();
         }
 
-        /// <summary>
-        /// Draw the scene components
-        /// </summary>
-        private void DrawSceneComponent(GameTime gameTime)
-        {
-            foreach (DrawableSceneComponent dsc in ObjectManager.drawableSceneComponents[this.ID])
-            {
-                ShaderManager.SetCurrentEffect(dsc.DefaultEffectID);
-                ShaderManager.SetValue("Texture", dsc.texture);
-                ShaderManager.SetValue("life", Hero.GetHeroLife());
-                ShaderManager.SetValue("ID", dsc.ID);
-                ShaderManager.SetValue("LightDir", -this.directionalLight.Direction);                
-                ShaderManager.SetValue("LightProj", ShadowMapManager.CalcLightProjection(bounds, -this.directionalLight.Direction, this.Game.GraphicsDevice.Viewport));
-                ShaderManager.SetValue("LightView", Matrix.CreateLookAt(-this.directionalLight.Direction * bounds.Radius + bounds.Center, bounds.Center, Vector3.Up)); ;
-                ShaderManager.SetValue("LightDiffuse", LightDiffuse);
-                ShaderManager.SetValue("LightAmbient", LightAmbient);
-                ShaderManager.SetValue("ShadowMapTexture", shadowMap);
-
-                ShaderManager.SetValue("View", this.Camera.View);
-                ShaderManager.SetValue("Projection", this.Camera.Perspective);
-
-                dsc.Draw(gameTime);
-            }
-        }
-
-        /// <summary>
-        /// The initialize.
-        /// </summary>
-        public override void Initialize()
-        {
-            // Calculate bounds of scene
-            bounds = new BoundingSphere();
-            foreach (DrawableSceneComponent dsc in ObjectManager.drawableSceneComponents[this.ID])
-            {
-                dsc.Initialize();
-            }
-
-            bounds.Radius = 120.0f;
-
-            foreach (SceneComponent sc in ObjectManager.sceneComponents[this.ID])
-            {
-                sc.Initialize();
-            }
-            this.LoadContent();
-        }
         #endregion
     }
 }

@@ -1,6 +1,13 @@
-using Gdd.Game.Engine.Menu;
-using FarseerGames.FarseerPhysics;
 // --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SceneManager.cs" company="UAD">
+//   Game Design and Development
+// </copyright>
+// <summary>
+//   The scene manager.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+ // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SceneManager.cs" company="UAD">
 //   game Design and Development
 // </copyright>
@@ -14,7 +21,8 @@ namespace Gdd.Game.Engine.Scenes
     using System.Collections.Generic;
     using System.Linq;
 
-    using Render;
+    using Gdd.Game.Engine.Menu;
+    using Gdd.Game.Engine.Render;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -25,26 +33,21 @@ namespace Gdd.Game.Engine.Scenes
     public class SceneManager
     {
         #region Constants and Fields
-        
-        public enum SCENE_ID {MAIN_MENU, MAIN_GAME, IN_GAME_MENU};
-        
-        public static void ChangeScene(SCENE_ID id){
-
-            if(scenes.Count-1 >= (int)id){
-                SetCurrentScene(scenes[(int)id]);
-            }
-
-        }
 
         /// <summary>
-        /// The scenes.
+        /// The game instance of the scenemanager
         /// </summary>
-        private static SceneCollection scenes;
+        private static Game game;
 
         /// <summary>
         /// The overlay vertex array.
         /// </summary>
         private static VertexPositionColor[] overlayVertexArray;
+
+        /// <summary>
+        /// The scenes.
+        /// </summary>
+        private static SceneCollection scenes;
 
         /// <summary>
         /// The vb.
@@ -56,40 +59,34 @@ namespace Gdd.Game.Engine.Scenes
         /// </summary>
         private static VertexDeclaration vd;
 
-        /// <summary>
-        /// The game instance of the scenemanager
-        /// </summary>
-        private static Microsoft.Xna.Framework.Game game;
-
         #endregion
 
-        #region Constructors and Destructors
+        #region Enums
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SceneManager"/> class.
+        /// The scen e_ id.
         /// </summary>
-        /// <param name="game">
-        /// The game.
-        /// </param>
-        /// <param name="z">
-        /// The z.
-        /// </param>
-        public static void Construct(Microsoft.Xna.Framework.Game game)
+        public enum SCENE_ID
         {
-            Z_POSITION = -10.0f;
-            scenes = new SceneCollection();
-                       
-            SceneManager.game = game;
-        }
+            /// <summary>
+            /// The mai n_ menu.
+            /// </summary>
+            MAIN_MENU, 
+
+            /// <summary>
+            /// The mai n_ game.
+            /// </summary>
+            MAIN_GAME, 
+
+            /// <summary>
+            /// The i n_ gam e_ menu.
+            /// </summary>
+            IN_GAME_MENU
+        } ;
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// used for drawing objects in the correct z- position
-        /// </summary>
-        public static float Z_POSITION { get; private set; }
 
         /// <summary>
         /// Gets Scenes.
@@ -101,6 +98,11 @@ namespace Gdd.Game.Engine.Scenes
                 return scenes;
             }
         }
+
+        /// <summary>
+        /// used for drawing objects in the correct z- position
+        /// </summary>
+        public static float Z_POSITION { get; private set; }
 
         #endregion
 
@@ -115,9 +117,9 @@ namespace Gdd.Game.Engine.Scenes
         public static void AddScene(Scene scene)
         {
             scene.Visible = false;
-            
+
             scenes.Add(scene);
-            
+
             if (scene.TopMost && vd == null)
             {
                 // set up the vertices and add the effect
@@ -133,29 +135,22 @@ namespace Gdd.Game.Engine.Scenes
                 overlayVertexArray[1] =
                     new VertexPositionColor(
                         new Vector3(
-                            -game.GraphicsDevice.Viewport.Width / 2.0f, 
-                            game.GraphicsDevice.Viewport.Height / 2.0f, 
-                            0.0f), 
+                            -game.GraphicsDevice.Viewport.Width / 2.0f, game.GraphicsDevice.Viewport.Height / 2.0f, 0.0f), 
                         Color.TransparentBlack);
                 overlayVertexArray[2] =
                     new VertexPositionColor(
                         new Vector3(
-                            game.GraphicsDevice.Viewport.Width / 2.0f, 
-                            -game.GraphicsDevice.Viewport.Height / 2.0f, 
-                            0.0f), 
+                            game.GraphicsDevice.Viewport.Width / 2.0f, -game.GraphicsDevice.Viewport.Height / 2.0f, 0.0f), 
                         Color.TransparentBlack);
                 overlayVertexArray[3] =
                     new VertexPositionColor(
                         new Vector3(
-                            game.GraphicsDevice.Viewport.Width / 2.0f, 
-                            game.GraphicsDevice.Viewport.Height / 2.0f, 
-                            0.0f), 
+                            game.GraphicsDevice.Viewport.Width / 2.0f, game.GraphicsDevice.Viewport.Height / 2.0f, 0.0f), 
                         Color.TransparentBlack);
 
                 vd = new VertexDeclaration(game.GraphicsDevice, VertexPositionColor.VertexElements);
 
-                vb = new VertexBuffer(
-                    game.GraphicsDevice, VertexPositionColor.SizeInBytes * 4, BufferUsage.None);
+                vb = new VertexBuffer(game.GraphicsDevice, VertexPositionColor.SizeInBytes * 4, BufferUsage.None);
                 vb.SetData(overlayVertexArray);
 
                 Vector4 overlayColor = Color.TransparentBlack.ToVector4();
@@ -166,6 +161,34 @@ namespace Gdd.Game.Engine.Scenes
                 ShaderManager.SetValue("OverlayColor", overlayColor);
                 ShaderManager.CommitChanges();
             }
+        }
+
+        /// <summary>
+        /// The change scene.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        public static void ChangeScene(SCENE_ID id)
+        {
+            if (scenes.Count - 1 >= (int)id)
+            {
+                SetCurrentScene(scenes[(int)id]);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SceneManager"/> class.
+        /// </summary>
+        /// <param name="game">
+        /// The game.
+        /// </param>
+        public static void Construct(Game game)
+        {
+            Z_POSITION = -10.0f;
+            scenes = new SceneCollection();
+
+            SceneManager.game = game;
         }
 
         /// <summary>
@@ -189,12 +212,13 @@ namespace Gdd.Game.Engine.Scenes
                     ShaderManager.GetCurrentEffectGraphicsDevice().VertexDeclaration = vd;
                     ShaderManager.SetCurrentTechnique("Overlay");
                     ShaderManager.Begin();
-                    
+
                     foreach (EffectPass pass in ShaderManager.GetEffectPasses())
                     {
                         pass.Begin();
-                            ShaderManager.GetCurrentEffectGraphicsDevice().Vertices[0].SetSource(vb, 0, VertexPositionColor.SizeInBytes);
-                            ShaderManager.GetCurrentEffectGraphicsDevice().DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
+                        ShaderManager.GetCurrentEffectGraphicsDevice().Vertices[0].SetSource(
+                            vb, 0, VertexPositionColor.SizeInBytes);
+                        ShaderManager.GetCurrentEffectGraphicsDevice().DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
                         pass.End();
                     }
 
@@ -245,8 +269,9 @@ namespace Gdd.Game.Engine.Scenes
                     ingameMenu.Initialize();
                     AddScene(ingameMenu);
                 }
-                else if(!(scene is InGameMenu)){
-                    scenes.Remove((from s in scenes where s is InGameMenu select s).FirstOrDefault<Scene>());
+                else if (!(scene is InGameMenu))
+                {
+                    scenes.Remove((from s in scenes where s is InGameMenu select s).FirstOrDefault());
                 }
             }
         }

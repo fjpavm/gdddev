@@ -11,14 +11,15 @@ namespace Gdd.Game.Engine.Scenes
 {
     using System;
     using System.Collections.Generic;
-    using System.Xml.Serialization;
-    using Render;
+
+    using FarseerGames.FarseerPhysics.Collisions;
+    using FarseerGames.FarseerPhysics.Dynamics;
+
+    using Gdd.Game.Engine.Render;
+    using Gdd.Game.Engine.Scenes.Lights;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using FarseerGames.FarseerPhysics.Dynamics;
-    using FarseerGames.FarseerPhysics.Collisions;
-    using Gdd.Game.Engine.Scenes.Lights;
 
     /// <summary>
     /// The drawable scene component.
@@ -43,6 +44,21 @@ namespace Gdd.Game.Engine.Scenes
         protected bool isLoaded;
 
         /// <summary>
+        /// The point light colors.
+        /// </summary>
+        private readonly Vector4[] pointLightColors;
+
+        /// <summary>
+        /// The pointlights
+        /// </summary>
+        private readonly Vector3[] pointLightPositions;
+
+        /// <summary>
+        /// The i d_ roller.
+        /// </summary>
+        private static int ID_ROLLER = 1;
+
+        /// <summary>
         /// The device service.
         /// </summary>
         private IGraphicsDeviceService deviceService;
@@ -53,14 +69,6 @@ namespace Gdd.Game.Engine.Scenes
         private int drawOrder;
 
         /// <summary>
-        /// The DrawableObjects ID 
-        /// </summary>
-        public int ID{get; private set;}
-
-        // start at 1
-        private static int ID_ROLLER = 1;
-
-        /// <summary>
         /// The initialized.
         /// </summary>
         private bool initialized;
@@ -69,13 +77,6 @@ namespace Gdd.Game.Engine.Scenes
         /// The visible.
         /// </summary>
         private bool visible;
-
-        /// <summary>
-        /// The pointlights
-        /// </summary>
-        private Vector3[] pointLightPositions;
-        private Vector4[] pointLightColors;
-
 
         #endregion
 
@@ -93,8 +94,8 @@ namespace Gdd.Game.Engine.Scenes
             this.adjacentDrawableSceneComponents = new List<DrawableSceneComponent>();
             this.adjacentSceneComponents = new List<SceneComponent>();
 
-            pointLightPositions = new Vector3[4];
-            pointLightColors = new Vector4[4];
+            this.pointLightPositions = new Vector3[4];
+            this.pointLightColors = new Vector4[4];
 
             this.ID = ID_ROLLER++;
         }
@@ -117,21 +118,15 @@ namespace Gdd.Game.Engine.Scenes
 
         #region Properties
 
-        public Texture2D texture { get; protected set; }
-        
         /// <summary>
-        /// Gets or sets PhysicsBody.
+        /// Gets or sets DefaultEffectID.
         /// </summary>
-        public Body PhysicsBody { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets PhysicsGeometry.
-        /// </summary>
-        public Geom PhysicsGeometry { get; protected set; }
-
         public ShaderManager.EFFECT_ID DefaultEffectID { get; protected set; }
-        
-        public String DefaultTechnique { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets DefaultTechnique.
+        /// </summary>
+        public string DefaultTechnique { get; protected set; }
 
         /// <summary>
         /// Gets or sets DrawOrder.
@@ -172,6 +167,21 @@ namespace Gdd.Game.Engine.Scenes
         }
 
         /// <summary>
+        /// The DrawableObjects ID 
+        /// </summary>
+        public int ID { get; private set; }
+
+        /// <summary>
+        /// Gets or sets PhysicsBody.
+        /// </summary>
+        public Body PhysicsBody { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets PhysicsGeometry.
+        /// </summary>
+        public Geom PhysicsGeometry { get; protected set; }
+
+        /// <summary>
         /// Gets or sets Texture.
         /// </summary>
         public Texture2D Texture { get; protected set; }
@@ -195,6 +205,11 @@ namespace Gdd.Game.Engine.Scenes
                 }
             }
         }
+
+        /// <summary>
+        /// Gets or sets texture.
+        /// </summary>
+        public Texture2D texture { get; protected set; }
 
         #endregion
 
@@ -236,6 +251,70 @@ namespace Gdd.Game.Engine.Scenes
             {
                 this.adjacentDrawableSceneComponents.Clear();
             }
+        }
+
+        /// <summary>
+        /// The draw physics vertices.
+        /// </summary>
+        public virtual void DrawPhysicsVertices()
+        {
+            // draw the 2d representation of the model
+            ShaderManager.AddEffect(ShaderManager.EFFECT_ID.SIMPLE, "SimpleEffect", this.Game);
+
+            VertexPositionColor[] verticesPC;
+
+            verticesPC = new VertexPositionColor[this.PhysicsGeometry.WorldVertices.Count + 1];
+            for (int i = 0; i < this.PhysicsGeometry.WorldVertices.Count; i++)
+            {
+                verticesPC[i] =
+                    new VertexPositionColor(
+                        new Vector3(this.PhysicsGeometry.WorldVertices[i], SceneManager.Z_POSITION), Color.Green);
+            }
+
+            verticesPC[this.PhysicsGeometry.WorldVertices.Count] =
+                new VertexPositionColor(
+                    new Vector3(this.PhysicsGeometry.WorldVertices[0], SceneManager.Z_POSITION), Color.Green);
+
+            var vd = new VertexDeclaration(this.Game.GraphicsDevice, VertexPositionColor.VertexElements);
+            var VB = new VertexBuffer(
+                this.Game.GraphicsDevice, 
+                VertexPositionColor.SizeInBytes * (this.PhysicsGeometry.WorldVertices.Count + 1), 
+                BufferUsage.None);
+            VB.SetData(verticesPC);
+
+            ShaderManager.SetCurrentEffect(ShaderManager.EFFECT_ID.SIMPLE);
+
+            ShaderManager.SetValue("WVP", this.scene.Camera.View * this.scene.Camera.Perspective);
+
+            ShaderManager.SetValue("Color", Color.Black.ToVector4());
+
+            ShaderManager.SetCurrentTechnique("SimpleTechnique");
+            ShaderManager.GetCurrentEffectGraphicsDevice().VertexDeclaration = vd;
+            ShaderManager.Begin();
+            foreach (EffectPass pass in ShaderManager.GetEffectPasses())
+            {
+                pass.Begin();
+                ShaderManager.GetCurrentEffectGraphicsDevice().Vertices[0].SetSource(
+                    VB, 0, VertexPositionColor.SizeInBytes);
+                ShaderManager.GetCurrentEffectGraphicsDevice().DrawPrimitives(
+                    PrimitiveType.LineStrip, 0, this.PhysicsGeometry.WorldVertices.Count);
+                pass.End();
+            }
+
+            ShaderManager.End();
+        }
+
+        /// <summary>
+        /// The draw with effect.
+        /// </summary>
+        /// <param name="effect">
+        /// The effect.
+        /// </param>
+        /// <param name="technique">
+        /// The technique.
+        /// </param>
+        public virtual void DrawWithEffect(ShaderManager.EFFECT_ID effect, string technique)
+        {
         }
 
         /// <summary>
@@ -290,81 +369,34 @@ namespace Gdd.Game.Engine.Scenes
         /// </param>
         public virtual void Draw(GameTime gameTime)
         {
-
 #if !SHOW_ONLY_PHYSICS
             int nrOfPointLights = -1;
 
-            if (adjacentSceneComponents != null)
+            if (this.adjacentSceneComponents != null)
             {
-                foreach (PointLight p in adjacentSceneComponents)
+                foreach (PointLight p in this.adjacentSceneComponents)
                 {
                     nrOfPointLights++;
-                    pointLightColors[nrOfPointLights] = p.Color.ToVector4();
-                    pointLightPositions[nrOfPointLights] = p.Position3D;
+                    this.pointLightColors[nrOfPointLights] = p.Color.ToVector4();
+                    this.pointLightPositions[nrOfPointLights] = p.Position3D;
                     if (nrOfPointLights == 3)
+                    {
                         break;
+                    }
                 }
             }
 
-            ShaderManager.SetValue("InverseTransposeWorld", InverseTransposeWorld);
-            ShaderManager.SetValue("PointLightColors", pointLightColors);
-            ShaderManager.SetValue("PointLightPositionsW", pointLightPositions);
+            ShaderManager.SetValue("InverseTransposeWorld", this.InverseTransposeWorld);
+            ShaderManager.SetValue("PointLightColors", this.pointLightColors);
+            ShaderManager.SetValue("PointLightPositionsW", this.pointLightPositions);
             ShaderManager.SetValue("PointLightCount", nrOfPointLights);
 
-            DrawWithEffect(DefaultEffectID, DefaultTechnique); 
+            this.DrawWithEffect(this.DefaultEffectID, this.DefaultTechnique);
 #endif
-#if SHOW_PHYSICS 
-            DrawPhysicsVertices();
+#if SHOW_PHYSICS
+            this.DrawPhysicsVertices();
 #endif
         }
-        
-        public virtual void DrawWithEffect(ShaderManager.EFFECT_ID effect, String technique) { }
-
-        public virtual void DrawPhysicsVertices()
-        {
-            // draw the 2d representation of the model
-            ShaderManager.AddEffect(ShaderManager.EFFECT_ID.SIMPLE, "SimpleEffect", this.Game);
-
-            VertexPositionColor[] verticesPC;
-
-            verticesPC = new VertexPositionColor[this.PhysicsGeometry.WorldVertices.Count + 1];
-            for (int i = 0; i < this.PhysicsGeometry.WorldVertices.Count; i++)
-            {
-                verticesPC[i] = new VertexPositionColor(new Vector3(this.PhysicsGeometry.WorldVertices[i], SceneManager.Z_POSITION), Color.Green);
-            }
-
-            verticesPC[this.PhysicsGeometry.WorldVertices.Count] =
-                new VertexPositionColor(new Vector3(this.PhysicsGeometry.WorldVertices[0], SceneManager.Z_POSITION), Color.Green);
-
-            var vd = new VertexDeclaration(this.Game.GraphicsDevice, VertexPositionColor.VertexElements);
-            VertexBuffer VB = new VertexBuffer(
-                this.Game.GraphicsDevice,
-                VertexPositionColor.SizeInBytes * (this.PhysicsGeometry.WorldVertices.Count + 1),
-                BufferUsage.None);
-            VB.SetData(verticesPC);
-
-            ShaderManager.SetCurrentEffect(ShaderManager.EFFECT_ID.SIMPLE);
-
-            ShaderManager.SetValue("WVP", this.scene.Camera.View * this.scene.Camera.Perspective);
-
-            ShaderManager.SetValue("Color", Color.Black.ToVector4());
-
-            ShaderManager.SetCurrentTechnique("SimpleTechnique");
-            ShaderManager.GetCurrentEffectGraphicsDevice().VertexDeclaration = vd;
-            ShaderManager.Begin();
-            foreach (EffectPass pass in ShaderManager.GetEffectPasses())
-            {
-                pass.Begin();
-                ShaderManager.GetCurrentEffectGraphicsDevice().Vertices[0].SetSource(
-                    VB, 0, VertexPositionColor.SizeInBytes);
-                ShaderManager.GetCurrentEffectGraphicsDevice().DrawPrimitives(
-                    PrimitiveType.LineStrip, 0, this.PhysicsGeometry.WorldVertices.Count);
-                pass.End();
-            }
-
-            ShaderManager.End();
-        }
-
 
         #endregion
 

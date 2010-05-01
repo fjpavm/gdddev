@@ -229,11 +229,6 @@ namespace Gdd.Game.Engine.Levels
             {
                 this.levelScript.Update(gameTime);
             }
-
-            foreach (SceneComponent block in this.currentLevel.Components)
-            {
-                block.Update(gameTime);
-            }
         }
 
         #endregion
