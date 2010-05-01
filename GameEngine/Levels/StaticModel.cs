@@ -9,6 +9,7 @@
 
 namespace Gdd.Game.Engine.Levels
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.InteropServices;
@@ -62,6 +63,26 @@ namespace Gdd.Game.Engine.Levels
         protected float yawRotation;
 
         /// <summary>
+        /// The is updating.
+        /// </summary>
+        private bool isUpdating;
+
+        /// <summary>
+        /// The physics vertices.
+        /// </summary>
+        private Vertices physicsVertices;
+
+        /// <summary>
+        /// The scale.
+        /// </summary>
+        private float scale;
+
+        /// <summary>
+        /// The scale changed.
+        /// </summary>
+        private bool scaleChanged;
+
+        /// <summary>
         /// Gets or sets ModelTexture.
         /// </summary>
         private List<Texture2D> textures;
@@ -83,6 +104,7 @@ namespace Gdd.Game.Engine.Levels
             this.YawRotation = MathHelper.PiOver2;
             this.PitchRotation = 0.0f;
             this.RollRotation = 0.0f;
+            this.scale = 1.0f;
 
             this.Rotation = Matrix.CreateFromYawPitchRoll(this.YawRotation, this.PitchRotation, this.RollRotation);
 
@@ -137,7 +159,18 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// Gets or sets PhysicsVertices.
         /// </summary>
-        public Vertices PhysicsVertices { get; protected set; }
+        public Vertices PhysicsVertices
+        {
+            get
+            {
+                return this.physicsVertices;
+            }
+
+            protected set
+            {
+                this.physicsVertices = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets PitchRotation.
@@ -169,7 +202,7 @@ namespace Gdd.Game.Engine.Levels
             set
             {
                 base.Position2D = value;
-                if (this.PhysicsBody != null)
+                if (this.PhysicsBody != null && !this.isUpdating)
                 {
                     this.PhysicsBody.Position = value + this.offset;
                 }
@@ -192,6 +225,32 @@ namespace Gdd.Game.Engine.Levels
                 this.Rotation = Matrix.CreateFromYawPitchRoll(this.yawRotation, this.pitchRotation, this.rollRotation);
             }
         }
+
+        /// <summary>
+        /// Gets or sets Scale.
+        /// </summary>
+        public float Scale
+        {
+            get
+            {
+                return this.scale;
+            }
+
+            set
+            {
+                if (Math.Abs(this.scale - value) > 0.01)
+                {
+                    this.scaleChanged = true;
+                }
+
+                this.scale = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets ScaleMatrix.
+        /// </summary>
+        public Matrix ScaleMatrix { get; set; }
 
         /// <summary>
         /// Gets or sets YawRotation.
@@ -353,24 +412,32 @@ namespace Gdd.Game.Engine.Levels
         /// </param>
         public override void Update(GameTime gameTime)
         {
+            this.isUpdating = true;
+            this.ScaleMatrix = Matrix.CreateScale(this.Scale);
             if (this.PhysicsBody != null && !this.PhysicsBody.IsStatic)
             {
-                this.Position2D = this.PhysicsBody.Position - this.offset;
+                if (this.scaleChanged)
+                {
+                    IEnumerable<Vector2> vertices = from vertex in this.PhysicsGeometry.LocalVertices
+                                                    let scaledVertex =
+                                                        Vector3.Transform(
+                                                            new Vector3(vertex.X, vertex.Y, 0), this.ScaleMatrix)
+                                                    select new Vector2(scaledVertex.X, scaledVertex.Y);
+                    this.physicsVertices = new Vertices(vertices.ToArray());
+                    this.CreatePhysics();
+                    this.scaleChanged = false;
+                }
 
+                this.Position2D = this.PhysicsBody.Position - this.offset;
                 this.Translation = Matrix.CreateTranslation(this.Position3D);
                 Matrix translateOffset = Matrix.CreateTranslation(this.offset.X, this.offset.Y, 0);
                 Matrix translateOffsetBack = Matrix.CreateTranslation(-this.offset.X, -this.offset.Y, 0);
                 this.Rotation = Matrix.CreateFromYawPitchRoll(this.YawRotation, this.PitchRotation, this.RollRotation) *
                                 translateOffsetBack * this.PhysicsBody.GetBodyRotationMatrix() * translateOffset;
+            }
 
-                this.World =
-                    Matrix.CreateTranslation(new Vector3(-this.PhysicsGeometry.LocalVertices.GetCentroid(), 0.0f)) *
-                    this.Rotation * this.Translation;
-            }
-            else
-            {
-                this.World = this.Rotation * this.Translation;
-            }
+            this.World = this.ScaleMatrix * this.Rotation * this.Translation;
+            this.isUpdating = false;
         }
 
         #endregion
@@ -382,9 +449,60 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         protected void LoadCommonContent()
         {
+            this.CreatePhysics();
+
+            foreach (Effect effect in this.ObjectModel.Meshes.SelectMany(mesh => mesh.Effects))
+            {
+                if (effect.Parameters["Texture"] != null)
+                {
+                    this.ModelTextures.Add(effect.Parameters["Texture"].GetValueTexture2D());
+                }
+                else if (effect.Parameters["BasicTexture"] != null)
+                {
+                    this.ModelTextures.Add(effect.Parameters["BasicTexture"].GetValueTexture2D());
+                }
+            }
+
+            base.LoadContent();
+        }
+
+        /// <summary>
+        /// The load content.
+        /// </summary>
+        protected override void LoadContent()
+        {
+            this.ObjectModel = this.Game.Content.Load<Model>(this.modelName);
+
+            ShaderManager.AddEffect(ShaderManager.EFFECT_ID.STATICMODEL, "Effects\\StaticModel", this.Game);
+            this.DefaultEffectID = ShaderManager.EFFECT_ID.STATICMODEL;
+            this.DefaultTechnique = "StaticModelTechnique";
+
+            if (this.GeometryType == GeometryType.Polygon)
+            {
+                this.PhysicsVertices = ModelToVertices.TransformStaticModel(this, this.Game);
+            }
+
+            this.LoadCommonContent();
+        }
+
+        /// <summary>
+        /// The create physics.
+        /// </summary>
+        private void CreatePhysics()
+        {
             if (this.gridCellSize == -1.0f)
             {
                 this.gridCellSize = 0.0f;
+            }
+
+            if (this.PhysicsBody != null)
+            {
+                this.scene.PhysicsSimulator.Remove(this.PhysicsBody);
+            }
+
+            if (this.PhysicsGeometry != null)
+            {
+                this.scene.PhysicsSimulator.Remove(this.PhysicsGeometry);
             }
 
             if (this.GeometryType == GeometryType.Polygon)
@@ -425,43 +543,6 @@ namespace Gdd.Game.Engine.Levels
             this.PhysicsBody.Position = this.Position2D + this.offset;
 
             this.aabb = this.PhysicsGeometry.AABB;
-
-            // FieldInfo fi = typeof(Body).GetField("_previousPosition", BindingFlags.Instance | BindingFlags.NonPublic);
-            // fi.SetValue(this.PhysicsBody, this.PhysicsBody.Position);
-            foreach (Effect effect in this.ObjectModel.Meshes.SelectMany(mesh => mesh.Effects))
-            {
-                if (effect.Parameters["Texture"] != null)
-                {
-                    this.ModelTextures.Add(effect.Parameters["Texture"].GetValueTexture2D());
-                }
-                else if (effect.Parameters["BasicTexture"] != null)
-                {
-                    this.ModelTextures.Add(effect.Parameters["BasicTexture"].GetValueTexture2D());
-                }
-            }
-
-            base.LoadContent();
-        }
-
-        /// <summary>
-        /// The load content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            this.ObjectModel = this.Game.Content.Load<Model>(this.modelName);
-
-            ShaderManager.AddEffect(ShaderManager.EFFECT_ID.STATICMODEL, "Effects\\StaticModel", this.Game);
-            this.DefaultEffectID = ShaderManager.EFFECT_ID.STATICMODEL;
-            this.DefaultTechnique = "StaticModelTechnique";
-
-            if (this.GeometryType == GeometryType.Polygon)
-            {
-                this.PhysicsVertices = ModelToVertices.TransformStaticModel(this, this.Game);
-            }
-
-            this.LoadCommonContent();
-
-            // this.PhysicsBody.IsStatic = true;
         }
 
         #endregion

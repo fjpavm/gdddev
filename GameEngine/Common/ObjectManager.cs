@@ -5,8 +5,86 @@ using Gdd.Game.Engine.Scenes;
 namespace Gdd.Game.Engine.Common
 {
     // this class is used as the object manager
-    public class ObjectManager
+    public static class ObjectManager
     { 
+        private class DrawableOrderComparer: IComparer<DrawableSceneComponent>
+        {
+            private static DrawableOrderComparer defaultComparer;
+
+            static DrawableOrderComparer ()
+            {
+                defaultComparer = new DrawableOrderComparer();
+            }
+
+            public static DrawableOrderComparer Default { get {
+                return defaultComparer; } }
+            public int Compare(DrawableSceneComponent x, DrawableSceneComponent y)
+            {
+                if ((x == null) && (y == null))
+                {
+                    return 0;
+                }
+                if (x != null)
+                {
+                    if (y == null)
+                    {
+                        return -1;
+                    }
+                    if (x.Equals(y))
+                    {
+                        return 0;
+                    }
+                    if (x.DrawOrder < y.DrawOrder)
+                    {
+                        return -1;
+                    }
+                }
+                return 1;
+
+            }
+        }
+        private class UpdateableOrderComparer : IComparer<SceneComponent>
+        {
+            private static UpdateableOrderComparer defaultComparer;
+
+            static UpdateableOrderComparer()
+            {
+                defaultComparer = new UpdateableOrderComparer();
+            }
+
+            public static UpdateableOrderComparer Default
+            {
+                get
+                {
+                    return defaultComparer;
+                }
+            }
+            public int Compare(SceneComponent x, SceneComponent y)
+            {
+                if ((x == null) && (y == null))
+                {
+                    return 0;
+                }
+                if (x != null)
+                {
+                    if (y == null)
+                    {
+                        return -1;
+                    }
+                    if (x.Equals(y))
+                    {
+                        return 0;
+                    }
+                    if (x.UpdateOrder < y.UpdateOrder)
+                    {
+                        return -1;
+                    }
+                }
+                return 1;
+
+            }
+        }
+
         // I know this looks bad, I'll change it if we have time
         public static Dictionary<int, List<DrawableSceneComponent>> drawableSceneComponents { get; private set; }
         public static Dictionary<int, List<SceneComponent>> sceneComponents { get; private set; }
@@ -14,15 +92,41 @@ namespace Gdd.Game.Engine.Common
         public static void AddDrawableSceneComponent(int sceneId, ref DrawableSceneComponent dsc)
         {
             //SetUpLists(sceneId);
+            List<DrawableSceneComponent> drawableComponents;
+            if (drawableSceneComponents.TryGetValue(sceneId, out drawableComponents))
+            {
+                int index = drawableComponents.BinarySearch(dsc, DrawableOrderComparer.Default);
+                if (index < 0)
+                {
+                    index = ~index;
+                    while ((index < drawableComponents.Count) && (drawableComponents[index].DrawOrder == dsc.DrawOrder))
+                    {
+                        index++;
+                    }
 
-            drawableSceneComponents[sceneId].Add(dsc);
+                    drawableComponents.Insert(index, dsc);
+                }
+            }
         }
 
         public static void AddSceneComponent(int sceneId, ref SceneComponent sc)
         {
             //SetUpLists(sceneId);
+            List<SceneComponent> updateableComponents;
+            if (sceneComponents.TryGetValue(sceneId, out updateableComponents))
+            {
+                int index = updateableComponents.BinarySearch(sc, UpdateableOrderComparer.Default);
+                if (index < 0)
+                {
+                    index = ~index;
+                    while ((index < updateableComponents.Count) && (updateableComponents[index].UpdateOrder == sc.UpdateOrder))
+                    {
+                        index++;
+                    }
 
-            sceneComponents[sceneId].Add(sc);
+                    updateableComponents.Insert(index, sc);
+                }
+            }
         }
 
         public static void SetUpLists(int sceneId)
@@ -72,5 +176,44 @@ namespace Gdd.Game.Engine.Common
             drawableSceneComponents[sceneId].Remove(dsc);
         }
 
+        public static void DrawOrderChanged(int sceneId, DrawableSceneComponent dsc)
+        {
+            List<DrawableSceneComponent> drawableComponents;
+            if (drawableSceneComponents.TryGetValue(sceneId, out drawableComponents))
+            {
+                drawableComponents.Remove(dsc);
+                int index = drawableComponents.BinarySearch(dsc, DrawableOrderComparer.Default);
+                if (index < 0)
+                {
+                    index = ~index;
+                    while ((index < drawableComponents.Count) && (drawableComponents[index].DrawOrder == dsc.DrawOrder))
+                    {
+                        index++;
+                    }
+                    
+                    drawableComponents.Insert(index, dsc);
+                }
+            }
+        }
+
+        public static void UpdateOrderChanged(int sceneId, SceneComponent sc)
+        {
+            List<SceneComponent> updateableComponents;
+            if (sceneComponents.TryGetValue(sceneId, out updateableComponents))
+            {
+                updateableComponents.Remove(sc);
+                int index = updateableComponents.BinarySearch(sc, UpdateableOrderComparer.Default);
+                if (index < 0)
+                {
+                    index = ~index;
+                    while ((index < updateableComponents.Count) && (updateableComponents[index].UpdateOrder == sc.UpdateOrder))
+                    {
+                        index++;
+                    }
+
+                    updateableComponents.Insert(index, sc);
+                }
+            }            
+        }
     }
 }

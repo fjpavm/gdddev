@@ -338,7 +338,7 @@ namespace Gdd.Game.LevelEditor
                 }
                 else
                 {
-                    Vector3 world = this.ScreenToWorld(mouseState.X, mouseState.Y);
+                    Vector3 world = this.levelEditorScene.Camera.ScreenToWorld(mouseState.X, mouseState.Y);
                     this.newComponent.Position2D = new Vector2(world.X, world.Y);
                     this.invokeSelectedContentPropertyChanged.Invoke(EventArgs.Empty);
                 }
@@ -349,7 +349,7 @@ namespace Gdd.Game.LevelEditor
                 {
                     if (mouseState.LeftButton == ButtonState.Pressed && !this.isDragging)
                     {
-                        Vector3 clicked = this.ScreenToWorld(mouseState.X, mouseState.Y);
+                        Vector3 clicked = this.levelEditorScene.Camera.ScreenToWorld(mouseState.X, mouseState.Y);
                         this.SelectedComponent = this.levelEditorScene.CurrentLevel.GetBlockAt(clicked);
                     }
                 }
@@ -364,14 +364,11 @@ namespace Gdd.Game.LevelEditor
                 }
                 else
                 {
-                    this.isDragging = mouseState.LeftButton == ButtonState.Pressed &&
-                                      this.IsMouseInViewport(mouseState.X, mouseState.Y);
-                    if (this.isDragging && this.previousMouseState.X != mouseState.X &&
-                        this.previousMouseState.Y != mouseState.Y)
+                    this.isDragging = mouseState.LeftButton == ButtonState.Pressed && this.IsMouseInViewport(mouseState.X, mouseState.Y);
+                    if (this.isDragging && this.previousMouseState.X != mouseState.X && this.previousMouseState.Y != mouseState.Y)
                     {
-                        this.SelectedComponent.Position2D = new Vector2(
-                            this.ScreenToWorld(mouseState.X, mouseState.Y).X, 
-                            this.ScreenToWorld(mouseState.X, mouseState.Y).Y);
+                        Vector3 newPos = this.levelEditorScene.Camera.ScreenToWorld(mouseState.X, mouseState.Y);
+                        this.SelectedComponent.Position2D = new Vector2(newPos.X, newPos.Y);
                         this.invokeSelectedContentPropertyChanged.Invoke(EventArgs.Empty);
                     }
                 }
@@ -475,26 +472,6 @@ namespace Gdd.Game.LevelEditor
         private void Parent_SizeChanged(object sender, EventArgs e)
         {
             this.SetWindowSize();
-        }
-
-        /// <summary>
-        /// The screen to world.
-        /// </summary>
-        /// <param name="x">
-        /// The x coordinate.
-        /// </param>
-        /// <param name="y">
-        /// The y coordinate.
-        /// </param>
-        /// <returns>
-        /// Returns the world coordinate.
-        /// </returns>
-        private Vector3 ScreenToWorld(int x, int y)
-        {
-            var p = new Plane(-Vector3.UnitZ, -10f);
-
-            Vector3? point = this.levelEditorScene.Camera.Unproject(x, y).IntersectsAt(p);
-            return point ?? Vector3.Zero;
         }
 
         /// <summary>

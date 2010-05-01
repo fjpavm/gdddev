@@ -1,46 +1,115 @@
-﻿using Microsoft.Xna.Framework;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CharacterFollowCamera.cs" company="UAD">
+//   Game Design and Development
+// </copyright>
+// <summary>
+//   The character follow camera.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Gdd.Game.Engine.Scenes
 {
-    using Levels.Characters;
+    using Gdd.Game.Engine.Levels;
+    using Gdd.Game.Engine.Levels.Characters;
 
+    using Microsoft.Xna.Framework;
+
+    /// <summary>
+    /// The character follow camera.
+    /// </summary>
     public class CharacterFollowCamera : Camera
     {
-        private Levels.ModelDirection lastDirection;
-        private float multiplier, targetMultiplier;
-        private Vector3 positionOffset, lookatOffset;
+        #region Constants and Fields
 
-        public CharacterFollowCamera(Microsoft.Xna.Framework.Game game, Vector3 position) : base(game, position) { 
-            lastDirection = Levels.ModelDirection.Right; 
-            multiplier = 1.0f; 
-            targetMultiplier = 1.0f;
-            lookatOffset = new Vector3(15.0f * multiplier, 10.0f, 0.0f);
-            positionOffset = new Vector3(15.0f * multiplier, 15.0f, 35.0f);
+        /// <summary>
+        /// The last direction.
+        /// </summary>
+        private ModelDirection lastDirection;
+
+        /// <summary>
+        /// The lookat offset.
+        /// </summary>
+        private Vector3 lookatOffset;
+
+        /// <summary>
+        /// The multiplier.
+        /// </summary>
+        private float multiplier;
+
+        /// <summary>
+        /// The position offset.
+        /// </summary>
+        private Vector3 positionOffset;
+
+        /// <summary>
+        /// The target multiplier.
+        /// </summary>
+        private float targetMultiplier;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CharacterFollowCamera"/> class.
+        /// </summary>
+        /// <param name="game">
+        /// The game.
+        /// </param>
+        /// <param name="position">
+        /// The position.
+        /// </param>
+        public CharacterFollowCamera(Game game, Vector3 position)
+            : base(game, position)
+        {
+            this.lastDirection = ModelDirection.Right;
+            this.multiplier = 1.0f;
+            this.targetMultiplier = 1.0f;
+            this.lookatOffset = new Vector3(15.0f * this.multiplier, 10.0f, 0.0f);
+            this.positionOffset = new Vector3(15.0f * this.multiplier, 15.0f, 35.0f);
         }
 
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// The update.
+        /// </summary>
+        /// <param name="gameTime">
+        /// The game time.
+        /// </param>
+        public override void Update(GameTime gameTime)
         {
-            this.position = Hero.GetHeroPosition() + positionOffset;
-            this.lookVector = Hero.GetHeroPosition() + lookatOffset;
+            this.position = Hero.GetHeroPosition() + this.positionOffset;
+            this.lookVector = Hero.GetHeroPosition() + this.lookatOffset;
 
-            this.View = Matrix.CreateLookAt(position, lookVector, Vector3.Up);
+            this.View = Matrix.CreateLookAt(this.position, this.lookVector, Vector3.Up);
 
-            if(lastDirection != Hero.GetHeroDirection()){
-                targetMultiplier *= -1.0f;
-                lastDirection = Hero.GetHeroDirection();
+            if (this.lastDirection != Hero.GetHeroDirection())
+            {
+                this.targetMultiplier *= -1.0f;
+                this.lastDirection = Hero.GetHeroDirection();
             }
 
-            if(targetMultiplier != multiplier){
-                multiplier += 0.025f * (targetMultiplier);
+            if (this.targetMultiplier != this.multiplier)
+            {
+                this.multiplier += 0.025f * this.targetMultiplier;
 
-                if (multiplier > 1.0f)
-                    multiplier = 1.0f;
-                else if (multiplier < -1.0f)
-                    multiplier = -1.0f;
+                if (this.multiplier > 1.0f)
+                {
+                    this.multiplier = 1.0f;
+                }
+                else if (this.multiplier < -1.0f)
+                {
+                    this.multiplier = -1.0f;
+                }
 
-                lookatOffset.X = 15.0f * multiplier;
-                positionOffset.X = 15.0f * multiplier;
-            }         
+                this.lookatOffset.X = 15.0f * this.multiplier;
+                this.positionOffset.X = 15.0f * this.multiplier;
+            }
         }
+
+        #endregion
     }
 }

@@ -141,7 +141,6 @@
     <Compile Include="GeometryExtensions.cs" />
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\GameGUI.cs" />
-    <Compile Include="GUI\GUIModel.cs" />
     <Compile Include="Input\GameAction.cs" />
     <Compile Include="Input\GameActionBehavior.cs" />
     <Compile Include="Input\GameActionState.cs" />
