@@ -402,18 +402,18 @@ namespace Gdd.Game.Engine.Levels
             if (this.GeometryType == GeometryType.Polygon)
             {
                 this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
-                    SceneManager.physicsSimulator, this.PhysicsVertices, 10.0f);
+                    this.scene.PhysicsSimulator, this.PhysicsVertices, 10.0f);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(
-                    SceneManager.physicsSimulator, this.PhysicsBody, this.PhysicsVertices, this.gridCellSize);
+                    this.scene.PhysicsSimulator, this.PhysicsBody, this.PhysicsVertices, this.gridCellSize);
             }
             else if (this.GeometryType == GeometryType.Circle)
             {
                 this.PhysicsBody = BodyFactory.Instance.CreateCircleBody(
-                    SceneManager.physicsSimulator, this.ObjectModel.Meshes[0].BoundingSphere.Radius, 10.0f);
+                    this.scene.PhysicsSimulator, this.ObjectModel.Meshes[0].BoundingSphere.Radius, 10.0f);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateCircleGeom(
-                    SceneManager.physicsSimulator, 
+                    this.scene.PhysicsSimulator, 
                     this.PhysicsBody, 
                     this.ObjectModel.Meshes[0].BoundingSphere.Radius, 
                     20, 
@@ -423,10 +423,10 @@ namespace Gdd.Game.Engine.Levels
             {
                 BoundingBox box = BoundingBox.CreateFromPoints(GetModelVertices(this.ObjectModel));
                 this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(
-                    SceneManager.physicsSimulator, box.Max.X - box.Min.X, box.Max.Y - box.Min.Y, 10.0f);
+                    this.scene.PhysicsSimulator, box.Max.X - box.Min.X, box.Max.Y - box.Min.Y, 10.0f);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(
-                    SceneManager.physicsSimulator, 
+                    this.scene.PhysicsSimulator, 
                     this.PhysicsBody, 
                     box.Max.X - box.Min.X, 
                     box.Max.Y - box.Min.Y, 

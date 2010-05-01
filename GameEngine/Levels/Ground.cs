@@ -19,7 +19,6 @@ namespace Gdd.Game.Engine.Levels
     using FarseerGames.FarseerPhysics.Factories;
 
     using Gdd.Game.Engine.Render;
-    using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -156,9 +155,9 @@ namespace Gdd.Game.Engine.Levels
                         vertices.SubDivideEdges(5.0f);
 
                         this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
-                            SceneManager.physicsSimulator, vertices, 1);
+                            this.scene.PhysicsSimulator, vertices, 1);
                         this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(
-                            SceneManager.physicsSimulator, this.PhysicsBody, vertices, 0.0f);
+                            this.scene.PhysicsSimulator, this.PhysicsBody, vertices, 0.0f);
 
                         this.PhysicsGeometry.FrictionCoefficient = 4.0f;
 

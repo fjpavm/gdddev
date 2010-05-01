@@ -18,6 +18,8 @@ namespace Gdd.Game.Engine.Levels
 
     using Gdd.Game.Engine.Scenes;
 
+    using Microsoft.Xna.Framework;
+
     /// <summary>
     /// The level serializer.
     /// </summary>
@@ -179,7 +181,8 @@ namespace Gdd.Game.Engine.Levels
                 return null;
             }
 
-            var sceneComponent = (SceneComponent)Activator.CreateInstance(sceneComponentType, scene.Game);
+            Game game = scene != null ? scene.Game : null;
+            var sceneComponent = (SceneComponent)Activator.CreateInstance(sceneComponentType, game);
             PropertyInfo[] levelEntityPropertyInfos = levelEntityType.GetProperties();
             foreach (PropertyInfo levelEntityPropertyInfo in levelEntityPropertyInfos)
             {

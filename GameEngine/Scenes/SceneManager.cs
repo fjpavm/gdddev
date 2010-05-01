@@ -61,7 +61,6 @@ namespace Gdd.Game.Engine.Scenes
         /// </summary>
         private static Microsoft.Xna.Framework.Game game;
 
-        public static PhysicsSimulator physicsSimulator;
         #endregion
 
         #region Constructors and Destructors
@@ -79,9 +78,7 @@ namespace Gdd.Game.Engine.Scenes
         {
             Z_POSITION = -10.0f;
             scenes = new SceneCollection();
-            
-            physicsSimulator = new PhysicsSimulator(new Vector2(0.0f, -10.0f));
-            
+                       
             SceneManager.game = game;
         }
 

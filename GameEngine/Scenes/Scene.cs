@@ -14,6 +14,8 @@ namespace Gdd.Game.Engine.Scenes
 
     using Common;
 
+    using FarseerGames.FarseerPhysics;
+
     using Input;
 
     using Levels.Characters;
@@ -98,6 +100,8 @@ namespace Gdd.Game.Engine.Scenes
         private GameGUI gameGUI = null;
         private bool gameGUI_Run = false;
 
+        private PhysicsSimulator physicsSimulator;
+
         #endregion
 
         #region Constructors and Destructors
@@ -116,7 +120,11 @@ namespace Gdd.Game.Engine.Scenes
             this.ID = ID_ROLLER++;
             ObjectManager.SetUpLists(this.ID);
             this.EnablePhysics = true;
+            this.physicsSimulator = new PhysicsSimulator(new Vector2(0.0f, -10.0f));
         }
+
+        public PhysicsSimulator PhysicsSimulator { get {
+            return this.physicsSimulator; } }
 
         #endregion
 
@@ -391,7 +399,7 @@ namespace Gdd.Game.Engine.Scenes
             
             if (this.mainGameScene && this.EnablePhysics)
             {
-                SceneManager.physicsSimulator.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
+                this.physicsSimulator.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
             }
         }
 

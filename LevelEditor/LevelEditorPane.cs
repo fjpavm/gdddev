@@ -198,6 +198,7 @@ namespace Gdd.Game.LevelEditor
         public void RunPreview()
         {
             this.levelPreviewScene.EnableScripts = true;
+            this.levelPreviewScene.EnablePhysics = true;
             this.levelPreviewScene.CurrentLevel = (Level)this.levelEditorScene.CurrentLevel.Clone();
             SceneManager.SetCurrentScene(this.levelPreviewScene);
         }
@@ -214,10 +215,6 @@ namespace Gdd.Game.LevelEditor
             {
                 var serializer = new LevelSerializer();
                 serializer.Serialize(fileStream, this.levelEditorScene.CurrentLevel);
-
-                // var xmlSerializer = new XmlSerializer(
-                // typeof(Level), this.levelEditorScene.CurrentLevel.Components.GetBlockTypes().ToArray());
-                // xmlSerializer.Serialize(fileStream, this.levelEditorScene.CurrentLevel);
             }
         }
 
@@ -227,6 +224,7 @@ namespace Gdd.Game.LevelEditor
         public void StopPreview()
         {
             this.levelPreviewScene.EnableScripts = false;
+            this.levelPreviewScene.EnablePhysics = false;
             SceneManager.SetCurrentScene(this.levelEditorScene);
         }
 
