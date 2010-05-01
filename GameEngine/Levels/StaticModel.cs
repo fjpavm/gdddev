@@ -217,12 +217,7 @@ namespace Gdd.Game.Engine.Levels
         {
             get
             {
-                if (this.textures == null)
-                {
-                    this.textures = new List<Texture2D>();
-                }
-
-                return this.textures;
+                return this.textures ?? (this.textures = new List<Texture2D>());
             }
 
             set
@@ -340,14 +335,6 @@ namespace Gdd.Game.Engine.Levels
         }
 
         /// <summary>
-        /// The initialize.
-        /// </summary>
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        /// <summary>
         /// The set texture.
         /// </summary>
         /// <param name="texture">
@@ -371,9 +358,10 @@ namespace Gdd.Game.Engine.Levels
                 this.Position2D = this.PhysicsBody.Position - this.offset;
 
                 this.Translation = Matrix.CreateTranslation(this.Position3D);
-
+                Matrix translateOffset = Matrix.CreateTranslation(this.offset.X, this.offset.Y, 0);
+                Matrix translateOffsetBack = Matrix.CreateTranslation(-this.offset.X, -this.offset.Y, 0);
                 this.Rotation = Matrix.CreateFromYawPitchRoll(this.YawRotation, this.PitchRotation, this.RollRotation) *
-                                this.PhysicsBody.GetBodyRotationMatrix();
+                                translateOffsetBack * this.PhysicsBody.GetBodyRotationMatrix() * translateOffset;
 
                 this.World =
                     Matrix.CreateTranslation(new Vector3(-this.PhysicsGeometry.LocalVertices.GetCentroid(), 0.0f)) *
@@ -473,7 +461,7 @@ namespace Gdd.Game.Engine.Levels
 
             this.LoadCommonContent();
 
-            this.PhysicsBody.IsStatic = true;
+            // this.PhysicsBody.IsStatic = true;
         }
 
         #endregion
