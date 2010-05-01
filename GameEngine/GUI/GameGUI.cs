@@ -234,8 +234,8 @@ namespace Gdd.Game.Engine.GUI
                     // the object has been "returned" to the menu
                     // remove the model from the scene and the physicssimulator
 
-                    SceneManager.physicsSimulator.Remove(model.PhysicsBody);
-                    SceneManager.physicsSimulator.Remove(model.PhysicsGeometry);
+                    this.scene.PhysicsSimulator.Remove(model.PhysicsBody);
+                    this.scene.PhysicsSimulator.Remove(model.PhysicsGeometry);
 
                     this.scene.RemoveComponent(model);
                 }

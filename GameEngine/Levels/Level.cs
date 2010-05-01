@@ -135,7 +135,7 @@ namespace Gdd.Game.Engine.Levels
                 var levelSerializer = new LevelSerializer();
                 levelSerializer.Serialize(memoryStream, this);
                 memoryStream.Seek(0, SeekOrigin.Begin);
-                return levelSerializer.Deserialize(memoryStream, this.levelScene);
+                return levelSerializer.Deserialize(memoryStream, null);
             }
         }
 

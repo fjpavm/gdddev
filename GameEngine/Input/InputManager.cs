@@ -10,6 +10,7 @@
 namespace Gdd.Game.Engine.Input
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using Microsoft.Xna.Framework.Input;
 
@@ -50,12 +51,9 @@ namespace Gdd.Game.Engine.Input
         /// </param>
         public void ClearMap(GameAction action)
         {
-            foreach (var keyAction in this.keyActions)
+            foreach (var keyAction in this.keyActions.Where(keyAction => keyAction.Value == action))
             {
-                if (keyAction.Value == action)
-                {
-                    this.keyActions.Remove(keyAction.Key);
-                }
+                this.keyActions.Remove(keyAction.Key);
             }
         }
 
