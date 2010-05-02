@@ -29,6 +29,16 @@ namespace Gdd.Game.Engine.GUI
         #region Constants and Fields
 
         /// <summary>
+        /// The action rotate.
+        /// </summary>
+        private readonly GameAction actionRotate;
+
+        /// <summary>
+        /// The scale action.
+        /// </summary>
+        private readonly GameAction actionScale;
+
+        /// <summary>
         /// The button models.
         /// </summary>
         private readonly List<Button> buttonModels;
@@ -44,11 +54,6 @@ namespace Gdd.Game.Engine.GUI
         private readonly Texture2D pixel;
 
         /// <summary>
-        /// The scale action.
-        /// </summary>
-        private readonly GameAction scaleAction;
-
-        /// <summary>
         /// The model.
         /// </summary>
         private StaticModel model;
@@ -59,11 +64,14 @@ namespace Gdd.Game.Engine.GUI
         private MouseState previousMouseState;
 
         /// <summary>
+        /// The previous world coordinates.
+        /// </summary>
+        private Vector3 previousWorldCoordinates;
+
+        /// <summary>
         /// The sprite batch.
         /// </summary>
         private SpriteBatch spriteBatch;
-
-        private Vector3 previousWorldCoordinates;
 
         #endregion
 
@@ -79,8 +87,10 @@ namespace Gdd.Game.Engine.GUI
             : base(game)
         {
             this.inputManager = new InputManager();
-            this.scaleAction = new GameAction("scaleAction");
-            this.inputManager.MapToKey(this.scaleAction, Keys.LeftControl);
+            this.actionRotate = new GameAction("actionRotate");
+            this.inputManager.MapToKey(this.actionRotate, Keys.LeftShift);
+            this.actionScale = new GameAction("actionScale");
+            this.inputManager.MapToKey(this.actionScale, Keys.LeftControl);
 
             this.buttonModels = new List<Button>();
             this.spriteBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
@@ -218,21 +228,19 @@ namespace Gdd.Game.Engine.GUI
             if (currentMouseState.LeftButton == ButtonState.Pressed &&
                 this.previousMouseState.LeftButton != ButtonState.Pressed)
             {
-                foreach (Button t in this.buttonModels)
+                foreach (Button t in
+                    this.buttonModels.Where(t => t.IsIntersecting(currentMouseState.X, currentMouseState.Y)))
                 {
-                    if (t.IsIntersecting(currentMouseState.X, currentMouseState.Y))
-                    {
-                        this.model = new StaticModel(this.Game)
-                            {
-                                ModelName = t.GuiModelName, 
-                                GeometryType = t.GeometryType, 
-                                Position2D = new Vector2(currentWorldCoordinates.X, currentWorldCoordinates.Y) 
-                            };
-                        this.scene.AddComponent(this.model);
-                        this.model.Initialize();
-                        this.model.PhysicsBody.IsStatic = true;
-                        this.model.PhysicsGeometry.CollisionEnabled = false;
-                    }
+                    this.model = new StaticModel(this.Game)
+                        {
+                            ModelName = t.GuiModelName, 
+                            GeometryType = t.GeometryType, 
+                            Position2D = new Vector2(currentWorldCoordinates.X, currentWorldCoordinates.Y) 
+                        };
+                    this.scene.AddComponent(this.model);
+                    this.model.Initialize();
+                    this.model.PhysicsBody.IsStatic = true;
+                    this.model.PhysicsGeometry.CollisionEnabled = false;
                 }
             }
             else if (this.model != null)
@@ -243,11 +251,17 @@ namespace Gdd.Game.Engine.GUI
                     this.model.Position2D = new Vector2(currentWorldCoordinates.X, currentWorldCoordinates.Y);
                 }
 
-                if (this.scaleAction.IsPressed)
+                if (this.actionScale.IsPressed)
                 {
                     float diffX = currentWorldCoordinates.X - this.previousWorldCoordinates.X;
                     float diffY = currentWorldCoordinates.Y - this.previousWorldCoordinates.Y;
                     this.model.Scale = new Vector2(this.model.Scale.X * (1 + diffX), this.model.Scale.Y * (1 + diffY));
+                }
+
+                if (this.actionRotate.IsPressed)
+                {
+                    float diffX = currentWorldCoordinates.X - this.previousWorldCoordinates.X;
+                    this.model.PhysicsBodyRotation += diffX;
                 }
             }
 
