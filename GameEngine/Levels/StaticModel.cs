@@ -73,6 +73,11 @@ namespace Gdd.Game.Engine.Levels
         private Vertices physicsVertices;
 
         /// <summary>
+        /// The scale.
+        /// </summary>
+        private Vector2 scale;
+
+        /// <summary>
         /// The scale changed.
         /// </summary>
         private bool scaleChanged;
@@ -145,6 +150,11 @@ namespace Gdd.Game.Engine.Levels
         /// Gets or sets ObjectModel.
         /// </summary>
         public Model ObjectModel { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets PhysicsBodyRotation.
+        /// </summary>
+        public float PhysicsBodyRotation { get; set; }
 
         /// <summary>
         /// Gets or sets PhysicsTexture.
@@ -221,14 +231,16 @@ namespace Gdd.Game.Engine.Levels
             }
         }
 
-        private Vector2 scale;
-
+        /// <summary>
+        /// Gets or sets Scale.
+        /// </summary>
         public Vector2 Scale
         {
             get
             {
                 return this.scale;
             }
+
             set
             {
                 if (Math.Abs(this.scale.X - value.X) > 0.01 || Math.Abs(this.scale.Y - value.Y) > 0.01)
@@ -413,28 +425,39 @@ namespace Gdd.Game.Engine.Levels
             }
             else
             {
-                this.ScaleMatrix = Matrix.CreateScale(1, this.scale.Y, this.scale.X);    
+                this.ScaleMatrix = Matrix.CreateScale(1, this.scale.Y, this.scale.X);
             }
 
-            if (this.PhysicsBody != null && !this.PhysicsBody.IsStatic)
+            if (this.PhysicsBody != null)
             {
-                if (this.scaleChanged)
+                this.PhysicsBody.Rotation += this.PhysicsBodyRotation;
+                this.PhysicsBodyRotation = 0;
+
+                if (!this.PhysicsBody.IsStatic)
                 {
-                    if (this.PhysicsVertices != null)
+                    if (this.scaleChanged)
                     {
-                        IEnumerable<Vector2> vertices = from vertex in this.PhysicsVertices
-                                                        let scaledVertex =
-                                                            Vector3.Transform(
-                                                                new Vector3(0, vertex.Y, vertex.X), this.ScaleMatrix)
-                                                        select new Vector2(scaledVertex.Z, scaledVertex.Y);
-                        this.physicsVertices = new Vertices(vertices.ToArray());
+                        if (this.PhysicsVertices != null)
+                        {
+                            IEnumerable<Vector2> vertices = from vertex in this.PhysicsVertices
+                                                            let scaledVertex =
+                                                                Vector3.Transform(
+                                                                    new Vector3(0, vertex.Y, vertex.X), this.ScaleMatrix)
+                                                            select new Vector2(scaledVertex.Z, scaledVertex.Y);
+                            this.physicsVertices = new Vertices(vertices.ToArray());
+                        }
+
+                        float rotation = this.PhysicsBody.Rotation;
+                        this.CreatePhysics();
+                        this.offset = new Vector2(this.offset.X * this.scale.X, this.offset.Y * this.scale.Y);
+                        this.PhysicsBody.Position = this.Position2D + this.offset;
+                        this.PhysicsBody.Rotation = rotation;
+                        this.scaleChanged = false;
                     }
 
-                    this.CreatePhysics();
-                    this.scaleChanged = false;
+                    this.Position2D = this.PhysicsBody.Position - this.offset;
                 }
 
-                this.Position2D = this.PhysicsBody.Position - this.offset;
                 this.Translation = Matrix.CreateTranslation(this.Position3D);
                 Matrix translateOffset = Matrix.CreateTranslation(this.offset.X, this.offset.Y, 0);
                 Matrix translateOffsetBack = Matrix.CreateTranslation(-this.offset.X, -this.offset.Y, 0);
@@ -456,6 +479,9 @@ namespace Gdd.Game.Engine.Levels
         protected void LoadCommonContent()
         {
             this.CreatePhysics();
+
+            this.offset = this.PhysicsBody.Position;
+            this.PhysicsBody.Position = this.Position2D + this.offset;
 
             foreach (Effect effect in this.ObjectModel.Meshes.SelectMany(mesh => mesh.Effects))
             {
@@ -522,11 +548,13 @@ namespace Gdd.Game.Engine.Levels
             else if (this.GeometryType == GeometryType.Circle)
             {
                 this.PhysicsBody = BodyFactory.Instance.CreateCircleBody(
-                    this.scene.PhysicsSimulator, this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 10.0f);
+                    this.scene.PhysicsSimulator, 
+                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
+                    10.0f);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateCircleGeom(
                     this.scene.PhysicsSimulator, 
-                    this.PhysicsBody,
+                    this.PhysicsBody, 
                     this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
                     20, 
                     this.gridCellSize);
@@ -535,7 +563,10 @@ namespace Gdd.Game.Engine.Levels
             {
                 BoundingBox box = BoundingBox.CreateFromPoints(GetModelVertices(this.ObjectModel));
                 this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(
-                    this.scene.PhysicsSimulator, (box.Max.X - box.Min.X) * this.scale.X, (box.Max.Y - box.Min.Y) * this.scale.Y, 10.0f);
+                    this.scene.PhysicsSimulator, 
+                    (box.Max.X - box.Min.X) * this.scale.X, 
+                    (box.Max.Y - box.Min.Y) * this.scale.Y, 
+                    10.0f);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(
                     this.scene.PhysicsSimulator, 
@@ -544,9 +575,6 @@ namespace Gdd.Game.Engine.Levels
                     (box.Max.Y - box.Min.Y) * this.scale.Y, 
                     this.gridCellSize);
             }
-
-            this.offset = this.PhysicsBody.Position;
-            this.PhysicsBody.Position = this.Position2D + this.offset;
 
             this.aabb = this.PhysicsGeometry.AABB;
         }
