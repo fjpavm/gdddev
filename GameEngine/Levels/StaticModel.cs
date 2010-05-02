@@ -73,11 +73,6 @@ namespace Gdd.Game.Engine.Levels
         private Vertices physicsVertices;
 
         /// <summary>
-        /// The scale.
-        /// </summary>
-        private float scale;
-
-        /// <summary>
         /// The scale changed.
         /// </summary>
         private bool scaleChanged;
@@ -104,7 +99,7 @@ namespace Gdd.Game.Engine.Levels
             this.YawRotation = MathHelper.PiOver2;
             this.PitchRotation = 0.0f;
             this.RollRotation = 0.0f;
-            this.scale = 1.0f;
+            this.scale = Vector2.One;
 
             this.Rotation = Matrix.CreateFromYawPitchRoll(this.YawRotation, this.PitchRotation, this.RollRotation);
 
@@ -226,19 +221,17 @@ namespace Gdd.Game.Engine.Levels
             }
         }
 
-        /// <summary>
-        /// Gets or sets Scale.
-        /// </summary>
-        public float Scale
+        private Vector2 scale;
+
+        public Vector2 Scale
         {
             get
             {
                 return this.scale;
             }
-
             set
             {
-                if (Math.Abs(this.scale - value) > 0.01)
+                if (Math.Abs(this.scale.X - value.X) > 0.01 || Math.Abs(this.scale.Y - value.Y) > 0.01)
                 {
                     this.scaleChanged = true;
                 }
@@ -413,17 +406,30 @@ namespace Gdd.Game.Engine.Levels
         public override void Update(GameTime gameTime)
         {
             this.isUpdating = true;
-            this.ScaleMatrix = Matrix.CreateScale(this.Scale);
+            if (this.GeometryType == GeometryType.Circle)
+            {
+                float circleScale = this.scale.Length();
+                this.ScaleMatrix = Matrix.CreateScale(circleScale, -circleScale, circleScale);
+            }
+            else
+            {
+                this.ScaleMatrix = Matrix.CreateScale(1, this.scale.Y, this.scale.X);    
+            }
+
             if (this.PhysicsBody != null && !this.PhysicsBody.IsStatic)
             {
                 if (this.scaleChanged)
                 {
-                    IEnumerable<Vector2> vertices = from vertex in this.PhysicsGeometry.LocalVertices
-                                                    let scaledVertex =
-                                                        Vector3.Transform(
-                                                            new Vector3(vertex.X, vertex.Y, 0), this.ScaleMatrix)
-                                                    select new Vector2(scaledVertex.X, scaledVertex.Y);
-                    this.physicsVertices = new Vertices(vertices.ToArray());
+                    if (this.PhysicsVertices != null)
+                    {
+                        IEnumerable<Vector2> vertices = from vertex in this.PhysicsVertices
+                                                        let scaledVertex =
+                                                            Vector3.Transform(
+                                                                new Vector3(0, vertex.Y, vertex.X), this.ScaleMatrix)
+                                                        select new Vector2(scaledVertex.Z, scaledVertex.Y);
+                        this.physicsVertices = new Vertices(vertices.ToArray());
+                    }
+
                     this.CreatePhysics();
                     this.scaleChanged = false;
                 }
@@ -516,12 +522,12 @@ namespace Gdd.Game.Engine.Levels
             else if (this.GeometryType == GeometryType.Circle)
             {
                 this.PhysicsBody = BodyFactory.Instance.CreateCircleBody(
-                    this.scene.PhysicsSimulator, this.ObjectModel.Meshes[0].BoundingSphere.Radius, 10.0f);
+                    this.scene.PhysicsSimulator, this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 10.0f);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateCircleGeom(
                     this.scene.PhysicsSimulator, 
-                    this.PhysicsBody, 
-                    this.ObjectModel.Meshes[0].BoundingSphere.Radius, 
+                    this.PhysicsBody,
+                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
                     20, 
                     this.gridCellSize);
             }
@@ -529,13 +535,13 @@ namespace Gdd.Game.Engine.Levels
             {
                 BoundingBox box = BoundingBox.CreateFromPoints(GetModelVertices(this.ObjectModel));
                 this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(
-                    this.scene.PhysicsSimulator, box.Max.X - box.Min.X, box.Max.Y - box.Min.Y, 10.0f);
+                    this.scene.PhysicsSimulator, (box.Max.X - box.Min.X) * this.scale.X, (box.Max.Y - box.Min.Y) * this.scale.Y, 10.0f);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(
                     this.scene.PhysicsSimulator, 
                     this.PhysicsBody, 
-                    box.Max.X - box.Min.X, 
-                    box.Max.Y - box.Min.Y, 
+                    (box.Max.X - box.Min.X) * this.scale.X, 
+                    (box.Max.Y - box.Min.Y) * this.scale.Y, 
                     this.gridCellSize);
             }
 

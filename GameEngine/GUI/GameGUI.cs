@@ -63,6 +63,8 @@ namespace Gdd.Game.Engine.GUI
         /// </summary>
         private SpriteBatch spriteBatch;
 
+        private Vector3 previousWorldCoordinates;
+
         #endregion
 
         #region Constructors and Destructors
@@ -204,8 +206,9 @@ namespace Gdd.Game.Engine.GUI
 
             // Get the current state of the Mouse
             MouseState currentMouseState = Mouse.GetState();
+            Vector3 currentWorldCoordinates = this.scene.Camera.ScreenToWorld(currentMouseState.X, currentMouseState.Y);
 
-            // Control mouse out of bounds
+            // Control mouse out of bounds)
             if (currentMouseState.X < 0 || currentMouseState.X > this.Game.Window.ClientBounds.Width ||
                 currentMouseState.Y < 0 || currentMouseState.Y > this.Game.Window.ClientBounds.Height)
             {
@@ -219,13 +222,12 @@ namespace Gdd.Game.Engine.GUI
                 {
                     if (t.IsIntersecting(currentMouseState.X, currentMouseState.Y))
                     {
-                        Vector3 position = this.scene.Camera.ScreenToWorld(currentMouseState.X, currentMouseState.Y);
                         this.model = new StaticModel(this.Game)
                             {
                                 ModelName = t.GuiModelName, 
                                 GeometryType = t.GeometryType, 
-                                Position2D = new Vector2(position.X, position.Y) 
- };
+                                Position2D = new Vector2(currentWorldCoordinates.X, currentWorldCoordinates.Y) 
+                            };
                         this.scene.AddComponent(this.model);
                         this.model.Initialize();
                         this.model.PhysicsBody.IsStatic = true;
@@ -238,14 +240,14 @@ namespace Gdd.Game.Engine.GUI
                 if (currentMouseState.LeftButton == ButtonState.Pressed &&
                     this.previousMouseState.LeftButton == ButtonState.Pressed)
                 {
-                    Vector3 newPos = this.scene.Camera.ScreenToWorld(currentMouseState.X, currentMouseState.Y);
-                    this.model.Position2D = new Vector2(newPos.X, newPos.Y);
+                    this.model.Position2D = new Vector2(currentWorldCoordinates.X, currentWorldCoordinates.Y);
                 }
 
                 if (this.scaleAction.IsPressed)
                 {
-                    int diff = (currentMouseState.X - this.previousMouseState.X) + (currentMouseState.Y - this.previousMouseState.Y);
-                    this.model.Scale = this.model.Scale * (1 + (diff / 100.0f));
+                    float diffX = currentWorldCoordinates.X - this.previousWorldCoordinates.X;
+                    float diffY = currentWorldCoordinates.Y - this.previousWorldCoordinates.Y;
+                    this.model.Scale = new Vector2(this.model.Scale.X * (1 + diffX), this.model.Scale.Y * (1 + diffY));
                 }
             }
 
@@ -274,6 +276,7 @@ namespace Gdd.Game.Engine.GUI
             }
 
             this.previousMouseState = currentMouseState;
+            this.previousWorldCoordinates = currentWorldCoordinates;
         }
 
         #endregion
