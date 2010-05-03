@@ -186,6 +186,7 @@ namespace Gdd.Game
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 SceneManager.ChangeScene(SceneManager.SCENE_ID.IN_GAME_MENU);
+                Audio.PauseBackgroundMusic();
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.X))
             {
@@ -281,10 +282,14 @@ namespace Gdd.Game
             scene1.AddComponent(this.hero);
             // Testing bunny AI
             Bunny bunny = new Bunny(this) { Position2D = new Vector2(-10.0f, -10.0f) };
+            Bunny secondBunny = new Bunny(this) { Position2D = new Vector2(-20.0f, 40.0f) };
             this.monster = bunny;
+            //bunny.Debug = true;
 
             aiManager.objectList.Add(bunny);
+            aiManager.objectList.Add(secondBunny);
             scene1.AddComponent(bunny);
+            scene1.AddComponent(secondBunny);
             scene1.AddComponent(lollypop);
             scene1.AddComponent(rock);
             scene1.AddComponent(candy);
@@ -321,7 +326,7 @@ namespace Gdd.Game
             //scene1.GameGUI.LoadContent();
             //scene1.GameGUI.Scene = scene1;
             //scene1.GameGUIRun = true;);
-            
+           
             this.mainMenu = new MainMenu(this);
             
             SceneManager.AddScene(this.mainMenu);

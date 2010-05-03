@@ -113,6 +113,8 @@ namespace Gdd.Game.Engine.Physics
             bs.Radius *= 1.5f;
             Vertices textureVertices = new Vertices();
 
+
+
             // do marching squares
             Vertices v = new Vertices();
             v.AddRange(MarchingSquare.DoMarch(texture).ToArray());
@@ -122,6 +124,21 @@ namespace Gdd.Game.Engine.Physics
             {
                 v[i] = new Vector2(v[i].X * 2 * bs.Radius / (texture.Width - 1) + bs.Center.X - bs.Radius, (texture.Height - 1 - v[i].Y) * 2 * bs.Radius / (texture.Height - 1) + bs.Center.Y - bs.Radius);
             }
+
+
+            List<Vector2> points = new List<Vector2>(v);
+
+            for (int i = 3; i < points.Count; i++)
+            {
+                if (isColinear(points[i - 2], points[i - 1], points[i]))
+                {
+                    points.Remove(points[i - 1]);
+                    i--;
+                }
+            }
+
+            v.Clear();
+            v.AddRange(points.ToArray());
 
             return v; 
         }

@@ -58,9 +58,10 @@ namespace Gdd.Game.Engine.AI.StateMachines
         int moveRightAnimationCommand, moveLeftAnimationCommand;
         double lastDistanceSquared;
         int nrOffSetbacks;
+        bool movingToNext = false;
         const int left = -1;
         const int right = +1;
-        const int maxSetBacks = 5;
+        const int maxSetBacks = 500;
         int direction; // -1 left, +1 right
         Vector2 setPoint;
 
@@ -73,7 +74,9 @@ namespace Gdd.Game.Engine.AI.StateMachines
 
         public override void OnEnter()
         {
+            base.OnEnter();
             nrOffSetbacks = 0;
+            movingToNext = false;
             Scenes.SceneComponent bunny = thisObject as Scenes.SceneComponent;
             lastDistanceSquared = (setPoint - bunny.Position2D).LengthSquared();
             direction = (setPoint.X - bunny.Position2D.X) > 0 ? right : left;
@@ -90,23 +93,29 @@ namespace Gdd.Game.Engine.AI.StateMachines
 
         public override void Update()
         {
+            base.Update();
             Scenes.SceneComponent bunny = thisObject as Scenes.SceneComponent;
             double distanceSquared = (setPoint - bunny.Position2D).LengthSquared();
             int currentDirection = (setPoint.X - bunny.Position2D.X) > 0 ? right : left;
-            if (distanceSquared <= 0.1 || currentDirection != direction) 
+            if (!movingToNext)
             {
-                //go to next setpoint
-                AIManager.messageQueue.sendMessage(new NextSetPointMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor));
-            }
-            if (distanceSquared >= lastDistanceSquared) 
-            {
-                nrOffSetbacks++;
-                //Check nrOffSetbacks against a limit and go to next setpoint if exceded
-                if (nrOffSetbacks > maxSetBacks) 
+                if (distanceSquared <= 0.1 || currentDirection != direction)
                 {
+                    //go to next setpoint
                     AIManager.messageQueue.sendMessage(new NextSetPointMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor));
+                    movingToNext = true;
                 }
-                return;
+                if (distanceSquared >= lastDistanceSquared)
+                {
+                    nrOffSetbacks++;
+                    //Check nrOffSetbacks against a limit and go to next setpoint if exceded
+                    if (!movingToNext && nrOffSetbacks > maxSetBacks)
+                    {
+                        AIManager.messageQueue.sendMessage(new NextSetPointMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor));
+                        movingToNext = true;
+                    }
+                    return;
+                }
             }
             lastDistanceSquared = distanceSquared;
             nrOffSetbacks = 0;
@@ -199,7 +208,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
 
         public override void OnEnter()
         {
-            Console.WriteLine(name + ".OnEnter()");
+            base.OnEnter();
             Message m = new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, animationCommand);
             AIManager.messageQueue.sendMessage(m);
         }

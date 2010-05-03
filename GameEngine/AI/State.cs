@@ -53,12 +53,37 @@ namespace Gdd.Game.Engine.AI
 			transitions[messageType].Add(t);
 		}
 		
-		public virtual void OnEnter(){Console.WriteLine(name + ".OnEnter()");}
+		public virtual void OnEnter(){
+            IDebugable thisDebugable = thisObject as IDebugable;
+            if (thisDebugable != null) if (thisDebugable.Debug)
+            {
+                Console.WriteLine(name + ".OnEnter()");
+            }
+        }
 		
-		public virtual void Update(){Console.WriteLine(name + ".Update()");}
+		public virtual void Update(){
+            IDebugable thisDebugable = thisObject as IDebugable;
+            if (thisDebugable != null) if (thisDebugable.Debug)
+                {
+                    Console.WriteLine(name + ".Update()");
+                }
+        }
 		
-		public virtual void OnExit(){Console.WriteLine(name + ".OnExit()");}
+		public virtual void OnExit(){
+            IDebugable thisDebugable = thisObject as IDebugable;
+            if (thisDebugable != null) if (thisDebugable.Debug)
+                {
+                    Console.WriteLine(name + ".OnExit()");
+                }
+        }
 		
-		public virtual bool ProcessMessage(Message m){Console.WriteLine(name + ".ProcessMessage({0})",m.MessageType);return true;}
+		public virtual bool ProcessMessage(Message m){
+            IDebugable thisDebugable = thisObject as IDebugable;
+            if (thisDebugable != null) if (thisDebugable.Debug)
+                {
+                    Console.WriteLine(name + ".ProcessMessage({0})", m.MessageType);
+                }
+            return true;
+        }
 	}
 }
