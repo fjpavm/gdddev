@@ -40,6 +40,7 @@ namespace Gdd.Game.Engine.AI
 		
 		public override void OnEnter()
 		{
+            base.OnEnter();
 			currentState = initialState;
 			nextState = initialState;
 			currentState.OnEnter();
@@ -47,6 +48,7 @@ namespace Gdd.Game.Engine.AI
 		
 		public override void Update()
 		{
+            base.Update();
             // In case it's not started yet
             if (currentState == dummyState) 
             {
@@ -64,10 +66,12 @@ namespace Gdd.Game.Engine.AI
 		
 		public override void OnExit()
 		{
+            base.OnExit();
 			currentState.OnExit();
 		}
 		
 		public override bool ProcessMessage(Message m){
+            base.ProcessMessage(m);
             if (currentState == nextState)
             {
                 nextState = currentState.checkTransitions(m);

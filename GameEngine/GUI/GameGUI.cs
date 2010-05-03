@@ -106,7 +106,7 @@ namespace Gdd.Game.Engine.GUI
                 33 * 0, 
                 88, 
                 33, 
-                "tmpCube", 
+                "mesh\\box", 
                 GeometryType.Rectangle);
             this.buttonModels.Add(button);
 
@@ -117,9 +117,9 @@ namespace Gdd.Game.Engine.GUI
                 0, 
                 33 * 1, 
                 88, 
-                33, 
-                "cube", 
-                GeometryType.Rectangle);
+                33,
+                "mesh\\sphere", 
+                GeometryType.Circle);
             this.buttonModels.Add(button);
 
             button = new Button(
@@ -129,20 +129,8 @@ namespace Gdd.Game.Engine.GUI
                 0, 
                 33 * 2, 
                 88, 
-                33, 
-                "sphere", 
-                GeometryType.Circle);
-            this.buttonModels.Add(button);
-
-            button = new Button(
-                this.Game, 
-                "button_apply_normal", 
-                "button_apply_selected", 
-                0, 
-                33 * 3, 
-                88, 
-                33, 
-                "cone", 
+                33,
+                "mesh\\tent", 
                 GeometryType.Polygon);
             this.buttonModels.Add(button);
         }

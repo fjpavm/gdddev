@@ -297,6 +297,11 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
+    <Compile Include="MenuContent\MainMenuBackgroundLowRes.JPG">
+      <Name>MainMenuBackgroundLowRes</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="mesh\rabbitAnimation.xml">
       <Name>rabbitAnimation</Name>
       <Importer>XmlImporter</Importer>
@@ -347,10 +352,25 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="mesh\box.fbx">
+      <Name>box</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <Compile Include="Levels\test.lvl">
       <Name>test</Name>
       <Importer>LevelImporter</Importer>
       <Processor>LevelProcessor</Processor>
+    </Compile>
+    <Compile Include="mesh\sphere.fbx">
+      <Name>sphere</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="mesh\tent.fbx">
+      <Name>tent</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
     </Compile>
     <None Include="Textures\lollypop.jpg">
       <Name>lollypop</Name>

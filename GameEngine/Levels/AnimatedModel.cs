@@ -186,17 +186,24 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         protected override void LoadContent()
         {
-            this.ObjectModel = this.Game.Content.Load<Model>(this.modelName);
+            bool modelAlreadyLoaded = (this.ObjectModel == null);
+            if (modelAlreadyLoaded)
+            {
+                this.ObjectModel = this.Game.Content.Load<Model>(this.modelName);
+            }
 
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL, "Effects\\AnimatedModel", this.Game);
             this.DefaultEffectID = ShaderManager.EFFECT_ID.ANIMATEDMODEL;
             this.DefaultTechnique = "AnimatedModelTechnique";
 
-            ModelToVertices.TransformAnimatedModel(this, this.Game);
+            if (modelAlreadyLoaded)
+            {
+                ModelToVertices.TransformAnimatedModel(this, this.Game);
+            }
 
-            this.AnimationPlayer = new ModelAnimationPlayer((SkinningData)this.ObjectModel.Tag);
+            this.AnimationPlayer = new ModelAnimationPlayer(this.ObjectModel.Tag as SkinningData);
 
-            this.AnimationPlayer.SetClip(((SkinningData)this.ObjectModel.Tag).AnimationClips.Values.First());
+            this.AnimationPlayer.SetClip((this.ObjectModel.Tag as SkinningData).AnimationClips.Values.First());
             this.AnimationPlayer.StartClip();
             this.AnimationPlayer.StepClip();
 

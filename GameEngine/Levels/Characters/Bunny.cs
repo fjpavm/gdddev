@@ -16,7 +16,12 @@ namespace Gdd.Game.Engine.Levels.Characters
     using Gdd.Game.Engine.Scenes.Lights;
 
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using Scenes.Lights;
+    using FarseerGames.FarseerPhysics.Factories;
+    using Gdd.Game.Engine.Scenes;
+    using System.Linq;
 
     /// <summary>
     /// The bunny.
@@ -25,7 +30,7 @@ namespace Gdd.Game.Engine.Levels.Characters
     {
         #region Constants and Fields
 
-        /// <summary>
+        private static Model BunnyModel;
         /// The animations.
         /// </summary>
         private readonly string[] animations = new[] { "idle", "Death", "Skating" };
@@ -33,7 +38,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// <summary>
         /// The life.
         /// </summary>
-        private static float life;
+        private float life;
 
         /// <summary>
         /// The animation index.
@@ -166,9 +171,18 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         protected override void LoadContent()
         {
-            this.gridCellSize = 7.0f;
+            gridCellSize = 100.0f;
+            if(Bunny.BunnyModel != null){
+                this.ObjectModel = Bunny.BunnyModel;
+            }
+            
             base.LoadContent();
+            
+            if(Bunny.BunnyModel == null){
+                Bunny.BunnyModel = this.ObjectModel;
+            }
 
+              
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL, "AnimatedModel", this.Game);
             this.DefaultEffectID = ShaderManager.EFFECT_ID.ANIMATEDMODEL;
             this.DefaultTechnique = "AnimatedModelTechnique";
@@ -176,12 +190,11 @@ namespace Gdd.Game.Engine.Levels.Characters
 
             // currentClip = skinningData.AnimationClips[animations[animationIndex]];
 
-            // AnimationPlayer.SetClip(currentClip);
-            // AnimationPlayer.StartClip();
+             AnimationPlayer.StartClip();
 
             // Loading Bunny State Machines
             // some test patrol points
-            var patrol1 = new Vector2(-10, 0);
+            Vector2 patrol1 = new Vector2(-1000000.0f,0.0f);
             var patrol2 = new Vector2(10, 0);
             this.AnimationStateMachine = new BunnyAnimationStateMachine(this);
             this.MonsterStateMachine = new BunnyStateMachine(this, patrol1, patrol2);

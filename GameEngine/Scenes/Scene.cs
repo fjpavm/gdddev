@@ -425,6 +425,10 @@ namespace Gdd.Game.Engine.Scenes
         {
             AdjacencyManager.PopulateAdjacency(this.ID);
 
+            if (this.mainGameScene)
+            {
+                Audio.RepeatPlayBackgroundMusic();
+            }
             if (this.InputManager != null)
             {
                 this.InputManager.Update();
