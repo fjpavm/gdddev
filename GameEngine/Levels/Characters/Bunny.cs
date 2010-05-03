@@ -60,6 +60,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         {
             this.ModelName = "mesh//rabbit";
             this.Position2D = new Vector2(0.0f, 0.0f);
+            this.mass = 10.0f;
         }
 
         #endregion

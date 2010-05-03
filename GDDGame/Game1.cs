@@ -22,6 +22,8 @@ namespace Gdd.Game
     using Engine.Render.Shadow;
     using Engine.Scenes;
     using Engine.Scenes.Lights;
+
+    using Gdd.Game.Engine.Common;
     using Gdd.Game.Engine.Levels.Information;
 
     using Microsoft.Xna.Framework;
@@ -52,6 +54,11 @@ namespace Gdd.Game
         /// The graphics.
         /// </summary>
         private GraphicsDeviceManager graphics;
+
+        /// <summary>
+        /// Last keyboard state
+        /// </summary>
+        private KeyboardState lastState;
 
         /// <summary>
         /// The hero.
@@ -216,6 +223,13 @@ namespace Gdd.Game
             {
                 this.hero.Position2D = new Vector2(this.hero.Position2D.X, this.hero.Position2D.Y - 0.1f);
             }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.F12) && lastState.IsKeyUp(Keys.F12))
+            {
+                Globals.displayState = (DISPLAY_STATE)((int)(Globals.displayState + 1) % 3);
+            }
+
+            lastState = Keyboard.GetState();
 
             SceneManager.Update(gameTime);
 

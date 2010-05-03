@@ -15,6 +15,7 @@ namespace Gdd.Game.Engine.Scenes
     using FarseerGames.FarseerPhysics.Collisions;
     using FarseerGames.FarseerPhysics.Dynamics;
 
+    using Gdd.Game.Engine.Common;
     using Gdd.Game.Engine.Render;
     using Gdd.Game.Engine.Scenes.Lights;
 
@@ -369,7 +370,9 @@ namespace Gdd.Game.Engine.Scenes
         /// </param>
         public virtual void Draw(GameTime gameTime)
         {
-#if !SHOW_ONLY_PHYSICS
+            if (Globals.displayState == DISPLAY_STATE.BOTH || Globals.displayState == DISPLAY_STATE.THREE_DIM)
+            {
+                
             int nrOfPointLights = -1;
 
             if (this.adjacentSceneComponents != null)
@@ -392,10 +395,12 @@ namespace Gdd.Game.Engine.Scenes
             ShaderManager.SetValue("PointLightCount", nrOfPointLights);
 
             this.DrawWithEffect(this.DefaultEffectID, this.DefaultTechnique);
-#endif
-#if SHOW_PHYSICS
-            this.DrawPhysicsVertices();
-#endif
+            }
+
+            if (Globals.displayState == DISPLAY_STATE.BOTH || Globals.displayState == DISPLAY_STATE.TWO_DIM)
+            {
+                this.DrawPhysicsVertices();
+            }
         }
 
         #endregion
