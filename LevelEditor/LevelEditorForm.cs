@@ -225,6 +225,8 @@ namespace Gdd.Game.LevelEditor
             if (dr == DialogResult.OK)
             {
                 this.levelEditorPane.LoadLevel(dialog.FileName);
+                this.comboBoxLevelComponents.Items.Clear();
+                this.comboBoxLevelComponents.Items.AddRange(this.levelEditorPane.Level.Components.ToArray());
                 this.textBoxLevelScript.Lines = this.levelEditorPane.Level.Script;
                 this.tabControl.SelectedTab = this.tabPageLevelEditor;
             }
@@ -243,6 +245,17 @@ namespace Gdd.Game.LevelEditor
         {
             if (e.ChangedItem.Label != null && e.ChangedItem.Label.Equals("Name", StringComparison.InvariantCulture))
             {
+                if (string.IsNullOrEmpty((string)e.ChangedItem.Value) ||
+                    this.levelEditorPane.Level.Components.Any(
+                        c => c.Name.Equals((string)e.ChangedItem.Value, StringComparison.InvariantCulture)))
+                {
+                    var changedItem = this.propertyGrid.SelectedObject as SceneComponent;
+                    if (changedItem != null)
+                    {
+                        changedItem.Name = (string)e.OldValue;
+                    }
+                }
+
                 this.comboBoxLevelComponents.DisplayMember = string.Empty;
                 this.comboBoxLevelComponents.DisplayMember = "Name";
             }
