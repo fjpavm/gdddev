@@ -105,6 +105,8 @@ namespace Gdd.Game.Engine.Physics
                     hasGoneThrough = player.CurrentKeyframe == 1 && lastKeyFrame != 0;
                 }
             }
+
+
         }
 
         private static Vertices GetVertices(Texture2D texture, BoundingSphere bs)

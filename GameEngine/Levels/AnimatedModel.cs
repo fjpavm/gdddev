@@ -49,6 +49,7 @@ namespace Gdd.Game.Engine.Levels
             this.modelName = "mesh\\Hero";
             this.ModelDirection = ModelDirection.Right;
             this.AddOffset = false;
+            this.mass = 0.01f;
         }
 
         #endregion

@@ -39,16 +39,17 @@
             this.tsmiPreviewRun = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPreviewStop = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+            this.comboBoxLevelComponents = new System.Windows.Forms.ComboBox();
+            this.propertyGrid = new Azuria.Common.Controls.FilteredPropertyGrid();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageLevelEditor = new System.Windows.Forms.TabPage();
             this.tabPageLevelScript = new System.Windows.Forms.TabPage();
             this.textBoxLevelScript = new System.Windows.Forms.TextBox();
             this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
+            this.toolStripToolbar = new System.Windows.Forms.ToolStrip();
             this.toolStripPreview = new System.Windows.Forms.ToolStrip();
             this.tsmiPreviewToolStripRun = new System.Windows.Forms.ToolStripButton();
             this.tsmiPreviewToolStripStop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripToolbar = new System.Windows.Forms.ToolStrip();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.splitContainer.Panel1.SuspendLayout();
@@ -68,7 +69,7 @@
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox.Location = new System.Drawing.Point(3, 3);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(401, 316);
+            this.pictureBox.Size = new System.Drawing.Size(400, 366);
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
             // 
@@ -147,41 +148,61 @@
             // 
             // splitContainer
             // 
-            this.splitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer.Location = new System.Drawing.Point(0, 0);
             this.splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
             // 
+            this.splitContainer.Panel1.Controls.Add(this.comboBoxLevelComponents);
             this.splitContainer.Panel1.Controls.Add(this.propertyGrid);
             // 
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.tabControl);
-            this.splitContainer.Size = new System.Drawing.Size(626, 348);
-            this.splitContainer.SplitterDistance = 207;
-            this.splitContainer.TabIndex = 3;
+            this.splitContainer.Size = new System.Drawing.Size(632, 404);
+            this.splitContainer.SplitterDistance = 208;
+            this.splitContainer.TabIndex = 0;
+            // 
+            // comboBoxLevelComponents
+            // 
+            this.comboBoxLevelComponents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxLevelComponents.DisplayMember = "Name";
+            this.comboBoxLevelComponents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxLevelComponents.FormattingEnabled = true;
+            this.comboBoxLevelComponents.Location = new System.Drawing.Point(4, 3);
+            this.comboBoxLevelComponents.Name = "comboBoxLevelComponents";
+            this.comboBoxLevelComponents.Size = new System.Drawing.Size(201, 21);
+            this.comboBoxLevelComponents.TabIndex = 0;
+            this.comboBoxLevelComponents.SelectedValueChanged += new System.EventHandler(this.ComboBoxLevelComponents_SelectedValueChanged);
             // 
             // propertyGrid
             // 
-            this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.propertyGrid.BrowsableProperties = null;
+            this.propertyGrid.HiddenAttributes = null;
+            this.propertyGrid.HiddenProperties = null;
+            this.propertyGrid.Location = new System.Drawing.Point(4, 30);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(207, 348);
-            this.propertyGrid.TabIndex = 0;
+            this.propertyGrid.Size = new System.Drawing.Size(201, 371);
+            this.propertyGrid.TabIndex = 1;
+            this.propertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGrid_PropertyValueChanged);
             // 
             // tabControl
             // 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabPageLevelEditor);
             this.tabControl.Controls.Add(this.tabPageLevelScript);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Location = new System.Drawing.Point(3, 3);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(415, 348);
-            this.tabControl.TabIndex = 2;
+            this.tabControl.Size = new System.Drawing.Size(414, 398);
+            this.tabControl.TabIndex = 0;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // tabPageLevelEditor
@@ -190,7 +211,7 @@
             this.tabPageLevelEditor.Location = new System.Drawing.Point(4, 22);
             this.tabPageLevelEditor.Name = "tabPageLevelEditor";
             this.tabPageLevelEditor.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLevelEditor.Size = new System.Drawing.Size(407, 322);
+            this.tabPageLevelEditor.Size = new System.Drawing.Size(406, 372);
             this.tabPageLevelEditor.TabIndex = 0;
             this.tabPageLevelEditor.Text = "Designer";
             this.tabPageLevelEditor.UseVisualStyleBackColor = true;
@@ -201,7 +222,7 @@
             this.tabPageLevelScript.Location = new System.Drawing.Point(4, 22);
             this.tabPageLevelScript.Name = "tabPageLevelScript";
             this.tabPageLevelScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLevelScript.Size = new System.Drawing.Size(407, 322);
+            this.tabPageLevelScript.Size = new System.Drawing.Size(406, 372);
             this.tabPageLevelScript.TabIndex = 1;
             this.tabPageLevelScript.Text = "Script";
             this.tabPageLevelScript.UseVisualStyleBackColor = true;
@@ -215,7 +236,7 @@
             this.textBoxLevelScript.Location = new System.Drawing.Point(6, 6);
             this.textBoxLevelScript.Multiline = true;
             this.textBoxLevelScript.Name = "textBoxLevelScript";
-            this.textBoxLevelScript.Size = new System.Drawing.Size(395, 360);
+            this.textBoxLevelScript.Size = new System.Drawing.Size(394, 410);
             this.textBoxLevelScript.TabIndex = 0;
             // 
             // toolStripContainer
@@ -229,13 +250,21 @@
             this.toolStripContainer.Location = new System.Drawing.Point(0, 24);
             this.toolStripContainer.Name = "toolStripContainer";
             this.toolStripContainer.Size = new System.Drawing.Size(632, 429);
-            this.toolStripContainer.TabIndex = 4;
+            this.toolStripContainer.TabIndex = 1;
             this.toolStripContainer.Text = "toolStripContainer1";
             // 
             // toolStripContainer.TopToolStripPanel
             // 
-            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStripPreview);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStripToolbar);
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStripPreview);
+            // 
+            // toolStripToolbar
+            // 
+            this.toolStripToolbar.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripToolbar.Location = new System.Drawing.Point(3, 0);
+            this.toolStripToolbar.Name = "toolStripToolbar";
+            this.toolStripToolbar.Size = new System.Drawing.Size(111, 25);
+            this.toolStripToolbar.TabIndex = 0;
             // 
             // toolStripPreview
             // 
@@ -263,14 +292,6 @@
             this.tsmiPreviewToolStripStop.Size = new System.Drawing.Size(35, 22);
             this.tsmiPreviewToolStripStop.Text = "Stop";
             this.tsmiPreviewToolStripStop.Click += new System.EventHandler(this.StopToolStripMenuItem_Click);
-            // 
-            // toolStripToolbar
-            // 
-            this.toolStripToolbar.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStripToolbar.Location = new System.Drawing.Point(3, 0);
-            this.toolStripToolbar.Name = "toolStripToolbar";
-            this.toolStripToolbar.Size = new System.Drawing.Size(111, 25);
-            this.toolStripToolbar.TabIndex = 2;
             // 
             // LevelEditorForm
             // 
@@ -314,7 +335,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiFileOpen;
         private System.Windows.Forms.ToolStripMenuItem tsmiFileSave;
         private System.Windows.Forms.SplitContainer splitContainer;
-        private System.Windows.Forms.PropertyGrid propertyGrid;
+        private Azuria.Common.Controls.FilteredPropertyGrid propertyGrid;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPageLevelEditor;
         private System.Windows.Forms.ToolStripMenuItem tsmiEdit;
@@ -329,5 +350,6 @@
         private System.Windows.Forms.ToolStripButton tsmiPreviewToolStripRun;
         private System.Windows.Forms.ToolStripButton tsmiPreviewToolStripStop;
         private System.Windows.Forms.ToolStrip toolStripToolbar;
+        private System.Windows.Forms.ComboBox comboBoxLevelComponents;
     }
 }
