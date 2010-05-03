@@ -161,7 +161,7 @@ namespace Gdd.Game.Engine.Levels
                             };
 
                         vertices = new Vertices(ref temp);
-                        vertices.SubDivideEdges(5.0f);
+                        vertices.SubDivideEdges(2.0f);
 
                         this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
                             SceneManager.physicsSimulator, vertices, 1);
