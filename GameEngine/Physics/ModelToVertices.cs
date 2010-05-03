@@ -36,12 +36,16 @@ namespace Gdd.Game.Engine.Physics
         private static Vector3 physicsLookat = new Vector3(0.0f, 0.0f, 0.0f);
         private static Vector3 physicsPos = new Vector3(0.0f, 0.0f, 150.0f);
 
-        public static Vertices TransformStaticModel(StaticModel model, Microsoft.Xna.Framework.Game game)
+        public static Vertices TransformStaticModel(StaticModel model, Microsoft.Xna.Framework.Game game, out float mass)
         {
             renderTarget = GfxComponent.CreateCustomRenderTarget(game.GraphicsDevice, 1, SurfaceFormat.Color, MultiSampleType.None, (int)TextureSize.X, (int)TextureSize.Y);
             depthBuffer = GfxComponent.CreateDepthStencil(renderTarget);
             Texture2D tex;
             Vertices v = GetVertices(RenderToTarget(model, null, game, out tex), model.ObjectModel.Meshes[0].BoundingSphere);
+            Color[] bmp = new Color[tex.Width * tex.Height];
+            tex.GetData(bmp);
+            mass = bmp.Where(c => c.R != 0.0f).Count();
+            mass /= tex.Width * tex.Height;
             renderTarget.Dispose();
             renderTarget = null;
             return v;

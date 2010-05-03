@@ -118,6 +118,7 @@
     <Compile Include="Animation\SkinningData.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Common\Globals.cs" />
     <Compile Include="Levels\Entities\AnimatedModelEntity.cs" />
     <Compile Include="Levels\Entities\BunnyEntity.cs" />
     <Compile Include="Levels\Entities\GroundEntity.cs" />

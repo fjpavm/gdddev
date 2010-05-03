@@ -48,6 +48,7 @@ namespace Gdd.Game.Engine.Levels
         {
             this.modelName = "mesh\\Hero";
             this.ModelDirection = ModelDirection.Right;
+            this.AddOffset = false;
         }
 
         #endregion
@@ -170,7 +171,7 @@ namespace Gdd.Game.Engine.Levels
 
                 Matrix m = this.PhysicsGeometry.Matrix;
                 this.PhysicsGeometry.SetVertices(this.currentPhysicsVertices);
-                this.PhysicsGeometry.Matrix = m * this.OffsetMatrix;
+                this.PhysicsGeometry.Matrix = m;// *this.OffsetMatrix;
 
                 this.aabb = this.PhysicsGeometry.AABB;
             }

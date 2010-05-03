@@ -38,9 +38,19 @@ namespace Gdd.Game.Engine.Levels
         public Vector2 offset;
 
         /// <summary>
+        /// The add offset.
+        /// </summary>
+        protected bool AddOffset;
+
+        /// <summary>
         /// The grid cell size.
         /// </summary>
         protected float gridCellSize = -1.0f;
+
+        /// <summary>
+        /// The mass.
+        /// </summary>
+        protected float mass;
 
         /// <summary>
         /// The model name.
@@ -100,6 +110,7 @@ namespace Gdd.Game.Engine.Levels
         public StaticModel(Game game)
             : base(game)
         {
+            this.AddOffset = true;
             this.modelName = "tmpCube";
             this.YawRotation = MathHelper.PiOver2;
             this.PitchRotation = 0.0f;
@@ -207,9 +218,13 @@ namespace Gdd.Game.Engine.Levels
             set
             {
                 base.Position2D = value;
-                if (this.PhysicsBody != null && !this.isUpdating)
+                if (this.PhysicsBody != null && !this.isUpdating && this.AddOffset)
                 {
                     this.PhysicsBody.Position = value + this.offset;
+                }
+                else if (this.PhysicsBody != null && !this.isUpdating && !this.AddOffset)
+                {
+                    this.PhysicsBody.Position = value;
                 }
             }
         }
@@ -455,7 +470,14 @@ namespace Gdd.Game.Engine.Levels
                         this.scaleChanged = false;
                     }
 
-                    this.Position2D = this.PhysicsBody.Position - this.offset;
+                    if (this.AddOffset)
+                    {
+                        this.Position2D = this.PhysicsBody.Position - this.offset;
+                    }
+                    else
+                    {
+                        this.Position2D = this.PhysicsBody.Position;
+                    }
                 }
 
                 this.Translation = Matrix.CreateTranslation(this.Position3D);
@@ -511,7 +533,8 @@ namespace Gdd.Game.Engine.Levels
 
             if (this.GeometryType == GeometryType.Polygon)
             {
-                this.PhysicsVertices = ModelToVertices.TransformStaticModel(this, this.Game);
+                this.PhysicsVertices = ModelToVertices.TransformStaticModel(this, this.Game, out this.mass);
+                this.mass *= 100.0f;
             }
 
             this.LoadCommonContent();
@@ -540,39 +563,43 @@ namespace Gdd.Game.Engine.Levels
             if (this.GeometryType == GeometryType.Polygon)
             {
                 this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
-                    this.scene.PhysicsSimulator, this.PhysicsVertices, 10.0f);
+                    this.scene.PhysicsSimulator, this.PhysicsVertices, this.mass * this.scale.X * this.scale.Y);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(
                     this.scene.PhysicsSimulator, this.PhysicsBody, this.PhysicsVertices, this.gridCellSize);
             }
             else if (this.GeometryType == GeometryType.Circle)
             {
+                this.mass =
+                    (float)
+                    (Math.PI * Math.Pow(this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 2));
                 this.PhysicsBody = BodyFactory.Instance.CreateCircleBody(
-                    this.scene.PhysicsSimulator, 
-                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
-                    10.0f);
+                    this.scene.PhysicsSimulator,
+                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(),
+                    this.mass);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateCircleGeom(
-                    this.scene.PhysicsSimulator, 
-                    this.PhysicsBody, 
-                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
-                    20, 
+                    this.scene.PhysicsSimulator,
+                    this.PhysicsBody,
+                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(),
+                    100,
                     this.gridCellSize);
             }
             else if (this.GeometryType == GeometryType.Rectangle)
             {
                 BoundingBox box = BoundingBox.CreateFromPoints(GetModelVertices(this.ObjectModel));
+                this.mass = (box.Max.X - box.Min.X) * (box.Max.Y - box.Min.Y) * this.scale.X * this.scale.Y;
                 this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(
-                    this.scene.PhysicsSimulator, 
-                    (box.Max.X - box.Min.X) * this.scale.X, 
-                    (box.Max.Y - box.Min.Y) * this.scale.Y, 
-                    10.0f);
+                    this.scene.PhysicsSimulator,
+                    (box.Max.X - box.Min.X) * this.scale.X,
+                    (box.Max.Y - box.Min.Y) * this.scale.Y,
+                    this.mass);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(
-                    this.scene.PhysicsSimulator, 
-                    this.PhysicsBody, 
-                    (box.Max.X - box.Min.X) * this.scale.X, 
-                    (box.Max.Y - box.Min.Y) * this.scale.Y, 
+                    this.scene.PhysicsSimulator,
+                    this.PhysicsBody,
+                    (box.Max.X - box.Min.X) * this.scale.X,
+                    (box.Max.Y - box.Min.Y) * this.scale.Y,
                     this.gridCellSize);
             }
 
