@@ -14,7 +14,6 @@ namespace Gdd.Game.LevelEditor
     using System.Reflection;
     using System.Windows.Forms;
 
-    using Gdd.Game.Engine;
     using Gdd.Game.Engine.Input;
     using Gdd.Game.Engine.Levels;
     using Gdd.Game.Engine.Scenes;
@@ -364,8 +363,10 @@ namespace Gdd.Game.LevelEditor
                 }
                 else
                 {
-                    this.isDragging = mouseState.LeftButton == ButtonState.Pressed && this.IsMouseInViewport(mouseState.X, mouseState.Y);
-                    if (this.isDragging && this.previousMouseState.X != mouseState.X && this.previousMouseState.Y != mouseState.Y)
+                    this.isDragging = mouseState.LeftButton == ButtonState.Pressed &&
+                                      this.IsMouseInViewport(mouseState.X, mouseState.Y);
+                    if (this.isDragging && this.previousMouseState.X != mouseState.X &&
+                        this.previousMouseState.Y != mouseState.Y)
                     {
                         Vector3 newPos = this.levelEditorScene.Camera.ScreenToWorld(mouseState.X, mouseState.Y);
                         this.SelectedComponent.Position2D = new Vector2(newPos.X, newPos.Y);

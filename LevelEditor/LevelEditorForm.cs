@@ -11,7 +11,9 @@ namespace Gdd.Game.LevelEditor
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
+    using System.Text;
     using System.Windows.Forms;
 
     using Gdd.Game.Engine.Levels;
@@ -107,6 +109,20 @@ namespace Gdd.Game.LevelEditor
         }
 
         /// <summary>
+        /// The combo box level components_ selected value changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void ComboBoxLevelComponents_SelectedValueChanged(object sender, EventArgs e)
+        {
+            this.SetPropertyGridObject(this.comboBoxLevelComponents.SelectedItem);
+        }
+
+        /// <summary>
         /// The initialize menu items.
         /// </summary>
         private void InitializeMenuItems()
@@ -131,7 +147,7 @@ namespace Gdd.Game.LevelEditor
                     var menuItem = new ToolStripMenuItem(
                         levelEntityTypeBinding.SceneComponentType.Name, 
                         null, 
-                        this.ToolbarItemClick, 
+                        this.ToolbarItem_Click, 
                         levelEntityTypeBinding.SceneComponentType.Name);
                     this.buttonEntities.Add(menuItem, levelEntityTypeBinding);
                     categoryButton.DropDownItems.Add(menuItem);
@@ -157,11 +173,11 @@ namespace Gdd.Game.LevelEditor
         {
             if (e.SelectedComponent != null)
             {
-                this.propertyGrid.SelectedObject = e.SelectedComponent;
+                this.SetPropertyGridObject(e.SelectedComponent);
             }
             else
             {
-                this.propertyGrid.SelectedObject = this.levelEditorPane.Level;
+                this.SetPropertyGridObject(this.levelEditorPane.Level);
             }
         }
 
@@ -190,7 +206,7 @@ namespace Gdd.Game.LevelEditor
         /// </param>
         private void LevelPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.propertyGrid.SelectedObject = this.levelEditorPane.Level;
+            this.SetPropertyGridObject(this.levelEditorPane.Level);
         }
 
         /// <summary>
@@ -211,6 +227,24 @@ namespace Gdd.Game.LevelEditor
                 this.levelEditorPane.LoadLevel(dialog.FileName);
                 this.textBoxLevelScript.Lines = this.levelEditorPane.Level.Script;
                 this.tabControl.SelectedTab = this.tabPageLevelEditor;
+            }
+        }
+
+        /// <summary>
+        /// The property grid_ property value changed.
+        /// </summary>
+        /// <param name="s">
+        /// The s.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void PropertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (e.ChangedItem.Label != null && e.ChangedItem.Label.Equals("Name", StringComparison.InvariantCulture))
+            {
+                this.comboBoxLevelComponents.DisplayMember = string.Empty;
+                this.comboBoxLevelComponents.DisplayMember = "Name";
             }
         }
 
@@ -251,6 +285,39 @@ namespace Gdd.Game.LevelEditor
                 this.levelEditorPane.Level.Script = this.textBoxLevelScript.Lines;
                 this.levelEditorPane.SaveLevel(dialog.FileName);
             }
+        }
+
+        /// <summary>
+        /// The set property grid object.
+        /// </summary>
+        /// <param name="obj">
+        /// The obj.
+        /// </param>
+        private void SetPropertyGridObject(object obj)
+        {
+            this.propertyGrid.HiddenProperties = null;
+            this.propertyGrid.SelectedObject = obj;
+            var sceneComponent = obj as SceneComponent;
+            if (sceneComponent == null)
+            {
+                return;
+            }
+
+            this.comboBoxLevelComponents.SelectedItem = sceneComponent;
+            Type sceneComponentType = sceneComponent.GetType();
+            Type levelEntityType = (from levelEntityTypeBinding in LevelScene.LevelEntityTypeBindings
+                                    where levelEntityTypeBinding.SceneComponentType == sceneComponentType
+                                    select levelEntityTypeBinding.LevelEntityType).FirstOrDefault();
+            if (levelEntityType == null)
+            {
+                return;
+            }
+
+            IEnumerable<string> hiddenProperties =
+                (from sceneComponentProperty in sceneComponentType.GetProperties() select sceneComponentProperty.Name).
+                    Except(from levelEntityProperty in levelEntityType.GetProperties() select levelEntityProperty.Name);
+            this.propertyGrid.HiddenProperties = hiddenProperties.ToArray();
+            this.propertyGrid.Refresh();
         }
 
         /// <summary>
@@ -302,7 +369,7 @@ namespace Gdd.Game.LevelEditor
         /// <param name="e">
         /// The EventArgs.
         /// </param>
-        private void ToolbarItemClick(object sender, EventArgs e)
+        private void ToolbarItem_Click(object sender, EventArgs e)
         {
             var toolStripItem = sender as ToolStripItem;
             if (toolStripItem == null)
@@ -317,11 +384,45 @@ namespace Gdd.Game.LevelEditor
             }
 
             object component = Activator.CreateInstance(typeBinding.SceneComponentType, this.levelEditorPane);
-            if (component is SceneComponent)
+            var sceneComponent = component as SceneComponent;
+            if (sceneComponent == null)
             {
-                this.propertyGrid.SelectedObject = component;
-                this.levelEditorPane.AddComponent((SceneComponent)component);
+                return;
             }
+
+            SceneComponent existingComponent = (from existing in this.levelEditorPane.Level.Components
+                                                where
+                                                    existing.GetType() == typeBinding.SceneComponentType &&
+                                                    !string.IsNullOrEmpty(existing.Name) &&
+                                                    existing.Name.StartsWith(
+                                                        typeBinding.SceneComponentType.Name, 
+                                                        true, 
+                                                        CultureInfo.InvariantCulture)
+                                                orderby existing.Name descending
+                                                select existing).FirstOrDefault();
+            var sb = new StringBuilder();
+            sb.Append(typeBinding.SceneComponentType.Name.Substring(0, 1).ToLower(CultureInfo.InvariantCulture));
+            sb.Append(typeBinding.SceneComponentType.Name.Substring(1, typeBinding.SceneComponentType.Name.Length - 1));
+            if (existingComponent != null)
+            {
+                string last = existingComponent.Name.Substring(
+                    typeBinding.SceneComponentType.Name.Length, 
+                    existingComponent.Name.Length - typeBinding.SceneComponentType.Name.Length);
+                int number;
+                if (int.TryParse(last, NumberStyles.Integer, CultureInfo.InvariantCulture, out number))
+                {
+                    sb.Append(number + 1);
+                }
+            }
+            else
+            {
+                sb.Append("1");
+            }
+
+            sceneComponent.Name = sb.ToString();
+            this.comboBoxLevelComponents.Items.Add(sceneComponent);
+            this.SetPropertyGridObject(sceneComponent);
+            this.levelEditorPane.AddComponent(sceneComponent);
         }
 
         #endregion
