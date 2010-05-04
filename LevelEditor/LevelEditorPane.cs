@@ -65,7 +65,7 @@ namespace Gdd.Game.LevelEditor
         /// <summary>
         /// The level preview scene.
         /// </summary>
-        private LevelScene levelPreviewScene;
+        private LevelPreviewScene levelPreviewScene;
 
         /// <summary>
         /// The new level block.
@@ -288,7 +288,7 @@ namespace Gdd.Game.LevelEditor
             this.levelEditorScene.InputManager.MapToKey(this.deleteSelectedBlock, Keys.Delete);
             SceneManager.AddScene(this.levelEditorScene);
 
-            this.levelPreviewScene = new LevelScene(this) { MainGameScene = true };
+            this.levelPreviewScene = new LevelPreviewScene(this) { MainGameScene = true };
             SceneManager.AddScene(this.levelPreviewScene);
 
             SceneManager.SetCurrentScene(this.levelEditorScene);

@@ -169,7 +169,6 @@
     <Compile Include="Menu\MainMenu.cs" />
     <Compile Include="Physics\MarchingSquares.cs" />
     <Compile Include="Physics\ModelToVertices.cs" />
-    <Compile Include="Physics\ScenePhysics.cs" />
     <Compile Include="Render\GfxComponent.cs" />
     <Compile Include="Render\Shadows\ShadowMapManager.cs" />
     <Compile Include="Scenes\SceneCollection.cs" />

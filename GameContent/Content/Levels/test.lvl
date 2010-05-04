@@ -14,31 +14,63 @@
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh/Final_terrian _Y _X _Half</ModelName>
     </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut1Txt</Name>
+      <Position2D>
+        <X>-357.841553</X>
+        <Y>2.30810547</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>20</X>
+        <Y>20</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="TutorialTextEntity">
+      <Enabled>true</Enabled>
+      <Name>tutorialText1</Name>
+      <Position2D>
+        <X>-334.826538</X>
+        <Y>14.08374</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <BodyText>Click and drag the sphere to paint it\ninto the world.\nSpheres can roll over flowers,\nbut are outrun by bunnies.\nPainting objects or getting injured\nremoves paint from your bar.\nIf this bar becomes empty,\nyou will have to restart the game.</BodyText>
+      <HeaderText>Tutorial 1</HeaderText>
+      <TextBoxSize>
+        <X>20</X>
+        <Y>20</Y>
+      </TextBoxSize>
+    </LevelEntity>
   </LevelEntityCollection>
   <Script>
-    <string>using System;</string>
     <string>using Gdd.Game.Engine.Levels;</string>
+    <string>using Gdd.Game.Engine.Levels.Information;</string>
+    <string>using Gdd.Game.Engine.Scenes;</string>
+    <string />
+    <string>using System;</string>
+    <string>using System.Linq;</string>
     <string />
     <string>using Microsoft.Xna.Framework;</string>
     <string />
     <string>public class MyLevel : LevelScript</string>
     <string>{</string>
-    <string>    float a = 0.0f;</string>
-    <string />
     <string>    public override void Initialize()</string>
     <string>    {</string>
+    <string>        foreach (TutorialText t in this.Level.Components.Where(c =&gt; c is TutorialText)) {</string>
+    <string>            t.Visible = false;</string>
+    <string>        }</string>
     <string>    }</string>
     <string />
     <string>    public override void Update(GameTime gameTime)</string>
     <string>    {</string>
-    <string>        a += 0.1f;</string>
-    <string>        StaticModel cube = this.Level.Components["bunny1"] as StaticModel;</string>
-    <string>        cube.Position2D = new Vector2(cube.Position2D.X + (float)Math.Sin(a) / 2, cube.Position2D.Y + (float)Math.Cos(a) / 2);</string>
+    <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText1"]).Visible = </string>
+    <string>            ((Bounds)this.Level.Components["bndTut1Txt"]).IsColliding;</string>
     <string>    } </string>
     <string>}</string>
   </Script>
   <StartPosition>
-    <X>-360</X>
-    <Y>-6</Y>
+    <X>-380</X>
+    <Y>0</Y>
   </StartPosition>
 </SerializableLevel>

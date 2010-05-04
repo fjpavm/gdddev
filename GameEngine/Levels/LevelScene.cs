@@ -120,6 +120,7 @@ namespace Gdd.Game.Engine.Levels
                     this.currentLevel = value;
                     this.currentLevel.Components.AutoInitialize = true;
                     this.Camera.Pos = new Vector3(this.currentLevel.StartPosition, this.Camera.Pos.Z);
+                    this.OnCurrentLevelChanged();
                     this.Initialize();
                 }
             }
@@ -155,12 +156,6 @@ namespace Gdd.Game.Engine.Levels
         {
             base.AddComponent(sceneComponent);
             this.currentLevel.Components.Add(sceneComponent);
-        }
-
-        public override void RemoveComponent(SceneComponent sceneComponent)
-        {
-            base.RemoveComponent(sceneComponent);
-            this.currentLevel.Components.Remove(sceneComponent);
         }
 
         /// <summary>
@@ -216,6 +211,18 @@ namespace Gdd.Game.Engine.Levels
         }
 
         /// <summary>
+        /// The remove component.
+        /// </summary>
+        /// <param name="sceneComponent">
+        /// The scene component.
+        /// </param>
+        public override void RemoveComponent(SceneComponent sceneComponent)
+        {
+            base.RemoveComponent(sceneComponent);
+            this.currentLevel.Components.Remove(sceneComponent);
+        }
+
+        /// <summary>
         /// The update.
         /// </summary>
         /// <param name="gameTime">
@@ -253,6 +260,13 @@ namespace Gdd.Game.Engine.Levels
             }
 
             this.background.Draw();
+        }
+
+        /// <summary>
+        /// The on current level changed.
+        /// </summary>
+        protected virtual void OnCurrentLevelChanged()
+        {
         }
 
         #endregion

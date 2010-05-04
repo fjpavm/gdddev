@@ -21,6 +21,20 @@ namespace Gdd.Game.Engine.Levels
     /// </summary>
     public class Bounds : DrawableSceneComponent
     {
+        #region Constants and Fields
+
+        /// <summary>
+        /// The has changed.
+        /// </summary>
+        private bool hasChanged;
+
+        /// <summary>
+        /// The size.
+        /// </summary>
+        private Vector2 size;
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -44,10 +58,6 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         public bool IsColliding { get; private set; }
 
-        private Vector2 size;
-
-        private bool hasChanged;
-
         /// <summary>
         /// Gets or sets Size.
         /// </summary>
@@ -57,6 +67,7 @@ namespace Gdd.Game.Engine.Levels
             {
                 return this.size;
             }
+
             set
             {
                 this.size = value;

@@ -99,6 +99,7 @@
     <Compile Include="LevelEditorForm.Designer.cs">
       <DependentUpon>LevelEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LevelPreviewScene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="LevelEditorPane.cs" />
