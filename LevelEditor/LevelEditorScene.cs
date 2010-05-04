@@ -22,7 +22,7 @@ namespace Gdd.Game.LevelEditor
     /// <summary>
     /// The level editor scene.
     /// </summary>
-    internal class LevelEditorScene : LevelScene
+    internal sealed class LevelEditorScene : LevelScene
     {
         #region Constants and Fields
 
@@ -83,20 +83,20 @@ namespace Gdd.Game.LevelEditor
         {
             base.Initialize();
             var newPosition = new Vector2(this.Camera.Pos.X, this.Camera.Pos.Y);
-            this.InvokeCameraPositionChanged(new CameraPositionChangedEventArgs(newPosition));
+            this.OnCameraPositionChanged(new CameraPositionChangedEventArgs(newPosition));
             this.Light = new DirectionalLight(this.Game)
                 {
                    Position3D = new Vector3(0.0f, 0.0f, 10.0f), Color = Color.CornflowerBlue 
                 };
 
             this.cameraUp = new GameAction("cameraUp");
-            this.InputManager.MapToKey(this.cameraUp, new[] { Keys.Up, Keys.LeftControl });
+            this.InputManager.MapToKey(this.cameraUp, Keys.Up);
             this.cameraDown = new GameAction("cameraDown");
-            this.InputManager.MapToKey(this.cameraDown, new[] { Keys.Down, Keys.LeftControl });
+            this.InputManager.MapToKey(this.cameraDown, Keys.Down);
             this.cameraRight = new GameAction("cameraRight");
-            this.InputManager.MapToKey(this.cameraRight, new[] { Keys.Right, Keys.LeftControl });
+            this.InputManager.MapToKey(this.cameraRight, Keys.Right);
             this.cameraLeft = new GameAction("cameraLeft");
-            this.InputManager.MapToKey(this.cameraLeft, new[] { Keys.Left, Keys.LeftControl });
+            this.InputManager.MapToKey(this.cameraLeft, Keys.Left);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Gdd.Game.LevelEditor
             if (cameraPositionChanged)
             {
                 var cameraPosition = new Vector2(this.Camera.Pos.X, this.Camera.Pos.Y);
-                this.InvokeCameraPositionChanged(new CameraPositionChangedEventArgs(cameraPosition));
+                this.OnCameraPositionChanged(new CameraPositionChangedEventArgs(cameraPosition));
             }
         }
 
@@ -151,7 +151,7 @@ namespace Gdd.Game.LevelEditor
         /// <param name="e">
         /// The e.
         /// </param>
-        private void InvokeCameraPositionChanged(CameraPositionChangedEventArgs e)
+        private void OnCameraPositionChanged(CameraPositionChangedEventArgs e)
         {
             EventHandler<CameraPositionChangedEventArgs> handler = this.CameraPositionChanged;
             if (handler != null)
