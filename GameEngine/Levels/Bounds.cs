@@ -1,46 +1,92 @@
-﻿using System;
-using Gdd.Game.Engine.Scenes;
-using Microsoft.Xna.Framework;
-using FarseerGames.FarseerPhysics.Dynamics;
-using FarseerGames.FarseerPhysics.Collisions;
-using FarseerGames.FarseerPhysics.Factories;
-using Gdd.Game.Engine.Levels.Characters;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Bounds.cs" company="UAD">
+//   Game Design and Development
+// </copyright>
+// <summary>
+//   The bounds.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Gdd.Game.Engine.Levels
 {
+    using FarseerGames.FarseerPhysics.Factories;
+
+    using Gdd.Game.Engine.Levels.Characters;
+    using Gdd.Game.Engine.Scenes;
+
+    using Microsoft.Xna.Framework;
+
+    /// <summary>
+    /// The bounds.
+    /// </summary>
     public class Bounds : DrawableSceneComponent
     {
-        public Vector2 Size {get; set;}
-        public bool isColliding {get; private set;}
+        #region Constructors and Destructors
 
-        public Bounds(Microsoft.Xna.Framework.Game game)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bounds"/> class.
+        /// </summary>
+        /// <param name="game">
+        /// The game.
+        /// </param>
+        public Bounds(Game game)
             : base(game)
         {
-            Size = Vector2.Zero;
+            this.Size = new Vector2(10, 10);
         }
 
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets a value indicating whether IsColliding.
+        /// </summary>
+        public bool IsColliding { get; private set; }
+
+        /// <summary>
+        /// Gets or sets Size.
+        /// </summary>
+        public Vector2 Size { get; set; }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// The update.
+        /// </summary>
+        /// <param name="gameTime">
+        /// The game time.
+        /// </param>
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            this.PhysicsBody.Position = this.pos2D;
+            this.aabb = this.PhysicsGeometry.AABB;
+
+            if (Hero.HeroGeometry != null)
+            {
+                this.IsColliding = this.PhysicsGeometry.Collide(Hero.HeroGeometry);
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The load content.
+        /// </summary>
         protected override void LoadContent()
         {
             base.LoadContent();
 
-            this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(Size.X, Size.Y, 1.0f);
-            this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(PhysicsBody, Size.X, Size.Y);
+            this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(this.Size.X, this.Size.Y, 1.0f);
+            this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(this.PhysicsBody, this.Size.X, this.Size.Y);
+            this.aabb = this.PhysicsGeometry.AABB;
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            this.PhysicsBody.Position = pos2D;
-
-            isColliding = this.PhysicsGeometry.Collide(Hero.HeroGeometry);
-
-            if(isColliding){
-                bool ble = false; 
-            }
-            else{
-                bool ble = false; 
-            }
-        }
-
+        #endregion
     }
 }
