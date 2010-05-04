@@ -179,7 +179,6 @@
       <Name>AnimatedModel</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -275,7 +274,6 @@
       <Name>terrain-test</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Textures\DialogTexture.png">
       <Name>DialogTexture</Name>

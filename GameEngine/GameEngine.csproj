@@ -123,6 +123,7 @@
     <Compile Include="Common\Globals.cs" />
     <Compile Include="Levels\Bounds.cs" />
     <Compile Include="Levels\Entities\AnimatedModelEntity.cs" />
+    <Compile Include="Levels\Entities\BoundsEntity.cs" />
     <Compile Include="Levels\Entities\BunnyEntity.cs" />
     <Compile Include="Levels\Entities\GroundEntity.cs" />
     <Compile Include="Levels\Entities\TutorialTextEntity.cs" />
