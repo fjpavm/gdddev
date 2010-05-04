@@ -1,3 +1,4 @@
+using FarseerGames.FarseerPhysics.Collisions;
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Hero.cs" company="UAD">
 //   Game Design and Development
@@ -41,6 +42,16 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// The life.
         /// </summary>
         private static float life = 1.0f;
+
+        /// <summary>
+        /// The target life.
+        /// </summary>
+        private static float targetLife = 1.0f;
+
+        /// <summary>
+        /// The aabb.
+        /// </summary>
+        public static Geom HeroGeometry;
 
         /// <summary>
         /// The animation index.
@@ -100,6 +111,21 @@ namespace Gdd.Game.Engine.Levels.Characters
             return life;
         }
 
+        public static void DecreaseLife()
+        {
+            targetLife -= 0.1f;
+
+            if (targetLife < 0.0f)
+                targetLife = 0.0f;
+        }
+
+        public static void IncreaseLife()
+        {
+            targetLife += 0.1f;
+            if (targetLife > 1.0f)
+                targetLife = 1.0f;
+        }
+
         /// <summary>
         /// The get hero position.
         /// </summary>
@@ -109,6 +135,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         {
             return HeroPosition;
         }
+
 
         /// <summary>
         /// The draw.
@@ -157,34 +184,30 @@ namespace Gdd.Game.Engine.Levels.Characters
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            
+            if(targetLife < life){
+                life -= 0.5f * gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+                if (targetLife > life)
+                    life = targetLife;
+            }
+            else if(targetLife > life){
+                life += 0.5f * gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+                if (targetLife < life)
+                    life = targetLife;
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 this.PhysicsBody.ApplyImpulse(ref this.jumpImpulse);
-
-                // this.AnimationPlayer.PauseClip();
             }
 
-            /*else if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            if (Keyboard.GetState().IsKeyDown(Keys.O) && lastState.IsKeyUp(Keys.O))
             {
-                this.AnimationPlayer.ResumeClip();
-            }*/
-
-            if (Keyboard.GetState().IsKeyDown(Keys.L))
-            {
-                life -= 0.001f;
-                if (life < 0.0f)
-                {
-                    life = 0.0f;
-                }
+                IncreaseLife();
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.O))
+            else if (Keyboard.GetState().IsKeyDown(Keys.L) && lastState.IsKeyUp(Keys.L))
             {
-                life += 0.001f;
-                if (life > 1.0f)
-                {
-                    life = 1.0f;
-                }
+                DecreaseLife();
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.V) && !this.lastState.IsKeyDown(Keys.V))
             {
@@ -215,7 +238,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         protected override void LoadContent()
         {
-            this.gridCellSize = 50.0f;
+            gridCellSize = 5.0f;
             base.LoadContent();
 
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL, "AnimatedModel", this.Game);
@@ -228,6 +251,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.AnimationPlayer.StartClip();
 
             this.PhysicsBody.Mass = 10.0f;
+            HeroGeometry = PhysicsGeometry;
         }
 
         #endregion

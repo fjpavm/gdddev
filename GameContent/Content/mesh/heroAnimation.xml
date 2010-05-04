@@ -2,7 +2,7 @@
   <animation>
     <name>idle</name>
     <startframe>1</startframe>
-    <endframe>60</endframe>
+    <endframe>59</endframe>
   </animation>
   <animation>
     <name>Act</name>

@@ -43,6 +43,16 @@ namespace Gdd.Game.Engine.Levels
         protected bool AddOffset;
 
         /// <summary>
+        /// The offset matrix.
+        /// </summary>
+        protected Matrix OffsetMatrix;
+
+        /// <summary>
+        /// The inverse offset matrix.
+        /// </summary>
+        protected Matrix InverseOffsetMatrix; 
+
+        /// <summary>
         /// The grid cell size.
         /// </summary>
         protected float gridCellSize = -1.0f;
@@ -464,7 +474,7 @@ namespace Gdd.Game.Engine.Levels
 
                         float rotation = this.PhysicsBody.Rotation;
                         this.CreatePhysics();
-                        this.offset = new Vector2(this.offset.X * this.scale.X, this.offset.Y * this.scale.Y);
+                      //  this.offset = new Vector2(this.offset.X * this.scale.X, this.offset.Y * this.scale.Y);
                         this.PhysicsBody.Position = this.Position2D + this.offset;
                         this.PhysicsBody.Rotation = rotation;
                         this.scaleChanged = false;
@@ -481,10 +491,11 @@ namespace Gdd.Game.Engine.Levels
                 }
 
                 this.Translation = Matrix.CreateTranslation(this.Position3D);
-                Matrix translateOffset = Matrix.CreateTranslation(this.offset.X, this.offset.Y, 0);
+               /* Matrix translateOffset = Matrix.CreateTranslation(this.offset.X, this.offset.Y, 0);
                 Matrix translateOffsetBack = Matrix.CreateTranslation(-this.offset.X, -this.offset.Y, 0);
+                */
                 this.Rotation = Matrix.CreateFromYawPitchRoll(this.YawRotation, this.PitchRotation, this.RollRotation) *
-                                translateOffsetBack * this.PhysicsBody.GetBodyRotationMatrix() * translateOffset;
+                                InverseOffsetMatrix * this.PhysicsBody.GetBodyRotationMatrix() * OffsetMatrix;
             }
 
             this.World = this.ScaleMatrix * this.Rotation * this.Translation;
@@ -502,7 +513,7 @@ namespace Gdd.Game.Engine.Levels
         {
             this.CreatePhysics();
 
-            this.offset = this.PhysicsBody.Position;
+            //this.offset = this.PhysicsBody.Position;
             this.PhysicsBody.Position = this.Position2D + this.offset;
 
             foreach (Effect effect in this.ObjectModel.Meshes.SelectMany(mesh => mesh.Effects))
@@ -584,6 +595,8 @@ namespace Gdd.Game.Engine.Levels
                     this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
                     100, 
                     this.gridCellSize);
+
+                this.offset = new Vector2(0.0f, -this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length());
             }
             else if (this.GeometryType == GeometryType.Rectangle)
             {
@@ -601,8 +614,15 @@ namespace Gdd.Game.Engine.Levels
                     (box.Max.X - box.Min.X) * this.scale.X, 
                     (box.Max.Y - box.Min.Y) * this.scale.Y, 
                     this.gridCellSize);
+
+                this.offset = new Vector2(0.0f, (box.Max.Y - box.Min.Y) * this.scale.Y / 2.0f);
             }
 
+            this.offset += this.PhysicsBody.Position;// +this.PhysicsGeometry.LocalVertices.GetCentroid();
+
+            OffsetMatrix = Matrix.CreateTranslation(new Vector3(offset, 0.0f));
+            InverseOffsetMatrix = Matrix.CreateTranslation(new Vector3(-offset, 0.0f));
+            
             this.aabb = this.PhysicsGeometry.AABB;
         }
 

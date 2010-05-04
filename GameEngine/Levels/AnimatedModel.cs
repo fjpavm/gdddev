@@ -216,8 +216,6 @@ namespace Gdd.Game.Engine.Levels
 
             this.LoadCommonContent();
 
-            this.OffsetMatrix = Matrix.CreateTranslation(new Vector3(-this.offset, 0.0f));
-
             this.PhysicsBody.Mass = 70.0f;
             this.PhysicsBody.MomentOfInertia = float.MaxValue;
             this.PhysicsGeometry.FrictionCoefficient = 10.0f;

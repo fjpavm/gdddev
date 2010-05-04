@@ -144,7 +144,7 @@ namespace Gdd.Game.Engine.Levels.Information
             ShaderManager.Begin();
             ShaderManager.GetCurrentEffect().Techniques["TextureTechnique"].Passes[0].Begin();
 
-            this.GraphicsDevice.VertexDeclaration = TextureSpriteVertexDeclaration;
+            this.Game.GraphicsDevice.VertexDeclaration = TextureSpriteVertexDeclaration;
             this.Game.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, this.textSprite, 0, 2);
 
             ShaderManager.GetCurrentEffect().Techniques["TextureTechnique"].Passes[0].End();
@@ -196,7 +196,7 @@ namespace Gdd.Game.Engine.Levels.Information
 
             var spriteBatch = (SpriteBatch)this.scene.Game.Services.GetService(typeof(SpriteBatch));
 
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.SaveState);
 
             spriteBatch.Draw(
                 this.DialogTexture, 
@@ -281,14 +281,15 @@ namespace Gdd.Game.Engine.Levels.Information
             public static int SizeInBytes = sizeof(float) * (3 + 2);
 
             /// <summary>
+            /// The position.
+            /// </summary>
+            private Vector3 position;
+
+            /// <summary>
             /// The uv.
             /// </summary>
             private Vector2 UV;
 
-            /// <summary>
-            /// The position.
-            /// </summary>
-            private Vector3 position;
 
             #endregion
 

@@ -77,7 +77,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.GraphicsDevice.RenderState.DepthBufferEnable = false;
             this.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
 
-            this.batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, SaveStateMode.SaveState);
+            this.batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
 
             this.batch.DrawString(this.font, "Health", this.healthPosition, Color.Black);
             this.batch.Draw(

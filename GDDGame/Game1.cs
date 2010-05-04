@@ -1,3 +1,4 @@
+using Gdd.Game.Engine.Levels;
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Game1.cs" company="UAD">
 //   Game Design and Development
@@ -293,25 +294,16 @@ namespace Gdd.Game
             scene1.AddComponent(lollypop);
             scene1.AddComponent(rock);
             scene1.AddComponent(candy);
-            scene1.AddComponent(new HeroHealthBar(this));
+            scene1.AddComponent(new HeroHealthBar(this){DrawOrder = int.MaxValue});
 
             scene1.AddComponent(
                 new TutorialText(this)
                     {
-                        HeaderText = "Disable normal drawing",
+                        HeaderText = "Drawing effects",
                         BodyText =
-                            "Put SHOW_ONLY_PHYSICS into the \n conditional compilation symbols \n To disable normal drawing",
+                            "Use F12 to switch through the\n drawing effects (3D, 2D or Both)",
                         Position2D = new Vector2(0.0f, 0.0f),
                         TextBoxSize = new Vector2(30.0f, 25.0f)
-                    });
-            scene1.AddComponent(
-                new TutorialText(this)
-                    {
-                        HeaderText = "Enable physics drawing",
-                        BodyText =
-                            "Put SHOW_PHYSICS into the \n conditional compilation symbols \n To enable physics drawing",
-                        Position2D = new Vector2(5.0f, 10.0f),
-                        TextBoxSize = new Vector2(15.0f, 15.0f)
                     });
             scene1.Camera = camera;
             scene1.Camera.Pos = new Vector3(0, 0, 10);
@@ -321,8 +313,11 @@ namespace Gdd.Game
             scene1.AddComponent(new PointLight(this) { Position2D = new Vector2(10.0f, 0.0f), Radius = 10.0f, Color = Color.Yellow });
 
             this.IsMouseVisible = true;
-            var gameGui = new GameGUI(this) { DrawOrder = int.MaxValue };
+            var gameGui = new GameGUI(this) { DrawOrder = int.MaxValue -1 };
             scene1.AddComponent(gameGui);
+
+            scene1.AddComponent(new Bounds(this) { Position2D = new Vector2(0.0f, 30.0f), Size = new Vector2(10.0f, 10.0f) });
+
             //scene1.GameGUI = new GameGUI(this);
             //scene1.GameGUI.LoadContent();
             //scene1.GameGUI.Scene = scene1;

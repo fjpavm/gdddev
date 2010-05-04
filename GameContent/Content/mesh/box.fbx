@@ -9,19 +9,19 @@ FBXHeaderExtension:  {
     CreationTimeStamp:  {
         Version: 1000
         Year: 2010
-        Month: 4
-        Day: 29
-        Hour: 14
-        Minute: 27
-        Second: 44
-        Millisecond: 234
+        Month: 5
+        Day: 3
+        Hour: 15
+        Minute: 49
+        Second: 30
+        Millisecond: 656
     }
     Creator: "FBX SDK/FBX Plugins build 20061101"
     OtherFlags:  {
         FlagPLE: 0
     }
 }
-CreationTime: "2010-04-29 14:27:44:234"
+CreationTime: "2010-05-03 15:49:30:656"
 Creator: "FBX SDK/FBX Plugins build 20061101"
 
 ; Object definitions
@@ -141,10 +141,10 @@ Objects:  {
             Property: "Lcl Translation", "Lcl Translation", "A+",0,-0,0
             Property: "Lcl Rotation", "Lcl Rotation", "A+",0,0,0
             Property: "Lcl Scaling", "Lcl Scaling", "A+",1,1,1
-            Property: "RotationOffset", "Vector3D", "",0,0,0
-            Property: "RotationPivot", "Vector3D", "",0,0,0
+            Property: "RotationOffset", "Vector3D", "",0,-1.9412385225296,1.9412385225296
+            Property: "RotationPivot", "Vector3D", "",0,1.9412385225296,0
             Property: "ScalingOffset", "Vector3D", "",0,0,0
-            Property: "ScalingPivot", "Vector3D", "",0,0,0
+            Property: "ScalingPivot", "Vector3D", "",0,1.9412385225296,0
             Property: "TranslationActive", "bool", "",0
             Property: "TranslationMin", "Vector3D", "",-0,0,-0
             Property: "TranslationMax", "Vector3D", "",-0,0,-0
@@ -158,7 +158,7 @@ Objects:  {
             Property: "RotationSpaceForLimitOnly", "bool", "",0
             Property: "AxisLen", "double", "",10
             Property: "PreRotation", "Vector3D", "",90,-0,0
-            Property: "PostRotation", "Vector3D", "",-0,-0,-0
+            Property: "PostRotation", "Vector3D", "",0,-0,0
             Property: "RotationActive", "bool", "",1
             Property: "RotationMin", "Vector3D", "",0,0,0
             Property: "RotationMax", "Vector3D", "",0,0,0
