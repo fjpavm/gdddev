@@ -9,19 +9,19 @@ FBXHeaderExtension:  {
     CreationTimeStamp:  {
         Version: 1000
         Year: 2010
-        Month: 4
-        Day: 29
-        Hour: 14
-        Minute: 28
-        Second: 23
-        Millisecond: 546
+        Month: 5
+        Day: 3
+        Hour: 15
+        Minute: 50
+        Second: 18
+        Millisecond: 62
     }
     Creator: "FBX SDK/FBX Plugins build 20061101"
     OtherFlags:  {
         FlagPLE: 0
     }
 }
-CreationTime: "2010-04-29 14:28:23:546"
+CreationTime: "2010-05-03 15:50:18:062"
 Creator: "FBX SDK/FBX Plugins build 20061101"
 
 ; Object definitions
@@ -133,7 +133,7 @@ Objects:  {
         CameraName: 100
         CameraIndexName: 
     }
-    Model: "Model::pCube3", "Mesh" {
+    Model: "Model::tent", "Mesh" {
         Version: 232
         Properties60:  {
             Property: "QuaternionInterpolate", "bool", "",0
@@ -141,10 +141,10 @@ Objects:  {
             Property: "Lcl Translation", "Lcl Translation", "A+",0,-0,0
             Property: "Lcl Rotation", "Lcl Rotation", "A+",0,0,0
             Property: "Lcl Scaling", "Lcl Scaling", "A+",1,1,1
-            Property: "RotationOffset", "Vector3D", "",0,0,0
-            Property: "RotationPivot", "Vector3D", "",0,0,0
+            Property: "RotationOffset", "Vector3D", "",0,-1.93669486045837,1.93669486045837
+            Property: "RotationPivot", "Vector3D", "",0,1.93669486045837,0
             Property: "ScalingOffset", "Vector3D", "",0,0,0
-            Property: "ScalingPivot", "Vector3D", "",0,0,0
+            Property: "ScalingPivot", "Vector3D", "",0,1.93669486045837,0
             Property: "TranslationActive", "bool", "",0
             Property: "TranslationMin", "Vector3D", "",-0,0,-0
             Property: "TranslationMax", "Vector3D", "",-0,0,-0
@@ -158,7 +158,7 @@ Objects:  {
             Property: "RotationSpaceForLimitOnly", "bool", "",0
             Property: "AxisLen", "double", "",10
             Property: "PreRotation", "Vector3D", "",90,-0,0
-            Property: "PostRotation", "Vector3D", "",-0,-0,-0
+            Property: "PostRotation", "Vector3D", "",0,-0,0
             Property: "RotationActive", "bool", "",1
             Property: "RotationMin", "Vector3D", "",0,0,0
             Property: "RotationMax", "Vector3D", "",0,0,0
@@ -1390,7 +1390,7 @@ Objects:  {
 ;------------------------------------------------------------------
 
 Relations:  {
-    Model: "Model::pCube3", "Mesh" {
+    Model: "Model::tent", "Mesh" {
     }
     Model: "Model::Producer Perspective", "Camera" {
     }
@@ -1416,8 +1416,8 @@ Relations:  {
 ;------------------------------------------------------------------
 
 Connections:  {
-    Connect: "OO", "Model::pCube3", "Model::Scene"
-    Connect: "OO", "Material::lambert1", "Model::pCube3"
+    Connect: "OO", "Model::tent", "Model::Scene"
+    Connect: "OO", "Material::lambert1", "Model::tent"
 }
 ;Takes and animation section
 ;----------------------------------------------------

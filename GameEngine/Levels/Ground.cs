@@ -53,6 +53,7 @@ namespace Gdd.Game.Engine.Levels
         public Ground(Game game)
             : base(game)
         {
+            AddOffset = true;
             // this.Rotation = Matrix.Identity;
         }
 
@@ -152,7 +153,7 @@ namespace Gdd.Game.Engine.Levels
                             };
 
                         vertices = new Vertices(ref temp);
-                        vertices.SubDivideEdges(2.0f);
+                        vertices.SubDivideEdges(3.0f);
 
                         this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
                             this.scene.PhysicsSimulator, vertices, 1);
@@ -165,6 +166,8 @@ namespace Gdd.Game.Engine.Levels
                         this.PhysicsGeometry.CollidesWith = CollisionCategory.All & ~CollisionCategory.Cat1;
 
                         this.offset = this.PhysicsBody.Position;
+                        OffsetMatrix = Matrix.CreateTranslation(new Vector3(offset, 0.0f));
+                        InverseOffsetMatrix = Matrix.CreateTranslation(new Vector3(-offset, 0.0f));
                         this.PhysicsBody.Position = this.Position2D + this.offset;
 
                         this.PhysicsBody.IsStatic = true;
