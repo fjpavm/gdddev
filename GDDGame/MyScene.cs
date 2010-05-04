@@ -9,9 +9,8 @@
 
 namespace Gdd.Game
 {
-    using Engine.Input;
-    using Engine.Levels;
-    using Engine.Scenes;
+    using Gdd.Game.Engine.Input;
+    using Gdd.Game.Engine.Levels;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;

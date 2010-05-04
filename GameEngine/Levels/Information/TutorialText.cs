@@ -33,6 +33,36 @@ namespace Gdd.Game.Engine.Levels.Information
         private static VertexDeclaration TextureSpriteVertexDeclaration;
 
         /// <summary>
+        /// The body font.
+        /// </summary>
+        private SpriteFont bodyFont;
+
+        /// <summary>
+        /// The body text.
+        /// </summary>
+        private string bodyText;
+
+        /// <summary>
+        /// The has changed.
+        /// </summary>
+        private bool hasChanged;
+
+        /// <summary>
+        /// The header font.
+        /// </summary>
+        private SpriteFont headerFont;
+
+        /// <summary>
+        /// The header text.
+        /// </summary>
+        private string headerText;
+
+        /// <summary>
+        /// The text box size.
+        /// </summary>
+        private Vector2 textBoxSize;
+
+        /// <summary>
         /// The text sprite.
         /// </summary>
         private TextureSprite[] textSprite;
@@ -67,10 +97,6 @@ namespace Gdd.Game.Engine.Levels.Information
 
         #region Properties
 
-        private SpriteFont bodyFont;
-
-        private bool hasChanged;
-
         /// <summary>
         /// Gets or sets BodyFont.
         /// </summary>
@@ -80,14 +106,13 @@ namespace Gdd.Game.Engine.Levels.Information
             {
                 return this.bodyFont;
             }
+
             set
             {
                 this.bodyFont = value;
                 this.hasChanged = true;
             }
         }
-
-        private string bodyText;
 
         /// <summary>
         /// Gets or sets BodyText.
@@ -98,14 +123,13 @@ namespace Gdd.Game.Engine.Levels.Information
             {
                 return this.bodyText;
             }
+
             set
             {
                 this.bodyText = value;
                 this.hasChanged = true;
             }
         }
-
-        private SpriteFont headerFont;
 
         /// <summary>
         /// The header font.
@@ -116,14 +140,13 @@ namespace Gdd.Game.Engine.Levels.Information
             {
                 return this.headerFont;
             }
+
             set
             {
                 this.headerFont = value;
                 this.hasChanged = true;
             }
         }
-
-        private string headerText;
 
         /// <summary>
         /// Gets or sets HeaderText.
@@ -134,14 +157,13 @@ namespace Gdd.Game.Engine.Levels.Information
             {
                 return this.headerText;
             }
+
             set
             {
                 this.headerText = value;
                 this.hasChanged = true;
             }
         }
-
-        private Vector2 textBoxSize;
 
         /// <summary>
         /// Gets or sets TextBoxSize.
@@ -152,6 +174,7 @@ namespace Gdd.Game.Engine.Levels.Information
             {
                 return this.textBoxSize;
             }
+
             set
             {
                 this.textBoxSize = value;
@@ -280,50 +303,51 @@ namespace Gdd.Game.Engine.Levels.Information
                 new Rectangle(0, 0, 512, (int)(512 * (this.TextBoxSize.Y / this.TextBoxSize.X))), 
                 Color.White);
 
+            string header = this.HeaderText.Replace("\\n", "\n");
             spriteBatch.DrawString(
                 this.HeaderFont, 
-                this.HeaderText, 
-                new Vector2(renderTarget.Width / 2.0f, renderTarget.Height / 10.0f + 30), 
+                header, 
+                new Vector2(renderTarget.Width / 2.0f, (renderTarget.Height / 10.0f) + 30), 
                 Color.Black, 
                 0.0f, 
-                this.HeaderFont.MeasureString(this.HeaderText) / 2.0f, 
+                this.HeaderFont.MeasureString(header) / 2.0f, 
                 1.0f, 
                 SpriteEffects.None, 
                 1.0f);
+            string body = this.BodyText.Replace("\\n", "\n");
+            var textPos = new Vector2(renderTarget.Width / 2.0f, renderTarget.Height / 10.0f) +
+                      new Vector2(
+                          this.BodyFont.MeasureString(body).X / -2.0f, 2 * this.HeaderFont.MeasureString(header).Y);
             spriteBatch.DrawString(
-                this.BodyFont, 
-                this.BodyText, 
-                new Vector2(renderTarget.Width / 2.0f, renderTarget.Height / 10.0f) +
-                new Vector2(0.0f, 2 * this.HeaderFont.MeasureString(this.HeaderText).Y + 30), 
+                this.BodyFont,
+                body,
+                textPos,
                 Color.Black, 
                 0.0f, 
-                this.BodyFont.MeasureString(this.BodyText) / 2.0f, 
+                Vector2.Zero, 
                 1.0f, 
                 SpriteEffects.None, 
                 1.0f);
-
             spriteBatch.End();
 
             ShadowMapManager.ResetGraphicsDevice(this.Game.GraphicsDevice, old);
             this.TextTexture = renderTarget.GetTexture();
 
-            Vector3 HalfTextBoxSizeWidth, HalfTextBoxSizeHeight;
-            HalfTextBoxSizeHeight = new Vector3(0.0f, this.TextBoxSize.Y / 2.0f, 0.0f);
-            HalfTextBoxSizeWidth = new Vector3(this.TextBoxSize.X / 2.0f, 0.0f, 0.0f);
+            var halfTextBoxSizeHeight = new Vector3(0.0f, this.TextBoxSize.Y / 2.0f, 0.0f);
+            var halfTextBoxSizeWidth = new Vector3(this.TextBoxSize.X / 2.0f, 0.0f, 0.0f);
 
             this.textSprite = new[]
                 {
-                    new TextureSprite(
-                        - HalfTextBoxSizeWidth - HalfTextBoxSizeHeight, new Vector2(0.0f, 1.0f)), 
-                    new TextureSprite(- HalfTextBoxSizeWidth + HalfTextBoxSizeHeight, Vector2.Zero), 
-                    new TextureSprite(
-                        HalfTextBoxSizeWidth - HalfTextBoxSizeHeight, new Vector2(1.0f, 1.0f)), 
-                    new TextureSprite(
-                        HalfTextBoxSizeWidth + HalfTextBoxSizeHeight, new Vector2(1.0f, 0.0f)), 
+                   new TextureSprite(-halfTextBoxSizeWidth - halfTextBoxSizeHeight, new Vector2(0.0f, 1.0f)), 
+                  new TextureSprite(-halfTextBoxSizeWidth + halfTextBoxSizeHeight, Vector2.Zero), 
+                  new TextureSprite(halfTextBoxSizeWidth - halfTextBoxSizeHeight, new Vector2(1.0f, 1.0f)), 
+                  new TextureSprite(halfTextBoxSizeWidth + halfTextBoxSizeHeight, new Vector2(1.0f, 0.0f)), 
                 };
 
-            this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(HalfTextBoxSizeWidth.X * 2, HalfTextBoxSizeHeight.Y * 2, 1.0f);
-            this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(this.PhysicsBody, HalfTextBoxSizeWidth.X * 2, HalfTextBoxSizeHeight.Y * 2);
+            this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(
+                halfTextBoxSizeWidth.X * 2, halfTextBoxSizeHeight.Y * 2, 1.0f);
+            this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(
+                this.PhysicsBody, halfTextBoxSizeWidth.X * 2, halfTextBoxSizeHeight.Y * 2);
             this.aabb = this.PhysicsGeometry.AABB;
         }
 
@@ -370,7 +394,6 @@ namespace Gdd.Game.Engine.Levels.Information
             /// The uv.
             /// </summary>
             private Vector2 UV;
-
 
             #endregion
 

@@ -1,4 +1,3 @@
-using Gdd.Game.Engine.Levels;
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Game1.cs" company="UAD">
 //   Game Design and Development
@@ -10,27 +9,23 @@ using Gdd.Game.Engine.Levels;
 
 namespace Gdd.Game
 {
-    using System;
     using System.Collections.Generic;
 
-    using Engine;
-    using Engine.AI;
-    using Engine.AI.StateMachines;
-    using Engine.Levels;
-    using Engine.Levels.Characters;
-    using Engine.Menu;
-    using Engine.Physics;
-    using Engine.Render.Shadow;
-    using Engine.Scenes;
-    using Engine.Scenes.Lights;
-
+    using Gdd.Game.Engine;
+    using Gdd.Game.Engine.AI;
     using Gdd.Game.Engine.Common;
+    using Gdd.Game.Engine.GUI;
+    using Gdd.Game.Engine.Levels;
+    using Gdd.Game.Engine.Levels.Characters;
     using Gdd.Game.Engine.Levels.Information;
+    using Gdd.Game.Engine.Menu;
+    using Gdd.Game.Engine.Render.Shadow;
+    using Gdd.Game.Engine.Scenes;
+    using Gdd.Game.Engine.Scenes.Lights;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using Gdd.Game.Engine.GUI;
 
     /// <summary>
     /// This is the main type for your game
@@ -42,19 +37,27 @@ namespace Gdd.Game
         /// <summary>
         /// The aiManager
         /// </summary>
-        private AIManager aiManager;
+        private readonly AIManager aiManager;
+
+        /// <summary>
+        /// The graphics.
+        /// </summary>
+        private readonly GraphicsDeviceManager graphics;
+
+        /// <summary>
+        /// The camera.
+        /// </summary>
+        private MyCamera camera;
+
+        /// <summary>
+        /// The hero.
+        /// </summary>
+        private Hero hero;
 
         /// <summary>
         /// The camera.
         /// </summary>
         private CharacterFollowCamera heroCamera;
-
-        private MyCamera camera;
-
-        /// <summary>
-        /// The graphics.
-        /// </summary>
-        private GraphicsDeviceManager graphics;
 
         /// <summary>
         /// Last keyboard state
@@ -62,9 +65,9 @@ namespace Gdd.Game
         private KeyboardState lastState;
 
         /// <summary>
-        /// The hero.
+        /// The main menu.
         /// </summary>
-        private Hero hero;
+        private MainMenu mainMenu;
 
         // FrankM: Just for testing;
         /// <summary>
@@ -72,17 +75,10 @@ namespace Gdd.Game
         /// </summary>
         private AIMonster monster;
 
-        private ScenePhysics physics;
-
         /// <summary>
         /// The sprite batch.
         /// </summary>
         private SpriteBatch spriteBatch;
-
-        /// <summary>
-        /// The main menu.
-        /// </summary>
-        private MainMenu mainMenu;
 
         #endregion
 
@@ -99,16 +95,15 @@ namespace Gdd.Game
             this.Content.RootDirectory = "Content";
 
             // add the GFXComponent into the components
-            this.Components.Add(new GfxComponent(this, graphics));
+            this.Components.Add(new GfxComponent(this, this.graphics));
 
             this.graphics.MinimumPixelShaderProfile = ShaderProfile.PS_2_0;
             this.graphics.MinimumVertexShaderProfile = ShaderProfile.VS_2_0;
-            
+
             SceneManager.Construct(this);
         }
 
         #endregion
-
 
         #region Methods
 
@@ -157,6 +152,7 @@ namespace Gdd.Game
             this.Services.AddService(typeof(SpriteBatch), this.spriteBatch);
 
             this.graphics.GraphicsDevice.PresentationParameters.IsFullScreen = true;
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -179,7 +175,7 @@ namespace Gdd.Game
         protected override void Update(GameTime gameTime)
         {
             // FrankM: just for testing 
-            Message m = null;
+            Message m;
 
             // Console.WriteLine("well well well well well well well well well" + character1.Position2D);
             // character1 = new Character(this, "mesh//hero03");
@@ -191,31 +187,39 @@ namespace Gdd.Game
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.X))
             {
-                m = new Message();
-                m.MessageType = MessageTypes.die;
-                m.timeDelivery = gameTime.TotalGameTime.TotalSeconds;
-                m.to = this.monster;
+                m = new Message
+                    {
+                        MessageType = MessageTypes.die,
+                        timeDelivery = gameTime.TotalGameTime.TotalSeconds,
+                        to = this.monster
+                    };
                 AIManager.messageQueue.sendMessage(m);
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Z))
             {
-                m = new Message();
-                m.MessageType = MessageTypes.resurect;
-                m.timeDelivery = gameTime.TotalGameTime.TotalSeconds;
-                m.to = this.monster;
+                m = new Message
+                    {
+                        MessageType = MessageTypes.resurect,
+                        timeDelivery = gameTime.TotalGameTime.TotalSeconds,
+                        to = this.monster
+                    };
                 AIManager.messageQueue.sendMessage(m);
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 this.hero.Position2D = new Vector2(this.hero.Position2D.X - 0.1f, this.hero.Position2D.Y);
                 if (this.hero.ModelDirection == ModelDirection.Right)
+                {
                     this.hero.Flip();
+                }
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 this.hero.Position2D = new Vector2(this.hero.Position2D.X + 0.1f, this.hero.Position2D.Y);
                 if (this.hero.ModelDirection == ModelDirection.Left)
+                {
                     this.hero.Flip();
+                }
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -226,12 +230,12 @@ namespace Gdd.Game
                 this.hero.Position2D = new Vector2(this.hero.Position2D.X, this.hero.Position2D.Y - 0.1f);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.F12) && lastState.IsKeyUp(Keys.F12))
+            if (Keyboard.GetState().IsKeyDown(Keys.F12) && this.lastState.IsKeyUp(Keys.F12))
             {
                 Globals.displayState = (DISPLAY_STATE)((int)(Globals.displayState + 1) % 3);
             }
 
-            lastState = Keyboard.GetState();
+            this.lastState = Keyboard.GetState();
 
             SceneManager.Update(gameTime);
 
@@ -249,10 +253,9 @@ namespace Gdd.Game
         /// </summary>
         private void SetupAI()
         {
-
             this.aiManager.objectList = new List<IAIEntity>();
-           // this.aiManager.objectList.Add(this.monster);
-   
+
+            // this.aiManager.objectList.Add(this.monster);
         }
 
         /// <summary>
@@ -266,65 +269,72 @@ namespace Gdd.Game
             // this camera follows the hero
             this.heroCamera = new CharacterFollowCamera(this, new Vector3(-10.0f, 0.0f, 20.0f));
 
-            // this camera is movable
-            camera = new MyCamera(this, new Vector3(0.0f, 0.0f, 10.0f));
-
             this.hero = new Hero(this) { Position2D = new Vector2(-8.0f, -13.0f) };
-            StaticModel lollypop = new StaticModel(this) { ModelName = "mesh//lollypop", Position2D = new Vector2(-20.0f, 0.0f), YawRotation = 0.0f, PitchRotation = 0.0f, RollRotation = MathHelper.PiOver4};
-            StaticModel rock = new StaticModel(this) { ModelName = "mesh//rock", Position2D = new Vector2(10.0f, 10.0f) };
-            StaticModel candy = new StaticModel(this) { ModelName = "mesh//candy", Position2D = new Vector2(-10.0f, 10.0f) };
-
+            var lollypop = new StaticModel(this)
+                {
+                    ModelName = "mesh//lollypop", 
+                    Position2D = new Vector2(-20.0f, 0.0f), 
+                    YawRotation = 0.0f, 
+                    PitchRotation = 0.0f, 
+                    RollRotation = MathHelper.PiOver4
+                };
+            var rock = new StaticModel(this) { ModelName = "mesh//rock", Position2D = new Vector2(10.0f, 10.0f) };
+            var candy = new StaticModel(this) { ModelName = "mesh//candy", Position2D = new Vector2(-10.0f, 10.0f) };
 
             var dl1 = new DirectionalLight(this) { Direction = new Vector3(-0.3f, -0.7f, 0.0f), Color = Color.White };
-            var dl2 = new DirectionalLight(this) { Direction = new Vector3(-0.5f, -0.5f, 0.0f), Color = Color.Blue };
 
-            var scene1 = new MyScene(this) { EnableScripts = false, Visible = false, MainGameScene = true };
+            var scene1 = new MyScene(this) { EnableScripts = true, MainGameScene = true };
+
+            // this camera is movable
+            this.camera = new MyCamera(this, new Vector3(0.0f, 0.0f, 10.0f));
+            scene1.Camera = this.camera;
             scene1.LoadContent("levels/test");
             scene1.AddComponent(this.hero);
-            // Testing bunny AI
-            Bunny bunny = new Bunny(this) { Position2D = new Vector2(-10.0f, -10.0f) };
-            Bunny secondBunny = new Bunny(this) { Position2D = new Vector2(-20.0f, 40.0f) };
-            this.monster = bunny;
-            //bunny.Debug = true;
+            this.hero.Position2D = scene1.CurrentLevel.StartPosition;
 
-            aiManager.objectList.Add(bunny);
-            aiManager.objectList.Add(secondBunny);
+            // Testing bunny AI
+            var bunny = new Bunny(this) { Position2D = new Vector2(-10.0f, -10.0f) };
+            var secondBunny = new Bunny(this) { Position2D = new Vector2(-20.0f, 40.0f) };
+            this.monster = bunny;
+
+            // bunny.Debug = true;
+            this.aiManager.objectList.Add(bunny);
+            this.aiManager.objectList.Add(secondBunny);
             scene1.AddComponent(bunny);
             scene1.AddComponent(secondBunny);
             scene1.AddComponent(lollypop);
             scene1.AddComponent(rock);
             scene1.AddComponent(candy);
-            scene1.AddComponent(new HeroHealthBar(this){DrawOrder = int.MaxValue});
+            scene1.AddComponent(new HeroHealthBar(this) { DrawOrder = int.MaxValue });
 
             scene1.AddComponent(
                 new TutorialText(this)
                     {
-                        HeaderText = "Drawing effects",
-                        BodyText =
-                            "Use F12 to switch through the\n drawing effects (3D, 2D or Both)",
-                        Position2D = new Vector2(0.0f, 0.0f),
-                        TextBoxSize = new Vector2(30.0f, 25.0f)
-                    });
-            scene1.Camera = camera;
-            scene1.Camera.Pos = new Vector3(0, 0, 10);
+                        HeaderText = "Drawing effects", 
+                        BodyText = "Use F12 to switch through the\n drawing effects (3D, 2D or Both)", 
+                        Position2D = new Vector2(0.0f, 0.0f), 
+                        TextBoxSize = new Vector2(30.0f, 25.0f) 
+ });
             scene1.Light = dl1;
 
-            scene1.AddComponent(new PointLight(this) { Position2D = new Vector2(-10.0f, 0.0f), Radius = 10.0f, Color = Color.White });
-            scene1.AddComponent(new PointLight(this) { Position2D = new Vector2(10.0f, 0.0f), Radius = 10.0f, Color = Color.Yellow });
+            scene1.AddComponent(
+                new PointLight(this) { Position2D = new Vector2(-10.0f, 0.0f), Radius = 10.0f, Color = Color.White });
+            scene1.AddComponent(
+                new PointLight(this) { Position2D = new Vector2(10.0f, 0.0f), Radius = 10.0f, Color = Color.Yellow });
 
             this.IsMouseVisible = true;
-            var gameGui = new GameGUI(this) { DrawOrder = int.MaxValue -1 };
+            var gameGui = new GameGUI(this) { DrawOrder = int.MaxValue - 1 };
             scene1.AddComponent(gameGui);
 
-            scene1.AddComponent(new Bounds(this) { Position2D = new Vector2(0.0f, 30.0f), Size = new Vector2(10.0f, 10.0f) });
+            scene1.AddComponent(
+                new Bounds(this) { Position2D = new Vector2(0.0f, 30.0f), Size = new Vector2(10.0f, 10.0f) });
 
-            //scene1.GameGUI = new GameGUI(this);
-            //scene1.GameGUI.LoadContent();
-            //scene1.GameGUI.Scene = scene1;
-            //scene1.GameGUIRun = true;);
-           
+            // scene1.GameGUI = new GameGUI(this);
+            // scene1.GameGUI.LoadContent();
+            // scene1.GameGUI.Scene = scene1;
+            // scene1.GameGUIRun = true;);
             this.mainMenu = new MainMenu(this);
-            
+
             SceneManager.AddScene(this.mainMenu);
             SceneManager.AddScene(scene1);
 
