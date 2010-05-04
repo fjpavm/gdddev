@@ -30,7 +30,7 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// The convert to level.
         /// </summary>
-        /// <param name="levelEntityCollection">
+        /// <param name="serializableLevel">
         /// The level entity collection.
         /// </param>
         /// <param name="scene">
@@ -38,15 +38,18 @@ namespace Gdd.Game.Engine.Levels
         /// </param>
         /// <returns>
         /// </returns>
-        public Level ConvertToLevel(LevelEntityCollection levelEntityCollection, Scene scene)
+        public Level ConvertToLevel(SerializableLevel serializableLevel, Scene scene)
         {
             var level = new Level(false)
                 {
-                   Author = levelEntityCollection.Author, Script = levelEntityCollection.Script 
+                    Author = serializableLevel.Author, 
+                    Script = serializableLevel.Script, 
+                    StartPosition = serializableLevel.StartPosition
                 };
 
             foreach (SceneComponent sceneComponent in
-                levelEntityCollection.Select(levelEntity => this.ConvertToSceneComponent(levelEntity, scene)))
+                serializableLevel.LevelEntityCollection.Select(
+                    levelEntity => this.ConvertToSceneComponent(levelEntity, scene)))
             {
                 level.Components.Add(sceneComponent);
             }
@@ -67,7 +70,7 @@ namespace Gdd.Game.Engine.Levels
         /// </returns>
         public Level Deserialize(Stream stream, Scene scene)
         {
-            LevelEntityCollection levelEntityCollection = this.Deserialize(stream);
+            SerializableLevel levelEntityCollection = this.Deserialize(stream);
             return this.ConvertToLevel(levelEntityCollection, scene);
         }
 
@@ -79,12 +82,12 @@ namespace Gdd.Game.Engine.Levels
         /// </param>
         /// <returns>
         /// </returns>
-        public LevelEntityCollection Deserialize(Stream stream)
+        public SerializableLevel Deserialize(Stream stream)
         {
             IEnumerable<Type> entityTypes = from levelEntityTypeBinding in LevelScene.LevelEntityTypeBindings
                                             select levelEntityTypeBinding.LevelEntityType;
-            var xmlSerializer = new XmlSerializer(typeof(LevelEntityCollection), entityTypes.ToArray());
-            return (LevelEntityCollection)xmlSerializer.Deserialize(stream);
+            var xmlSerializer = new XmlSerializer(typeof(SerializableLevel), entityTypes.ToArray());
+            return (SerializableLevel)xmlSerializer.Deserialize(stream);
         }
 
         /// <summary>
@@ -98,8 +101,8 @@ namespace Gdd.Game.Engine.Levels
         /// </param>
         public void Serialize(Stream stream, Level level)
         {
-            LevelEntityCollection levelEntityCollection = this.CreateSerializableCollection(level);
-            this.Serialize(stream, levelEntityCollection);
+            SerializableLevel serializableLevel = this.CreateSerializableLevel(level);
+            this.Serialize(stream, serializableLevel);
         }
 
         /// <summary>
@@ -108,15 +111,15 @@ namespace Gdd.Game.Engine.Levels
         /// <param name="stream">
         /// The stream.
         /// </param>
-        /// <param name="levelEntityCollection">
+        /// <param name="serializableLevel">
         /// The level entity collection.
         /// </param>
-        public void Serialize(Stream stream, LevelEntityCollection levelEntityCollection)
+        public void Serialize(Stream stream, SerializableLevel serializableLevel)
         {
             IEnumerable<Type> entityTypes = from levelEntityTypeBinding in LevelScene.LevelEntityTypeBindings
                                             select levelEntityTypeBinding.LevelEntityType;
-            var xmlSerializer = new XmlSerializer(typeof(LevelEntityCollection), entityTypes.ToArray());
-            xmlSerializer.Serialize(stream, levelEntityCollection);
+            var xmlSerializer = new XmlSerializer(typeof(SerializableLevel), entityTypes.ToArray());
+            xmlSerializer.Serialize(stream, serializableLevel);
         }
 
         #endregion
@@ -208,16 +211,19 @@ namespace Gdd.Game.Engine.Levels
         /// </param>
         /// <returns>
         /// </returns>
-        private LevelEntityCollection CreateSerializableCollection(Level level)
+        private SerializableLevel CreateSerializableLevel(Level level)
         {
-            var levelEntityCollection = new LevelEntityCollection { Author = level.Author, Script = level.Script };
+            var serializableLevel = new SerializableLevel
+                {
+                   Author = level.Author, Script = level.Script, StartPosition = level.StartPosition 
+                };
             foreach (LevelEntity levelEntity in
                 level.Components.Select(sceneComponent => this.ConvertToEntity(sceneComponent)))
             {
-                levelEntityCollection.Add(levelEntity);
+                serializableLevel.LevelEntityCollection.Add(levelEntity);
             }
 
-            return levelEntityCollection;
+            return serializableLevel;
         }
 
         #endregion

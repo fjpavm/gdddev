@@ -137,6 +137,7 @@
     <Compile Include="Levels\LevelEntity.cs" />
     <Compile Include="Levels\LevelEntityBindingAttribute.cs" />
     <Compile Include="Levels\LevelEntityCategoryAttribute.cs" />
+    <Compile Include="Levels\SerializableLevel.cs" />
     <Compile Include="Scenes\CharacterFollowCamera.cs" />
     <Compile Include="Common\AdjacencyManager.cs" />
     <Compile Include="Common\ObjectManager.cs" />

@@ -172,7 +172,7 @@ namespace Gdd.Game.Engine.Levels
 
                 Matrix m = this.PhysicsGeometry.Matrix;
                 this.PhysicsGeometry.SetVertices(this.currentPhysicsVertices);
-                this.PhysicsGeometry.Matrix = m;// *this.OffsetMatrix;
+                this.PhysicsGeometry.Matrix = m; // *this.OffsetMatrix;
 
                 this.aabb = this.PhysicsGeometry.AABB;
             }
@@ -187,7 +187,7 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         protected override void LoadContent()
         {
-            bool modelAlreadyLoaded = (this.ObjectModel == null);
+            bool modelAlreadyLoaded = this.ObjectModel == null;
             if (modelAlreadyLoaded)
             {
                 this.ObjectModel = this.Game.Content.Load<Model>(this.modelName);

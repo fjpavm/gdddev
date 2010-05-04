@@ -90,6 +90,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CameraPositionChangedEventArgs.cs" />
     <Compile Include="InvokeTimer.cs" />
     <Compile Include="LevelEditorScene.cs" />
     <Compile Include="LevelEditorForm.cs">

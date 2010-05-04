@@ -192,6 +192,12 @@ namespace Gdd.Game.Engine
             {
                 return this.position;
             }
+
+            set
+            {
+                this.position = value;
+                this.hasChanged = true;
+            }
         }
 
         /// <summary>

@@ -574,15 +574,15 @@ namespace Gdd.Game.Engine.Levels
                     (float)
                     (Math.PI * Math.Pow(this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 2));
                 this.PhysicsBody = BodyFactory.Instance.CreateCircleBody(
-                    this.scene.PhysicsSimulator,
-                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(),
+                    this.scene.PhysicsSimulator, 
+                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
                     this.mass);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateCircleGeom(
-                    this.scene.PhysicsSimulator,
-                    this.PhysicsBody,
-                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(),
-                    100,
+                    this.scene.PhysicsSimulator, 
+                    this.PhysicsBody, 
+                    this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
+                    100, 
                     this.gridCellSize);
             }
             else if (this.GeometryType == GeometryType.Rectangle)
@@ -590,16 +590,16 @@ namespace Gdd.Game.Engine.Levels
                 BoundingBox box = BoundingBox.CreateFromPoints(GetModelVertices(this.ObjectModel));
                 this.mass = (box.Max.X - box.Min.X) * (box.Max.Y - box.Min.Y) * this.scale.X * this.scale.Y;
                 this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(
-                    this.scene.PhysicsSimulator,
-                    (box.Max.X - box.Min.X) * this.scale.X,
-                    (box.Max.Y - box.Min.Y) * this.scale.Y,
+                    this.scene.PhysicsSimulator, 
+                    (box.Max.X - box.Min.X) * this.scale.X, 
+                    (box.Max.Y - box.Min.Y) * this.scale.Y, 
                     this.mass);
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(
-                    this.scene.PhysicsSimulator,
-                    this.PhysicsBody,
-                    (box.Max.X - box.Min.X) * this.scale.X,
-                    (box.Max.Y - box.Min.Y) * this.scale.Y,
+                    this.scene.PhysicsSimulator, 
+                    this.PhysicsBody, 
+                    (box.Max.X - box.Min.X) * this.scale.X, 
+                    (box.Max.Y - box.Min.Y) * this.scale.Y, 
                     this.gridCellSize);
             }
 

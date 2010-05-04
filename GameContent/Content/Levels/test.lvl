@@ -1,36 +1,23 @@
 <?xml version="1.0"?>
-<ArrayOfLevelEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LevelEntity xsi:type="GroundEntity">
-    <Enabled>true</Enabled>
-    <Position2D>
-      <X>0</X>
-      <Y>-30</Y>
-    </Position2D>
-    <Visible>false</Visible>
-    <GeometryType>Polygon</GeometryType>
-    <ModelDirection>Right</ModelDirection>
-    <ModelName>mesh/Final_terrian _Y _X _Half</ModelName>
-  </LevelEntity>
-  <LevelEntity xsi:type="StaticModelEntity">
-    <Enabled>true</Enabled>
-    <Position2D>
-      <X>-31.1582031</X>
-      <Y>15.1115723</Y>
-    </Position2D>
-    <Visible>false</Visible>
-    <GeometryType>Polygon</GeometryType>
-    <ModelDirection>Right</ModelDirection>
-    <ModelName>tmpCube</ModelName>
-  </LevelEntity>
-  <LevelEntity xsi:type="StaticModelEntity">
-    <Enabled>true</Enabled>
-    <Position2D>
-      <X>35.29297</X>
-      <Y>14.9150391</Y>
-    </Position2D>
-    <Visible>false</Visible>
-    <GeometryType>Polygon</GeometryType>
-    <ModelDirection>Right</ModelDirection>
-    <ModelName>tmpCube</ModelName>
-  </LevelEntity>
-</ArrayOfLevelEntity>
+<SerializableLevel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LevelEntityCollection>
+    <LevelEntity xsi:type="GroundEntity">
+      <Enabled>true</Enabled>
+      <Name>ground</Name>
+      <Position2D>
+        <X>0</X>
+        <Y>-30</Y>
+      </Position2D>
+      <Visible>false</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh/Final_terrian _Y _X _Half</ModelName>
+    </LevelEntity>
+  </LevelEntityCollection>
+  <Author>GDD</Author>
+  <Script />
+  <StartPosition>
+    <X>-360</X>
+    <Y>-6</Y>
+  </StartPosition>
+</SerializableLevel>

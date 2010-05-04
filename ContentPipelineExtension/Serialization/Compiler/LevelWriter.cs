@@ -20,7 +20,7 @@ namespace Gdd.Game.Engine.Content.Pipeline.Serialization.Compiler
     /// The level writer.
     /// </summary>
     [ContentTypeWriter]
-    internal class LevelWriter : ContentTypeWriter<LevelEntityCollection>
+    internal class LevelWriter : ContentTypeWriter<SerializableLevel>
     {
         #region Public Methods
 
@@ -51,7 +51,7 @@ namespace Gdd.Game.Engine.Content.Pipeline.Serialization.Compiler
         /// <param name="value">
         /// The value.
         /// </param>
-        protected override void Write(ContentWriter output, LevelEntityCollection value)
+        protected override void Write(ContentWriter output, SerializableLevel value)
         {
             using (var memoryStream = new MemoryStream())
             {

@@ -76,9 +76,9 @@ namespace Gdd.Game.Engine.Levels
             : base(game)
         {
             this.currentLevel = new Level(true);
-            this.currentLevel.SetScene(this);
             ObjectManager.SetUpLists(this.ID);
             this.background = new Background(this);
+            this.Camera = new Camera(this.Game, new Vector3(0.0f, 0.0f, 30.0f)) { FieldOfView = 70.0f };
         }
 
         #endregion
@@ -117,10 +117,9 @@ namespace Gdd.Game.Engine.Levels
                         this.AddComponent(component);
                     }
 
-                    value.Components.AutoInitialize = true;
-
                     this.currentLevel = value;
-                    this.currentLevel.SetScene(this);
+                    this.currentLevel.Components.AutoInitialize = true;
+                    this.Camera.Pos = new Vector3(this.currentLevel.StartPosition, this.Camera.Pos.Z);
                     this.Initialize();
                 }
             }
@@ -165,11 +164,6 @@ namespace Gdd.Game.Engine.Levels
         {
             base.Initialize();
 
-            if (this.Camera == null)
-            {
-                this.Camera = new Camera(this.Game, new Vector3(0.0f, 0.0f, 30.0f)) { FieldOfView = 70.0f };
-            }
-
             if (this.Light == null)
             {
                 this.Light = new DirectionalLight(this.Game)
@@ -194,9 +188,9 @@ namespace Gdd.Game.Engine.Levels
         /// </param>
         public void LoadContent(string levelName)
         {
-            var levelEntityCollection = this.Game.Content.Load<LevelEntityCollection>(levelName);
+            var serializableLevel = this.Game.Content.Load<SerializableLevel>(levelName);
             var levelSerializer = new LevelSerializer();
-            this.CurrentLevel = levelSerializer.ConvertToLevel(levelEntityCollection, this);
+            this.CurrentLevel = levelSerializer.ConvertToLevel(serializableLevel, this);
             this.background.LoadContent();
         }
 

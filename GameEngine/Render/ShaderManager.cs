@@ -11,6 +11,7 @@ namespace Gdd.Game.Engine.Render
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -60,13 +61,7 @@ namespace Gdd.Game.Engine.Render
                 return;
             }
 
-            bool found = false;
-            foreach (EFFECT_ID i in Enum.GetValues(typeof(EFFECT_ID)))
-            {
-                if (ID == i) {
-                    found = true;
-                }
-            }
+            bool found = Enum.GetValues(typeof(EFFECT_ID)).Cast<EFFECT_ID>().Any(i => i == ID);
 
             if (!found)
             {
@@ -89,14 +84,7 @@ namespace Gdd.Game.Engine.Render
             if (effectDictionary.ContainsKey(ID))
                 return;
 
-            bool found = false;
-            foreach (EFFECT_ID i in Enum.GetValues(typeof(EFFECT_ID)))
-            {
-                if (ID == i)
-                {
-                    found = true;
-                }
-            }
+            bool found = Enum.GetValues(typeof(EFFECT_ID)).Cast<EFFECT_ID>().Any(i => i == ID);
 
             if (!found)
                 throw new Exception("Effect ID (" + ID.ToString() + ") not found in EFFECT_IDS enum");
