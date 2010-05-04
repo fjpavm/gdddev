@@ -189,8 +189,8 @@ namespace Gdd.Game
             {
                 m = new Message
                     {
-                        MessageType = MessageTypes.die,
-                        timeDelivery = gameTime.TotalGameTime.TotalSeconds,
+                        MessageType = MessageTypes.die, 
+                        timeDelivery = gameTime.TotalGameTime.TotalSeconds, 
                         to = this.monster
                     };
                 AIManager.messageQueue.sendMessage(m);
@@ -199,8 +199,8 @@ namespace Gdd.Game
             {
                 m = new Message
                     {
-                        MessageType = MessageTypes.resurect,
-                        timeDelivery = gameTime.TotalGameTime.TotalSeconds,
+                        MessageType = MessageTypes.resurect, 
+                        timeDelivery = gameTime.TotalGameTime.TotalSeconds, 
                         to = this.monster
                     };
                 AIManager.messageQueue.sendMessage(m);

@@ -28,7 +28,7 @@ namespace Gdd.Game.LevelEditor
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class LevelEditorPane : Game
+    internal sealed class LevelEditorPane : Game
     {
         #region Constants and Fields
 
@@ -56,6 +56,11 @@ namespace Gdd.Game.LevelEditor
         /// The is dragging.
         /// </summary>
         private bool isDragging;
+
+        /// <summary>
+        /// The is paused.
+        /// </summary>
+        private bool isPaused;
 
         /// <summary>
         /// The levelEditorScene.
@@ -86,6 +91,8 @@ namespace Gdd.Game.LevelEditor
         /// The sprite batch.
         /// </summary>
         private SpriteBatch spriteBatch;
+
+        private bool isPreviewRunning;
 
         #endregion
 
@@ -167,7 +174,7 @@ namespace Gdd.Game.LevelEditor
             set
             {
                 this.selectedComponent = value;
-                this.InvokeSelectedComponentChanged(new SelectedComponentChangedEventArgs(this.selectedComponent));
+                this.OnComponentChanged(new SelectedComponentChangedEventArgs(this.selectedComponent));
             }
         }
 
@@ -185,7 +192,7 @@ namespace Gdd.Game.LevelEditor
         {
             this.newComponent = component;
             this.SelectedComponent = null;
-            this.InvokeSelectedComponentChanged(new SelectedComponentChangedEventArgs(component));
+            this.OnComponentChanged(new SelectedComponentChangedEventArgs(component));
             this.levelEditorScene.AddComponent(component);
         }
 
@@ -202,10 +209,34 @@ namespace Gdd.Game.LevelEditor
         }
 
         /// <summary>
+        /// The pause.
+        /// </summary>
+        public void Pause()
+        {
+            this.isPaused = true;
+        }
+
+        /// <summary>
+        /// The resume.
+        /// </summary>
+        public void Resume()
+        {
+            this.isPaused = false;
+        }
+
+        public bool IsPreviewRunning {get {
+            return this.isPreviewRunning;}}
+
+        public bool IsPaused { get {
+            return this.isPaused; } }
+
+        /// <summary>
         /// The run preview.
         /// </summary>
         public void RunPreview()
         {
+            this.Resume();
+            this.isPreviewRunning = true;
             this.levelPreviewScene.EnableScripts = true;
             this.levelPreviewScene.EnablePhysics = true;
             this.levelPreviewScene.CurrentLevel = (Level)this.levelEditorScene.CurrentLevel.Clone();
@@ -244,6 +275,7 @@ namespace Gdd.Game.LevelEditor
         /// </summary>
         public void StopPreview()
         {
+            this.isPreviewRunning = false;
             this.levelPreviewScene.EnableScripts = false;
             this.levelPreviewScene.EnablePhysics = false;
             SceneManager.SetCurrentScene(this.levelEditorScene);
@@ -299,7 +331,7 @@ namespace Gdd.Game.LevelEditor
                     Target = this, 
                     TargetMethod =
                         this.GetType().GetMethod(
-                            "InvokeSelectedComponentPropertyChanged", BindingFlags.Instance | BindingFlags.NonPublic)
+                            "OnSelectedComponentPropertyChanged", BindingFlags.Instance | BindingFlags.NonPublic)
                 };
             this.Components.Add(this.invokeSelectedContentPropertyChanged);
 
@@ -336,10 +368,9 @@ namespace Gdd.Game.LevelEditor
         /// </param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (this.isPaused)
             {
-                this.Exit();
+                return;
             }
 
             SceneManager.Update(gameTime);
@@ -383,7 +414,7 @@ namespace Gdd.Game.LevelEditor
                 {
                     this.levelEditorScene.RemoveComponent(this.SelectedComponent);
                     this.SelectedComponent = null;
-                    this.InvokeLevelComponentsChanged(EventArgs.Empty);
+                    this.OnLevelComponentsChanged(EventArgs.Empty);
                 }
                 else
                 {
@@ -436,68 +467,6 @@ namespace Gdd.Game.LevelEditor
         }
 
         /// <summary>
-        /// The invoke camera position changed.
-        /// </summary>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void InvokeCameraPositionChanged(CameraPositionChangedEventArgs e)
-        {
-            EventHandler<CameraPositionChangedEventArgs> handler = this.CameraPositionChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        /// <summary>
-        /// The invoke level components changed.
-        /// </summary>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void InvokeLevelComponentsChanged(EventArgs e)
-        {
-            EventHandler handler = this.LevelComponentsChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        /// <summary>
-        /// The invoke selected block changed.
-        /// </summary>
-        /// <param name="e">
-        /// The EventArgs.
-        /// </param>
-        private void InvokeSelectedComponentChanged(SelectedComponentChangedEventArgs e)
-        {
-            EventHandler<SelectedComponentChangedEventArgs> handler = this.SelectedComponentChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        /// <summary>
-        /// The invoke selected component property changed.
-        /// </summary>
-        /// <param name="e">
-        /// The EventArgs.
-        /// </param>
-        /// ReSharper disable UnusedMember.Local
-        private void InvokeSelectedComponentPropertyChanged(EventArgs e)
-        {
-            // ReSharper restore UnusedMember.Local
-            EventHandler handler = this.SelectedComponentPropertyChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        /// <summary>
         /// The is mouse in viewport.
         /// </summary>
         /// <param name="x">
@@ -526,7 +495,69 @@ namespace Gdd.Game.LevelEditor
         /// </param>
         private void LevelEditorScene_CameraPositionChanged(object sender, CameraPositionChangedEventArgs e)
         {
-            this.InvokeCameraPositionChanged(new CameraPositionChangedEventArgs(e.CameraPosition));
+            this.OnCameraPositionChanged(new CameraPositionChangedEventArgs(e.CameraPosition));
+        }
+
+        /// <summary>
+        /// The invoke camera position changed.
+        /// </summary>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void OnCameraPositionChanged(CameraPositionChangedEventArgs e)
+        {
+            EventHandler<CameraPositionChangedEventArgs> handler = this.CameraPositionChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        /// <summary>
+        /// The invoke selected block changed.
+        /// </summary>
+        /// <param name="e">
+        /// The EventArgs.
+        /// </param>
+        private void OnComponentChanged(SelectedComponentChangedEventArgs e)
+        {
+            EventHandler<SelectedComponentChangedEventArgs> handler = this.SelectedComponentChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        /// <summary>
+        /// The invoke level components changed.
+        /// </summary>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void OnLevelComponentsChanged(EventArgs e)
+        {
+            EventHandler handler = this.LevelComponentsChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        /// <summary>
+        /// The invoke selected component property changed.
+        /// </summary>
+        /// <param name="e">
+        /// The EventArgs.
+        /// </param>
+        /// ReSharper disable UnusedMember.Local
+        private void OnSelectedComponentPropertyChanged(EventArgs e)
+        {
+            // ReSharper restore UnusedMember.Local
+            EventHandler handler = this.SelectedComponentPropertyChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
 
         /// <summary>

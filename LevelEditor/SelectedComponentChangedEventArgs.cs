@@ -16,7 +16,7 @@ namespace Gdd.Game.LevelEditor
     /// <summary>
     /// The selected block changed event args.
     /// </summary>
-    public class SelectedComponentChangedEventArgs : EventArgs
+    internal sealed class SelectedComponentChangedEventArgs : EventArgs
     {
         #region Constants and Fields
 

@@ -16,7 +16,7 @@ namespace Gdd.Game.LevelEditor
     /// <summary>
     /// The invoke timer.
     /// </summary>
-    internal class InvokeTimer : GameComponent
+    internal sealed class InvokeTimer : GameComponent
     {
         #region Constants and Fields
 

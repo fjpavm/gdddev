@@ -24,7 +24,7 @@ namespace Gdd.Game.LevelEditor
     /// <summary>
     /// The level editor form.
     /// </summary>
-    public partial class LevelEditorForm : Form
+    internal sealed partial class LevelEditorForm : Form
     {
         #region Constants and Fields
 
@@ -58,8 +58,7 @@ namespace Gdd.Game.LevelEditor
             this.numericUpDownCamX.Minimum = decimal.MinValue;
             this.numericUpDownCamY.Maximum = decimal.MaxValue;
             this.numericUpDownCamY.Minimum = decimal.MinValue;
-            this.tsmiPreviewStop.Visible = false;
-            this.tsmiPreviewToolStripStop.Visible = false;
+            this.SetEnabledPreviewControls(false);
             this.tsmiFileOpen.Image = Resources.openHS;
             this.tsmiFileSave.Image = Resources.saveHS;
             this.tsmiPreviewRun.Image = Resources.PlayHS;
@@ -98,6 +97,7 @@ namespace Gdd.Game.LevelEditor
             this.levelEditorPane.SelectedComponentPropertyChanged +=
                 this.LevelEditorPane_SelectedComponentPropertyChanged;
             this.levelEditorPane.LevelComponentsChanged += this.LevelEditorPane_LevelComponentsChanged;
+            this.pictureBox.LevelEditorPane = game;
         }
 
         #endregion
@@ -327,12 +327,30 @@ namespace Gdd.Game.LevelEditor
         /// </param>
         private void RunToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.levelEditorPane.RunPreview();
-            this.propertyGrid.Enabled = false;
-            this.tsmiPreviewRun.Visible = false;
-            this.tsmiPreviewToolStripRun.Visible = false;
-            this.tsmiPreviewStop.Visible = true;
-            this.tsmiPreviewToolStripStop.Visible = true;
+            this.SetEnabledPreviewControls(true);
+            try
+            {
+                this.levelEditorPane.RunPreview();
+            }
+            catch (Exception)
+            {
+                this.SetEnabledPreviewControls(false);
+                throw;
+            }
+        }
+
+        private void SetEnabledPreviewControls(bool preview)
+        {
+            this.propertyGrid.Enabled = !preview;
+            this.tsmiPreviewContinue.Visible = preview;
+            this.tsmiPreviewToolStripContinue.Visible = preview;
+            this.tsmiPreviewPause.Visible = preview;
+            this.tsmiPreviewToolStripPause.Visible = preview;
+            this.tsmiPreviewRun.Visible = !preview;
+            this.tsmiPreviewToolStripRun.Visible = !preview;
+            this.tsmiPreviewStop.Visible = preview;
+            this.tsmiPreviewToolStripStop.Visible = preview;
+            this.toolStripToolbar.Enabled = !preview;
         }
 
         /// <summary>
@@ -399,12 +417,14 @@ namespace Gdd.Game.LevelEditor
         /// </param>
         private void StopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.levelEditorPane.StopPreview();
-            this.propertyGrid.Enabled = true;
-            this.tsmiPreviewRun.Visible = true;
-            this.tsmiPreviewToolStripRun.Visible = true;
-            this.tsmiPreviewStop.Visible = false;
-            this.tsmiPreviewToolStripStop.Visible = false;
+            try
+            {
+                this.levelEditorPane.StopPreview();
+            }
+            finally 
+            {
+                this.SetEnabledPreviewControls(false);                
+            }
         }
 
         /// <summary>
@@ -458,6 +478,7 @@ namespace Gdd.Game.LevelEditor
                 return;
             }
 
+            this.pictureBox.Focus();
             SceneComponent existingComponent = (from existing in this.levelEditorPane.Level.Components
                                                 where
                                                     existing.GetType() == typeBinding.SceneComponentType &&
@@ -494,5 +515,22 @@ namespace Gdd.Game.LevelEditor
         }
 
         #endregion
+
+        private void PauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.levelEditorPane.IsPreviewRunning)
+            {
+                    this.levelEditorPane.Pause();
+            }
+        }
+
+        private void ContinueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.levelEditorPane.IsPreviewRunning)
+            {
+                this.levelEditorPane.Resume();
+            }
+
+        }
     }
 }
