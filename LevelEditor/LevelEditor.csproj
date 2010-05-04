@@ -118,6 +118,7 @@
     <Content Include="GameThumbnail.png" />
     <Content Include="Resources\NewDocumentHS.png" />
     <Content Include="Resources\openHS.png" />
+    <Content Include="Resources\PauseHS.png" />
     <Content Include="Resources\PlayHS.png" />
     <Content Include="Resources\saveHS.png" />
     <Content Include="Resources\StopHS.png" />

@@ -74,6 +74,13 @@ namespace Gdd.Game.LevelEditor {
             }
         }
         
+        internal static System.Drawing.Bitmap PauseHS {
+            get {
+                object obj = ResourceManager.GetObject("PauseHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap PlayHS {
             get {
                 object obj = ResourceManager.GetObject("PlayHS", resourceCulture);

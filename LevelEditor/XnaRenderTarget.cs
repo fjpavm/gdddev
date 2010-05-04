@@ -64,9 +64,9 @@ namespace Gdd.Game.LevelEditor
         /// </param>
         protected override void OnGotFocus(EventArgs e)
         {
-            if (this.LevelEditorPane != null)
+            if (this.LevelEditorPane != null && !this.LevelEditorPane.IsPreviewRunning)
             {
-                this.LevelEditorPane.Resume();
+                this.LevelEditorPane.ResumeUpdate();
             }
 
             base.OnGotFocus(e);
@@ -82,7 +82,7 @@ namespace Gdd.Game.LevelEditor
         {
             if (this.LevelEditorPane != null && !this.LevelEditorPane.IsPreviewRunning)
             {
-                this.LevelEditorPane.Pause();
+                this.LevelEditorPane.PauseUpdate();
             }
 
             base.OnLostFocus(e);

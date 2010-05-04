@@ -63,6 +63,11 @@ namespace Gdd.Game.LevelEditor
         private bool isPaused;
 
         /// <summary>
+        /// The is preview running.
+        /// </summary>
+        private bool isPreviewRunning;
+
+        /// <summary>
         /// The levelEditorScene.
         /// </summary>
         private LevelEditorScene levelEditorScene;
@@ -91,8 +96,6 @@ namespace Gdd.Game.LevelEditor
         /// The sprite batch.
         /// </summary>
         private SpriteBatch spriteBatch;
-
-        private bool isPreviewRunning;
 
         #endregion
 
@@ -149,6 +152,28 @@ namespace Gdd.Game.LevelEditor
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets a value indicating whether IsPaused.
+        /// </summary>
+        public bool IsPaused
+        {
+            get
+            {
+                return this.isPaused;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether IsPreviewRunning.
+        /// </summary>
+        public bool IsPreviewRunning
+        {
+            get
+            {
+                return this.isPreviewRunning;
+            }
+        }
 
         /// <summary>
         /// Gets Level.
@@ -211,7 +236,7 @@ namespace Gdd.Game.LevelEditor
         /// <summary>
         /// The pause.
         /// </summary>
-        public void Pause()
+        public void PauseUpdate()
         {
             this.isPaused = true;
         }
@@ -219,23 +244,17 @@ namespace Gdd.Game.LevelEditor
         /// <summary>
         /// The resume.
         /// </summary>
-        public void Resume()
+        public void ResumeUpdate()
         {
             this.isPaused = false;
         }
-
-        public bool IsPreviewRunning {get {
-            return this.isPreviewRunning;}}
-
-        public bool IsPaused { get {
-            return this.isPaused; } }
 
         /// <summary>
         /// The run preview.
         /// </summary>
         public void RunPreview()
         {
-            this.Resume();
+            this.ResumeUpdate();
             this.isPreviewRunning = true;
             this.levelPreviewScene.EnableScripts = true;
             this.levelPreviewScene.EnablePhysics = true;
