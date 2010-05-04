@@ -291,11 +291,8 @@ namespace Gdd.Game.Engine.Scenes
                 ObjectManager.AddDrawableSceneComponent(this.ID, ref dsc);
                 dsc.DrawOrderChanged += this.ComponentDrawOrderChanged;
             }
-            else
-            {
-                ObjectManager.AddSceneComponent(this.ID, ref sceneComponent);
-            }
 
+            ObjectManager.AddSceneComponent(this.ID, ref sceneComponent);
             sceneComponent.UpdateOrderChanged += this.ComponentUpdateOrderChanged;
         }
 
@@ -396,7 +393,7 @@ namespace Gdd.Game.Engine.Scenes
         /// <param name="sceneComponent">
         /// The scene component.
         /// </param>
-        public void RemoveComponent(SceneComponent sceneComponent)
+        public virtual void RemoveComponent(SceneComponent sceneComponent)
         {
             if (sceneComponent is DrawableSceneComponent)
             {
@@ -439,16 +436,13 @@ namespace Gdd.Game.Engine.Scenes
                 this.physicsSimulator.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
             }
 
-            for (int index = 0; index < ObjectManager.drawableSceneComponents[this.ID].Count; index++)
-            {
-                DrawableSceneComponent dsc = ObjectManager.drawableSceneComponents[this.ID][index];
-                dsc.Update(gameTime);
-            }
-
             for (int index = 0; index < ObjectManager.sceneComponents[this.ID].Count; index++)
             {
                 SceneComponent sc = ObjectManager.sceneComponents[this.ID][index];
-                sc.Update(gameTime);
+                if (sc.Enabled)
+                {
+                    sc.Update(gameTime);
+                }
             }
 
             if (this.camera != null)
@@ -507,6 +501,11 @@ namespace Gdd.Game.Engine.Scenes
         {
             foreach (DrawableSceneComponent dsc in ObjectManager.drawableSceneComponents[this.ID])
             {
+                if (!dsc.Visible)
+                {
+                    continue;
+                }
+
                 ShaderManager.SetCurrentEffect(dsc.DefaultEffectID);
                 ShaderManager.SetValue("Texture", dsc.texture);
                 ShaderManager.SetValue("life", Hero.GetHeroLife());

@@ -97,6 +97,7 @@ namespace Gdd.Game.LevelEditor
             this.levelEditorPane.SelectedComponentChanged += this.LevelEditorPane_SelectedComponentChanged;
             this.levelEditorPane.SelectedComponentPropertyChanged +=
                 this.LevelEditorPane_SelectedComponentPropertyChanged;
+            this.levelEditorPane.LevelComponentsChanged += this.LevelEditorPane_LevelComponentsChanged;
         }
 
         #endregion
@@ -141,7 +142,7 @@ namespace Gdd.Game.LevelEditor
         /// </param>
         private void ComboBoxLevelComponents_SelectedValueChanged(object sender, EventArgs e)
         {
-            this.SetPropertyGridObject(this.comboBoxLevelComponents.SelectedItem);
+            this.levelEditorPane.SelectedComponent = this.comboBoxLevelComponents.SelectedItem as SceneComponent;
         }
 
         /// <summary>
@@ -195,6 +196,21 @@ namespace Gdd.Game.LevelEditor
         {
             this.numericUpDownCamX.Value = (decimal)e.CameraPosition.X;
             this.numericUpDownCamY.Value = (decimal)e.CameraPosition.Y;
+        }
+
+        /// <summary>
+        /// The level editor pane_ level components changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void LevelEditorPane_LevelComponentsChanged(object sender, EventArgs e)
+        {
+            this.comboBoxLevelComponents.Items.Clear();
+            this.comboBoxLevelComponents.Items.AddRange(this.levelEditorPane.Level.Components.ToArray());
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Gdd.Game.Engine.Common
             {
                 adjSceneDSC.ClearAdjacencyLists();
 
-                foreach (DrawableSceneComponent sceneDSC in ObjectManager.drawableSceneComponents[sceneId])
+                /*foreach (DrawableSceneComponent sceneDSC in ObjectManager.drawableSceneComponents[sceneId])
                 {
                     aabb1 = adjSceneDSC.aabb;
                     aabb2 = sceneDSC.aabb;
@@ -24,7 +24,7 @@ namespace Gdd.Game.Engine.Common
                     {
                         adjSceneDSC.AddAdjacentDrawableSceneComponent(sceneDSC);
                     }
-                }
+                }*/
 
                 foreach (SceneComponent sceneDS in ObjectManager.sceneComponents[sceneId])
                 {
@@ -32,7 +32,14 @@ namespace Gdd.Game.Engine.Common
                     aabb2 = sceneDS.aabb;
                     if (adjSceneDSC.aabb != null && sceneDS.aabb != null && AABB.Intersect(ref aabb1, ref aabb2))
                     {
-                        adjSceneDSC.AddAdjacentSceneComponent(sceneDS);
+                        if (sceneDS is DrawableSceneComponent)
+                        {
+                            adjSceneDSC.AddAdjacentDrawableSceneComponent((DrawableSceneComponent)sceneDS);
+                        }
+                        else
+                        {
+                            adjSceneDSC.AddAdjacentSceneComponent(sceneDS);
+                        }
                     }
                 }
             }

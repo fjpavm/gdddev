@@ -11,6 +11,8 @@ namespace Gdd.Game.Engine.Levels.Information
 {
     using System;
 
+    using FarseerGames.FarseerPhysics.Factories;
+
     using Gdd.Game.Engine.Render;
     using Gdd.Game.Engine.Render.Shadow;
     using Gdd.Game.Engine.Scenes;
@@ -58,37 +60,104 @@ namespace Gdd.Game.Engine.Levels.Information
 
             this.HeaderText = string.Empty;
             this.BodyText = string.Empty;
-            this.TextBoxSize = new Vector2(100);
+            this.TextBoxSize = new Vector2(10);
         }
 
         #endregion
 
         #region Properties
 
+        private SpriteFont bodyFont;
+
+        private bool hasChanged;
+
         /// <summary>
         /// Gets or sets BodyFont.
         /// </summary>
-        public SpriteFont BodyFont { get; set; }
+        public SpriteFont BodyFont
+        {
+            get
+            {
+                return this.bodyFont;
+            }
+            set
+            {
+                this.bodyFont = value;
+                this.hasChanged = true;
+            }
+        }
+
+        private string bodyText;
 
         /// <summary>
         /// Gets or sets BodyText.
         /// </summary>
-        public string BodyText { get; set; }
+        public string BodyText
+        {
+            get
+            {
+                return this.bodyText;
+            }
+            set
+            {
+                this.bodyText = value;
+                this.hasChanged = true;
+            }
+        }
+
+        private SpriteFont headerFont;
 
         /// <summary>
         /// The header font.
         /// </summary>
-        public SpriteFont HeaderFont { get; set; }
+        public SpriteFont HeaderFont
+        {
+            get
+            {
+                return this.headerFont;
+            }
+            set
+            {
+                this.headerFont = value;
+                this.hasChanged = true;
+            }
+        }
+
+        private string headerText;
 
         /// <summary>
         /// Gets or sets HeaderText.
         /// </summary>
-        public string HeaderText { get; set; }
+        public string HeaderText
+        {
+            get
+            {
+                return this.headerText;
+            }
+            set
+            {
+                this.headerText = value;
+                this.hasChanged = true;
+            }
+        }
+
+        private Vector2 textBoxSize;
 
         /// <summary>
         /// Gets or sets TextBoxSize.
         /// </summary>
-        public Vector2 TextBoxSize { get; set; }
+        public Vector2 TextBoxSize
+        {
+            get
+            {
+                return this.textBoxSize;
+            }
+            set
+            {
+                this.textBoxSize = value;
+                this.hasChanged = true;
+            }
+        }
 
         /// <summary>
         /// Gets or sets DialogTexture.
@@ -132,7 +201,6 @@ namespace Gdd.Game.Engine.Levels.Information
             // draw the texture
             ShaderManager.SetCurrentEffect(ShaderManager.EFFECT_ID.TEXTURE);
 
-            Matrix worldMatrix = Matrix.Identity;
             ShaderManager.SetValue("World", Matrix.CreateTranslation(this.Position3D));
             ShaderManager.SetValue("View", this.scene.Camera.View);
             ShaderManager.SetValue("Projection", this.scene.Camera.Perspective);
@@ -150,6 +218,7 @@ namespace Gdd.Game.Engine.Levels.Information
             ShaderManager.GetCurrentEffect().Techniques["TextureTechnique"].Passes[0].End();
 
             ShaderManager.End();
+            this.DrawPhysicsVertices();
         }
 
         /// <summary>
@@ -160,7 +229,15 @@ namespace Gdd.Game.Engine.Levels.Information
         /// </param>
         public override void Update(GameTime gameTime)
         {
+            if (this.hasChanged)
+            {
+                this.LoadContent();
+                this.hasChanged = false;
+            }
+
             base.Update(gameTime);
+            this.PhysicsBody.Position = this.pos2D;
+            this.aabb = this.PhysicsGeometry.AABB;
         }
 
         #endregion
@@ -237,13 +314,17 @@ namespace Gdd.Game.Engine.Levels.Information
             this.textSprite = new[]
                 {
                     new TextureSprite(
-                        this.Position3D - HalfTextBoxSizeWidth - HalfTextBoxSizeHeight, new Vector2(0.0f, 1.0f)), 
-                    new TextureSprite(this.Position3D - HalfTextBoxSizeWidth + HalfTextBoxSizeHeight, Vector2.Zero), 
+                        - HalfTextBoxSizeWidth - HalfTextBoxSizeHeight, new Vector2(0.0f, 1.0f)), 
+                    new TextureSprite(- HalfTextBoxSizeWidth + HalfTextBoxSizeHeight, Vector2.Zero), 
                     new TextureSprite(
-                        this.Position3D + HalfTextBoxSizeWidth - HalfTextBoxSizeHeight, new Vector2(1.0f, 1.0f)), 
+                        HalfTextBoxSizeWidth - HalfTextBoxSizeHeight, new Vector2(1.0f, 1.0f)), 
                     new TextureSprite(
-                        this.Position3D + HalfTextBoxSizeWidth + HalfTextBoxSizeHeight, new Vector2(1.0f, 0.0f)), 
+                        HalfTextBoxSizeWidth + HalfTextBoxSizeHeight, new Vector2(1.0f, 0.0f)), 
                 };
+
+            this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(HalfTextBoxSizeWidth.X * 2, HalfTextBoxSizeHeight.Y * 2, 1.0f);
+            this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(this.PhysicsBody, HalfTextBoxSizeWidth.X * 2, HalfTextBoxSizeHeight.Y * 2);
+            this.aabb = this.PhysicsGeometry.AABB;
         }
 
         #endregion
