@@ -157,6 +157,12 @@ namespace Gdd.Game.Engine.Levels
             this.currentLevel.Components.Add(sceneComponent);
         }
 
+        public override void RemoveComponent(SceneComponent sceneComponent)
+        {
+            base.RemoveComponent(sceneComponent);
+            this.currentLevel.Components.Remove(sceneComponent);
+        }
+
         /// <summary>
         /// The initialize.
         /// </summary>

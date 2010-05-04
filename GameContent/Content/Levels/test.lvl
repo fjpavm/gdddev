@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <SerializableLevel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Author>GDD</Author>
   <LevelEntityCollection>
     <LevelEntity xsi:type="GroundEntity">
       <Enabled>true</Enabled>
@@ -8,14 +9,34 @@
         <X>0</X>
         <Y>-30</Y>
       </Position2D>
-      <Visible>false</Visible>
+      <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh/Final_terrian _Y _X _Half</ModelName>
     </LevelEntity>
   </LevelEntityCollection>
-  <Author>GDD</Author>
-  <Script />
+  <Script>
+    <string>using System;</string>
+    <string>using Gdd.Game.Engine.Levels;</string>
+    <string />
+    <string>using Microsoft.Xna.Framework;</string>
+    <string />
+    <string>public class MyLevel : LevelScript</string>
+    <string>{</string>
+    <string>    float a = 0.0f;</string>
+    <string />
+    <string>    public override void Initialize()</string>
+    <string>    {</string>
+    <string>    }</string>
+    <string />
+    <string>    public override void Update(GameTime gameTime)</string>
+    <string>    {</string>
+    <string>        a += 0.1f;</string>
+    <string>        StaticModel cube = this.Level.Components["bunny1"] as StaticModel;</string>
+    <string>        cube.Position2D = new Vector2(cube.Position2D.X + (float)Math.Sin(a) / 2, cube.Position2D.Y + (float)Math.Cos(a) / 2);</string>
+    <string>    } </string>
+    <string>}</string>
+  </Script>
   <StartPosition>
     <X>-360</X>
     <Y>-6</Y>

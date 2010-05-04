@@ -99,6 +99,7 @@ namespace Gdd.Game.Engine.Scenes
             this.pointLightColors = new Vector4[4];
 
             this.ID = ID_ROLLER++;
+            this.visible = true;
         }
 
         #endregion
@@ -235,7 +236,10 @@ namespace Gdd.Game.Engine.Scenes
         /// </param>
         public void AddAdjacentSceneComponent(SceneComponent sc)
         {
-            this.adjacentSceneComponents.Add(sc);
+            if (!sc.Equals(this))
+            {
+                this.adjacentSceneComponents.Add(sc);
+            }
         }
 
         /// <summary>
@@ -259,50 +263,53 @@ namespace Gdd.Game.Engine.Scenes
         /// </summary>
         public virtual void DrawPhysicsVertices()
         {
-            // draw the 2d representation of the model
-            ShaderManager.AddEffect(ShaderManager.EFFECT_ID.SIMPLE, "SimpleEffect", this.Game);
-
-            VertexPositionColor[] verticesPC;
-
-            verticesPC = new VertexPositionColor[this.PhysicsGeometry.WorldVertices.Count + 1];
-            for (int i = 0; i < this.PhysicsGeometry.WorldVertices.Count; i++)
+            if (Globals.displayState == DISPLAY_STATE.BOTH || Globals.displayState == DISPLAY_STATE.TWO_DIM)
             {
-                verticesPC[i] =
+                // draw the 2d representation of the model
+                ShaderManager.AddEffect(ShaderManager.EFFECT_ID.SIMPLE, "SimpleEffect", this.Game);
+
+                VertexPositionColor[] verticesPC;
+
+                verticesPC = new VertexPositionColor[this.PhysicsGeometry.WorldVertices.Count + 1];
+                for (int i = 0; i < this.PhysicsGeometry.WorldVertices.Count; i++)
+                {
+                    verticesPC[i] =
+                        new VertexPositionColor(
+                            new Vector3(this.PhysicsGeometry.WorldVertices[i], SceneManager.Z_POSITION), Color.Green);
+                }
+
+                verticesPC[this.PhysicsGeometry.WorldVertices.Count] =
                     new VertexPositionColor(
-                        new Vector3(this.PhysicsGeometry.WorldVertices[i], SceneManager.Z_POSITION), Color.Green);
+                        new Vector3(this.PhysicsGeometry.WorldVertices[0], SceneManager.Z_POSITION), Color.Green);
+
+                var vd = new VertexDeclaration(this.Game.GraphicsDevice, VertexPositionColor.VertexElements);
+                var VB = new VertexBuffer(
+                    this.Game.GraphicsDevice,
+                    VertexPositionColor.SizeInBytes * (this.PhysicsGeometry.WorldVertices.Count + 1),
+                    BufferUsage.None);
+                VB.SetData(verticesPC);
+
+                ShaderManager.SetCurrentEffect(ShaderManager.EFFECT_ID.SIMPLE);
+
+                ShaderManager.SetValue("WVP", this.scene.Camera.View * this.scene.Camera.Perspective);
+
+                ShaderManager.SetValue("Color", Color.Black.ToVector4());
+
+                ShaderManager.SetCurrentTechnique("SimpleTechnique");
+                ShaderManager.GetCurrentEffectGraphicsDevice().VertexDeclaration = vd;
+                ShaderManager.Begin();
+                foreach (EffectPass pass in ShaderManager.GetEffectPasses())
+                {
+                    pass.Begin();
+                    ShaderManager.GetCurrentEffectGraphicsDevice().Vertices[0].SetSource(
+                        VB, 0, VertexPositionColor.SizeInBytes);
+                    ShaderManager.GetCurrentEffectGraphicsDevice().DrawPrimitives(
+                        PrimitiveType.LineStrip, 0, this.PhysicsGeometry.WorldVertices.Count);
+                    pass.End();
+                }
+
+                ShaderManager.End();
             }
-
-            verticesPC[this.PhysicsGeometry.WorldVertices.Count] =
-                new VertexPositionColor(
-                    new Vector3(this.PhysicsGeometry.WorldVertices[0], SceneManager.Z_POSITION), Color.Green);
-
-            var vd = new VertexDeclaration(this.Game.GraphicsDevice, VertexPositionColor.VertexElements);
-            var VB = new VertexBuffer(
-                this.Game.GraphicsDevice, 
-                VertexPositionColor.SizeInBytes * (this.PhysicsGeometry.WorldVertices.Count + 1), 
-                BufferUsage.None);
-            VB.SetData(verticesPC);
-
-            ShaderManager.SetCurrentEffect(ShaderManager.EFFECT_ID.SIMPLE);
-
-            ShaderManager.SetValue("WVP", this.scene.Camera.View * this.scene.Camera.Perspective);
-
-            ShaderManager.SetValue("Color", Color.Black.ToVector4());
-
-            ShaderManager.SetCurrentTechnique("SimpleTechnique");
-            ShaderManager.GetCurrentEffectGraphicsDevice().VertexDeclaration = vd;
-            ShaderManager.Begin();
-            foreach (EffectPass pass in ShaderManager.GetEffectPasses())
-            {
-                pass.Begin();
-                ShaderManager.GetCurrentEffectGraphicsDevice().Vertices[0].SetSource(
-                    VB, 0, VertexPositionColor.SizeInBytes);
-                ShaderManager.GetCurrentEffectGraphicsDevice().DrawPrimitives(
-                    PrimitiveType.LineStrip, 0, this.PhysicsGeometry.WorldVertices.Count);
-                pass.End();
-            }
-
-            ShaderManager.End();
         }
 
         /// <summary>
@@ -397,10 +404,9 @@ namespace Gdd.Game.Engine.Scenes
             this.DrawWithEffect(this.DefaultEffectID, this.DefaultTechnique);
             }
 
-            if (Globals.displayState == DISPLAY_STATE.BOTH || Globals.displayState == DISPLAY_STATE.TWO_DIM)
-            {
-                this.DrawPhysicsVertices();
-            }
+            
+            this.DrawPhysicsVertices();
+            
         }
 
         #endregion

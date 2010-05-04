@@ -44,10 +44,25 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         public bool IsColliding { get; private set; }
 
+        private Vector2 size;
+
+        private bool hasChanged;
+
         /// <summary>
         /// Gets or sets Size.
         /// </summary>
-        public Vector2 Size { get; set; }
+        public Vector2 Size
+        {
+            get
+            {
+                return this.size;
+            }
+            set
+            {
+                this.size = value;
+                this.hasChanged = true;
+            }
+        }
 
         #endregion
 
@@ -61,6 +76,12 @@ namespace Gdd.Game.Engine.Levels
         /// </param>
         public override void Update(GameTime gameTime)
         {
+            if (this.hasChanged)
+            {
+                this.LoadContent();
+                this.hasChanged = false;
+            }
+
             base.Update(gameTime);
             this.PhysicsBody.Position = this.pos2D;
             this.aabb = this.PhysicsGeometry.AABB;

@@ -125,6 +125,11 @@ namespace Gdd.Game.LevelEditor
         public event EventHandler<CameraPositionChangedEventArgs> CameraPositionChanged;
 
         /// <summary>
+        /// The level components changed.
+        /// </summary>
+        public event EventHandler LevelComponentsChanged;
+
+        /// <summary>
         /// The selected block changed.
         /// </summary>
         public event EventHandler<SelectedComponentChangedEventArgs> SelectedComponentChanged;
@@ -376,8 +381,9 @@ namespace Gdd.Game.LevelEditor
             {
                 if (this.deleteSelectedBlock.IsPressed)
                 {
-                    this.levelEditorScene.CurrentLevel.Components.Remove(this.SelectedComponent);
+                    this.levelEditorScene.RemoveComponent(this.SelectedComponent);
                     this.SelectedComponent = null;
+                    this.InvokeLevelComponentsChanged(EventArgs.Empty);
                 }
                 else
                 {
@@ -438,6 +444,21 @@ namespace Gdd.Game.LevelEditor
         private void InvokeCameraPositionChanged(CameraPositionChangedEventArgs e)
         {
             EventHandler<CameraPositionChangedEventArgs> handler = this.CameraPositionChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        /// <summary>
+        /// The invoke level components changed.
+        /// </summary>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void InvokeLevelComponentsChanged(EventArgs e)
+        {
+            EventHandler handler = this.LevelComponentsChanged;
             if (handler != null)
             {
                 handler(this, e);
