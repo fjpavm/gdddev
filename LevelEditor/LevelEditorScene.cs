@@ -9,7 +9,8 @@
 
 namespace Gdd.Game.LevelEditor
 {
-    using Gdd.Game.Engine;
+    using System;
+
     using Gdd.Game.Engine.Input;
     using Gdd.Game.Engine.Levels;
     using Gdd.Game.Engine.Scenes.Lights;
@@ -64,6 +65,15 @@ namespace Gdd.Game.LevelEditor
 
         #endregion
 
+        #region Events
+
+        /// <summary>
+        /// The camera position changed.
+        /// </summary>
+        public event EventHandler<CameraPositionChangedEventArgs> CameraPositionChanged;
+
+        #endregion
+
         #region Public Methods
 
         /// <summary>
@@ -72,7 +82,8 @@ namespace Gdd.Game.LevelEditor
         public override void Initialize()
         {
             base.Initialize();
-            this.Camera = new Camera(this.Game, new Vector3(0.0f, 0.0f, 30.0f)) { FieldOfView = 70.0f };
+            var newPosition = new Vector2(this.Camera.Pos.X, this.Camera.Pos.Y);
+            this.InvokeCameraPositionChanged(new CameraPositionChangedEventArgs(newPosition));
             this.Light = new DirectionalLight(this.Game)
                 {
                    Position3D = new Vector3(0.0f, 0.0f, 10.0f), Color = Color.CornflowerBlue 
@@ -98,24 +109,54 @@ namespace Gdd.Game.LevelEditor
         {
             base.Update(gameTime);
             const float Delta = 0.1f;
+            bool cameraPositionChanged = false;
             if (this.cameraDown.IsPressed)
             {
                 this.Camera.MoveUpDown(-Delta);
+                cameraPositionChanged = true;
             }
 
             if (this.cameraLeft.IsPressed)
             {
                 this.Camera.StrafeRightLeft(-Delta);
+                cameraPositionChanged = true;
             }
 
             if (this.cameraRight.IsPressed)
             {
                 this.Camera.StrafeRightLeft(Delta);
+                cameraPositionChanged = true;
             }
 
             if (this.cameraUp.IsPressed)
             {
                 this.Camera.MoveUpDown(Delta);
+                cameraPositionChanged = true;
+            }
+
+            if (cameraPositionChanged)
+            {
+                var cameraPosition = new Vector2(this.Camera.Pos.X, this.Camera.Pos.Y);
+                this.InvokeCameraPositionChanged(new CameraPositionChangedEventArgs(cameraPosition));
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The invoke camera position changed.
+        /// </summary>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void InvokeCameraPositionChanged(CameraPositionChangedEventArgs e)
+        {
+            EventHandler<CameraPositionChangedEventArgs> handler = this.CameraPositionChanged;
+            if (handler != null)
+            {
+                handler(this, e);
             }
         }
 

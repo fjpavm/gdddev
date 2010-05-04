@@ -29,11 +29,6 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         private readonly LevelComponentCollection components;
 
-        /// <summary>
-        /// The level scene.
-        /// </summary>
-        private LevelScene levelScene;
-
         #endregion
 
         #region Constructors and Destructors
@@ -82,6 +77,11 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         public string[] Script { get; set; }
 
+        /// <summary>
+        /// Gets or sets StartPosition.
+        /// </summary>
+        public Vector2 StartPosition { get; set; }
+
         #endregion
 
         #region Public Methods
@@ -103,17 +103,6 @@ namespace Gdd.Game.Engine.Levels
                         boundingBox.Min.X <= vector3.X && boundingBox.Min.Y <= vector3.Y &&
                         boundingBox.Max.X >= vector3.X && boundingBox.Max.Y >= vector3.Y
                     select block).FirstOrDefault();
-        }
-
-        /// <summary>
-        /// The set scene.
-        /// </summary>
-        /// <param name="levelScene">
-        /// The level scene.
-        /// </param>
-        public void SetScene(LevelScene levelScene)
-        {
-            this.levelScene = levelScene;
         }
 
         #endregion

@@ -314,6 +314,7 @@ namespace Gdd.Game
                         TextBoxSize = new Vector2(15.0f, 15.0f)
                     });
             scene1.Camera = camera;
+            scene1.Camera.Pos = new Vector3(0, 0, 10);
             scene1.Light = dl1;
 
             scene1.AddComponent(new PointLight(this) { Position2D = new Vector2(-10.0f, 0.0f), Radius = 10.0f, Color = Color.White });

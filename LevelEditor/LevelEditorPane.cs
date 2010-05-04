@@ -120,6 +120,11 @@ namespace Gdd.Game.LevelEditor
         #region Events
 
         /// <summary>
+        /// The camera position changed.
+        /// </summary>
+        public event EventHandler<CameraPositionChangedEventArgs> CameraPositionChanged;
+
+        /// <summary>
         /// The selected block changed.
         /// </summary>
         public event EventHandler<SelectedComponentChangedEventArgs> SelectedComponentChanged;
@@ -218,6 +223,18 @@ namespace Gdd.Game.LevelEditor
         }
 
         /// <summary>
+        /// The set camera position.
+        /// </summary>
+        /// <param name="cameraPosition">
+        /// The camera position.
+        /// </param>
+        public void SetCameraPosition(Vector2 cameraPosition)
+        {
+            var newPosition = new Vector3(cameraPosition, this.levelEditorScene.Camera.Pos.Z);
+            this.levelEditorScene.Camera.Pos = newPosition;
+        }
+
+        /// <summary>
         /// The stop preview.
         /// </summary>
         public void StopPreview()
@@ -261,6 +278,7 @@ namespace Gdd.Game.LevelEditor
         protected override void Initialize()
         {
             this.levelEditorScene = new LevelEditorScene(this) { MainGameScene = true };
+            this.levelEditorScene.CameraPositionChanged += this.LevelEditorScene_CameraPositionChanged;
             this.deleteSelectedBlock = new GameAction("deleteSelectedBlock", GameActionBehavior.DetectInitialPressOnly);
             this.levelEditorScene.InputManager.MapToKey(this.deleteSelectedBlock, Keys.Delete);
             SceneManager.AddScene(this.levelEditorScene);
@@ -412,6 +430,21 @@ namespace Gdd.Game.LevelEditor
         }
 
         /// <summary>
+        /// The invoke camera position changed.
+        /// </summary>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void InvokeCameraPositionChanged(CameraPositionChangedEventArgs e)
+        {
+            EventHandler<CameraPositionChangedEventArgs> handler = this.CameraPositionChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        /// <summary>
         /// The invoke selected block changed.
         /// </summary>
         /// <param name="e">
@@ -459,6 +492,20 @@ namespace Gdd.Game.LevelEditor
         {
             return x >= 0 && y >= 0 && x <= this.GraphicsDevice.Viewport.Width &&
                    y <= this.GraphicsDevice.Viewport.Height;
+        }
+
+        /// <summary>
+        /// The level editor scene_ camera position changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void LevelEditorScene_CameraPositionChanged(object sender, CameraPositionChangedEventArgs e)
+        {
+            this.InvokeCameraPositionChanged(new CameraPositionChangedEventArgs(e.CameraPosition));
         }
 
         /// <summary>

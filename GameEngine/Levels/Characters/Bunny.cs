@@ -18,10 +18,6 @@ namespace Gdd.Game.Engine.Levels.Characters
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using Scenes.Lights;
-    using FarseerGames.FarseerPhysics.Factories;
-    using Gdd.Game.Engine.Scenes;
-    using System.Linq;
 
     /// <summary>
     /// The bunny.
@@ -30,15 +26,15 @@ namespace Gdd.Game.Engine.Levels.Characters
     {
         #region Constants and Fields
 
-        private static Model BunnyModel;
+        /// <summary>
         /// The animations.
         /// </summary>
         private readonly string[] animations = new[] { "idle", "Death", "Skating" };
 
         /// <summary>
-        /// The life.
+        /// The bunny model.
         /// </summary>
-        private float life;
+        private static Model BunnyModel;
 
         /// <summary>
         /// The animation index.
@@ -49,6 +45,11 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// The last state.
         /// </summary>
         private KeyboardState lastState;
+
+        /// <summary>
+        /// The life.
+        /// </summary>
+        private float life;
 
         #endregion
 
@@ -171,30 +172,30 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         protected override void LoadContent()
         {
-            gridCellSize = 100.0f;
-            if(Bunny.BunnyModel != null){
-                this.ObjectModel = Bunny.BunnyModel;
-            }
-            
-            base.LoadContent();
-            
-            if(Bunny.BunnyModel == null){
-                Bunny.BunnyModel = this.ObjectModel;
+            this.gridCellSize = 100.0f;
+            if (BunnyModel != null)
+            {
+                this.ObjectModel = BunnyModel;
             }
 
-              
+            base.LoadContent();
+
+            if (BunnyModel == null)
+            {
+                BunnyModel = this.ObjectModel;
+            }
+
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL, "AnimatedModel", this.Game);
             this.DefaultEffectID = ShaderManager.EFFECT_ID.ANIMATEDMODEL;
             this.DefaultTechnique = "AnimatedModelTechnique";
             this.skinningData = (SkinningData)this.ObjectModel.Tag;
 
             // currentClip = skinningData.AnimationClips[animations[animationIndex]];
-
-             AnimationPlayer.StartClip();
+            this.AnimationPlayer.StartClip();
 
             // Loading Bunny State Machines
             // some test patrol points
-            Vector2 patrol1 = new Vector2(-1000000.0f,0.0f);
+            var patrol1 = new Vector2(-1000000.0f, 0.0f);
             var patrol2 = new Vector2(10, 0);
             this.AnimationStateMachine = new BunnyAnimationStateMachine(this);
             this.MonsterStateMachine = new BunnyStateMachine(this, patrol1, patrol2);

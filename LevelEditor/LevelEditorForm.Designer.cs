@@ -43,6 +43,10 @@
             this.propertyGrid = new Azuria.Common.Controls.FilteredPropertyGrid();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageLevelEditor = new System.Windows.Forms.TabPage();
+            this.labelCameraPosition = new System.Windows.Forms.Label();
+            this.numericUpDownCamX = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownCamY = new System.Windows.Forms.NumericUpDown();
+            this.buttonSetCamPosition = new System.Windows.Forms.Button();
             this.tabPageLevelScript = new System.Windows.Forms.TabPage();
             this.textBoxLevelScript = new System.Windows.Forms.TextBox();
             this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
@@ -50,10 +54,6 @@
             this.toolStripPreview = new System.Windows.Forms.ToolStrip();
             this.tsmiPreviewToolStripRun = new System.Windows.Forms.ToolStripButton();
             this.tsmiPreviewToolStripStop = new System.Windows.Forms.ToolStripButton();
-            this.labelCameraPosition = new System.Windows.Forms.Label();
-            this.buttonSetCamPosition = new System.Windows.Forms.Button();
-            this.numericUpDownCamX = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownCamY = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.splitContainer.Panel1.SuspendLayout();
@@ -61,13 +61,13 @@
             this.splitContainer.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageLevelEditor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCamX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCamY)).BeginInit();
             this.tabPageLevelScript.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.toolStripPreview.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCamX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCamY)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -228,6 +228,41 @@
             this.tabPageLevelEditor.Text = "Designer";
             this.tabPageLevelEditor.UseVisualStyleBackColor = true;
             // 
+            // labelCameraPosition
+            // 
+            this.labelCameraPosition.AutoSize = true;
+            this.labelCameraPosition.Location = new System.Drawing.Point(6, 11);
+            this.labelCameraPosition.Name = "labelCameraPosition";
+            this.labelCameraPosition.Size = new System.Drawing.Size(110, 13);
+            this.labelCameraPosition.TabIndex = 0;
+            this.labelCameraPosition.Text = "Camera position (x, y):";
+            // 
+            // numericUpDownCamX
+            // 
+            this.numericUpDownCamX.DecimalPlaces = 2;
+            this.numericUpDownCamX.Location = new System.Drawing.Point(122, 9);
+            this.numericUpDownCamX.Name = "numericUpDownCamX";
+            this.numericUpDownCamX.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDownCamX.TabIndex = 1;
+            // 
+            // numericUpDownCamY
+            // 
+            this.numericUpDownCamY.DecimalPlaces = 2;
+            this.numericUpDownCamY.Location = new System.Drawing.Point(188, 9);
+            this.numericUpDownCamY.Name = "numericUpDownCamY";
+            this.numericUpDownCamY.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDownCamY.TabIndex = 2;
+            // 
+            // buttonSetCamPosition
+            // 
+            this.buttonSetCamPosition.Location = new System.Drawing.Point(254, 6);
+            this.buttonSetCamPosition.Name = "buttonSetCamPosition";
+            this.buttonSetCamPosition.Size = new System.Drawing.Size(75, 23);
+            this.buttonSetCamPosition.TabIndex = 3;
+            this.buttonSetCamPosition.Text = "Set";
+            this.buttonSetCamPosition.UseVisualStyleBackColor = true;
+            this.buttonSetCamPosition.Click += new System.EventHandler(this.ButtonSetCamPosition_Click);
+            // 
             // tabPageLevelScript
             // 
             this.tabPageLevelScript.Controls.Add(this.textBoxLevelScript);
@@ -305,40 +340,6 @@
             this.tsmiPreviewToolStripStop.Text = "Stop";
             this.tsmiPreviewToolStripStop.Click += new System.EventHandler(this.StopToolStripMenuItem_Click);
             // 
-            // labelCameraPosition
-            // 
-            this.labelCameraPosition.AutoSize = true;
-            this.labelCameraPosition.Location = new System.Drawing.Point(6, 11);
-            this.labelCameraPosition.Name = "labelCameraPosition";
-            this.labelCameraPosition.Size = new System.Drawing.Size(110, 13);
-            this.labelCameraPosition.TabIndex = 0;
-            this.labelCameraPosition.Text = "Camera position (x, y):";
-            // 
-            // buttonSetCamPosition
-            // 
-            this.buttonSetCamPosition.Location = new System.Drawing.Point(254, 6);
-            this.buttonSetCamPosition.Name = "buttonSetCamPosition";
-            this.buttonSetCamPosition.Size = new System.Drawing.Size(75, 23);
-            this.buttonSetCamPosition.TabIndex = 3;
-            this.buttonSetCamPosition.Text = "Set";
-            this.buttonSetCamPosition.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownCamX
-            // 
-            this.numericUpDownCamX.DecimalPlaces = 2;
-            this.numericUpDownCamX.Location = new System.Drawing.Point(122, 9);
-            this.numericUpDownCamX.Name = "numericUpDownCamX";
-            this.numericUpDownCamX.Size = new System.Drawing.Size(60, 20);
-            this.numericUpDownCamX.TabIndex = 1;
-            // 
-            // numericUpDownCamY
-            // 
-            this.numericUpDownCamY.DecimalPlaces = 2;
-            this.numericUpDownCamY.Location = new System.Drawing.Point(188, 9);
-            this.numericUpDownCamY.Name = "numericUpDownCamY";
-            this.numericUpDownCamY.Size = new System.Drawing.Size(60, 20);
-            this.numericUpDownCamY.TabIndex = 2;
-            // 
             // LevelEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -360,6 +361,8 @@
             this.tabControl.ResumeLayout(false);
             this.tabPageLevelEditor.ResumeLayout(false);
             this.tabPageLevelEditor.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCamX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCamY)).EndInit();
             this.tabPageLevelScript.ResumeLayout(false);
             this.tabPageLevelScript.PerformLayout();
             this.toolStripContainer.ContentPanel.ResumeLayout(false);
@@ -369,8 +372,6 @@
             this.toolStripContainer.PerformLayout();
             this.toolStripPreview.ResumeLayout(false);
             this.toolStripPreview.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCamX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCamY)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

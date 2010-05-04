@@ -14,7 +14,7 @@ namespace Gdd.Game.Engine.Levels
     /// <summary>
     /// The level reader.
     /// </summary>
-    internal class LevelReader : ContentTypeReader<LevelEntityCollection>
+    internal class LevelReader : ContentTypeReader<SerializableLevel>
     {
         #region Methods
 
@@ -30,7 +30,7 @@ namespace Gdd.Game.Engine.Levels
         /// <returns>
         /// Level instance.
         /// </returns>
-        protected override LevelEntityCollection Read(ContentReader input, LevelEntityCollection existingInstance)
+        protected override SerializableLevel Read(ContentReader input, SerializableLevel existingInstance)
         {
             var levelSerializer = new LevelSerializer();
             return levelSerializer.Deserialize(input.BaseStream);

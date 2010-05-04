@@ -19,7 +19,7 @@ namespace Gdd.Game.Engine.Content.Pipeline.Processors
     /// The level processor.
     /// </summary>
     [ContentProcessor(DisplayName = "Level Processor - GddGame")]
-    internal class LevelProcessor : ContentProcessor<byte[], LevelEntityCollection>
+    internal class LevelProcessor : ContentProcessor<byte[], SerializableLevel>
     {
         #region Public Methods
 
@@ -35,7 +35,7 @@ namespace Gdd.Game.Engine.Content.Pipeline.Processors
         /// <returns>
         /// Returns the Level instance.
         /// </returns>
-        public override LevelEntityCollection Process(byte[] input, ContentProcessorContext context)
+        public override SerializableLevel Process(byte[] input, ContentProcessorContext context)
         {
             using (var memoryStream = new MemoryStream(input))
             {

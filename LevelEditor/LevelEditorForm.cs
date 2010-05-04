@@ -19,6 +19,8 @@ namespace Gdd.Game.LevelEditor
     using Gdd.Game.Engine.Levels;
     using Gdd.Game.Engine.Scenes;
 
+    using Microsoft.Xna.Framework;
+
     /// <summary>
     /// The level editor form.
     /// </summary>
@@ -52,6 +54,10 @@ namespace Gdd.Game.LevelEditor
         {
             this.InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            this.numericUpDownCamX.Maximum = decimal.MaxValue;
+            this.numericUpDownCamX.Minimum = decimal.MinValue;
+            this.numericUpDownCamY.Maximum = decimal.MaxValue;
+            this.numericUpDownCamY.Minimum = decimal.MinValue;
             this.tsmiPreviewStop.Visible = false;
             this.tsmiPreviewToolStripStop.Visible = false;
             this.tsmiFileOpen.Image = Resources.openHS;
@@ -87,6 +93,7 @@ namespace Gdd.Game.LevelEditor
         public void SetLevelEditorPane(LevelEditorPane game)
         {
             this.levelEditorPane = game;
+            this.levelEditorPane.CameraPositionChanged += this.LevelEditorPane_CameraPositionChanged;
             this.levelEditorPane.SelectedComponentChanged += this.LevelEditorPane_SelectedComponentChanged;
             this.levelEditorPane.SelectedComponentPropertyChanged +=
                 this.LevelEditorPane_SelectedComponentPropertyChanged;
@@ -106,6 +113,21 @@ namespace Gdd.Game.LevelEditor
         {
             base.OnFormClosed(e);
             this.levelEditorPane.Exit();
+        }
+
+        /// <summary>
+        /// The button set cam position_ click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void ButtonSetCamPosition_Click(object sender, EventArgs e)
+        {
+            var cameraPosition = new Vector2((float)this.numericUpDownCamX.Value, (float)this.numericUpDownCamY.Value);
+            this.levelEditorPane.SetCameraPosition(cameraPosition);
         }
 
         /// <summary>
@@ -158,6 +180,21 @@ namespace Gdd.Game.LevelEditor
             {
                 this.toolStripToolbar.Items.Add(pair.Value);
             }
+        }
+
+        /// <summary>
+        /// The level editor pane_ camera position changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void LevelEditorPane_CameraPositionChanged(object sender, CameraPositionChangedEventArgs e)
+        {
+            this.numericUpDownCamX.Value = (decimal)e.CameraPosition.X;
+            this.numericUpDownCamY.Value = (decimal)e.CameraPosition.Y;
         }
 
         /// <summary>
@@ -247,7 +284,9 @@ namespace Gdd.Game.LevelEditor
             {
                 if (string.IsNullOrEmpty((string)e.ChangedItem.Value) ||
                     this.levelEditorPane.Level.Components.Any(
-                        c => c.Name.Equals((string)e.ChangedItem.Value, StringComparison.InvariantCulture)))
+                        c =>
+                        c != this.propertyGrid.SelectedObject &&
+                        c.Name.Equals((string)e.ChangedItem.Value, StringComparison.InvariantCulture)))
                 {
                     var changedItem = this.propertyGrid.SelectedObject as SceneComponent;
                     if (changedItem != null)

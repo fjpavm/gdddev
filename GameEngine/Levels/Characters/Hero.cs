@@ -215,7 +215,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         protected override void LoadContent()
         {
-            gridCellSize = 50.0f;
+            this.gridCellSize = 50.0f;
             base.LoadContent();
 
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL, "AnimatedModel", this.Game);

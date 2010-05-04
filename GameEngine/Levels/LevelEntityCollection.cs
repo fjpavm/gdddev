@@ -16,18 +16,5 @@ namespace Gdd.Game.Engine.Levels
     /// </summary>
     public class LevelEntityCollection : Collection<LevelEntity>
     {
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets Author.
-        /// </summary>
-        public string Author { get; set; }
-
-        /// <summary>
-        /// Gets or sets Script.
-        /// </summary>
-        public string[] Script { get; set; }
-
-        #endregion
     }
 }
