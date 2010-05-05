@@ -14,6 +14,7 @@ namespace Gdd.Game.Engine.Levels
     using FarseerGames.FarseerPhysics.Collisions;
 
     using Gdd.Game.Engine.Animation;
+    using Gdd.Game.Engine.Common;
     using Gdd.Game.Engine.Levels.Characters;
     using Gdd.Game.Engine.Physics;
     using Gdd.Game.Engine.Render;
@@ -187,21 +188,13 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         protected override void LoadContent()
         {
-            bool modelAlreadyLoaded = this.ObjectModel == null;
-            if (modelAlreadyLoaded)
-            {
-                this.ObjectModel = this.Game.Content.Load<Model>(this.modelName);
-            }
+            GddModel gddModel = ModelManager.LoadModel(this.modelName, this.Game, this.ScaleMatrix * this.Rotation);
+            this.ObjectModel = gddModel.Model;
+            this.ModelTextures = gddModel.Textures;
 
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL, "Effects\\AnimatedModel", this.Game);
             this.DefaultEffectID = ShaderManager.EFFECT_ID.ANIMATEDMODEL;
             this.DefaultTechnique = "AnimatedModelTechnique";
-
-            if (modelAlreadyLoaded)
-            {
-                ModelToVertices.TransformAnimatedModel(this, this.Game);
-            }
-
             this.AnimationPlayer = new ModelAnimationPlayer(this.ObjectModel.Tag as SkinningData);
 
             this.AnimationPlayer.SetClip((this.ObjectModel.Tag as SkinningData).AnimationClips.Values.First());

@@ -120,7 +120,9 @@
     <Compile Include="Animation\SkinningData.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Common\GddModel.cs" />
     <Compile Include="Common\Globals.cs" />
+    <Compile Include="Common\ModelManager.cs" />
     <Compile Include="Levels\Bounds.cs" />
     <Compile Include="Levels\Entities\AnimatedModelEntity.cs" />
     <Compile Include="Levels\Entities\BoundsEntity.cs" />

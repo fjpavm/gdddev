@@ -234,8 +234,7 @@ namespace Gdd.Game.LevelEditor
         /// </param>
         private void LevelEditorPane_LevelComponentsChanged(object sender, EventArgs e)
         {
-            this.comboBoxLevelComponents.Items.Clear();
-            this.comboBoxLevelComponents.Items.AddRange(this.levelEditorPane.Level.Components.ToArray());
+            this.SetComboBoxItems();
         }
 
         /// <summary>
@@ -303,8 +302,7 @@ namespace Gdd.Game.LevelEditor
             if (dr == DialogResult.OK)
             {
                 this.levelEditorPane.LoadLevel(dialog.FileName);
-                this.comboBoxLevelComponents.Items.Clear();
-                this.comboBoxLevelComponents.Items.AddRange(this.levelEditorPane.Level.Components.ToArray());
+                this.SetComboBoxItems();
                 this.textBoxLevelScript.Lines = this.levelEditorPane.Level.Script;
                 this.tabControl.SelectedTab = this.tabPageLevelEditor;
                 this.xnaRenderTarget.Focus();
@@ -408,6 +406,18 @@ namespace Gdd.Game.LevelEditor
                 this.levelEditorPane.Level.Script = this.textBoxLevelScript.Lines;
                 this.levelEditorPane.SaveLevel(dialog.FileName);
             }
+        }
+
+        /// <summary>
+        /// The set combo box items.
+        /// </summary>
+        private void SetComboBoxItems()
+        {
+            IEnumerable<object> items =
+                new[] { (object)this.levelEditorPane.Level }.Concat(
+                    this.levelEditorPane.Level.Components.Cast<object>());
+            this.comboBoxLevelComponents.Items.Clear();
+            this.comboBoxLevelComponents.Items.AddRange(items.ToArray());
         }
 
         /// <summary>
@@ -561,9 +571,10 @@ namespace Gdd.Game.LevelEditor
             }
 
             sceneComponent.Name = sb.ToString();
-            this.comboBoxLevelComponents.Items.Add(sceneComponent);
             this.SetPropertyGridObject(sceneComponent);
             this.levelEditorPane.AddComponent(sceneComponent);
+            this.SetComboBoxItems();
+            this.comboBoxLevelComponents.SelectedItem = sceneComponent;
         }
 
         #endregion

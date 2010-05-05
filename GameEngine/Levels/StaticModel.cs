@@ -17,6 +17,7 @@ namespace Gdd.Game.Engine.Levels
     using FarseerGames.FarseerPhysics.Collisions;
     using FarseerGames.FarseerPhysics.Factories;
 
+    using Gdd.Game.Engine.Common;
     using Gdd.Game.Engine.Levels.Characters;
     using Gdd.Game.Engine.Physics;
     using Gdd.Game.Engine.Render;
@@ -126,6 +127,7 @@ namespace Gdd.Game.Engine.Levels
             this.PitchRotation = 0.0f;
             this.RollRotation = 0.0f;
             this.scale = Vector2.One;
+            this.ScaleMatrix = Matrix.Identity;
 
             this.Rotation = Matrix.CreateFromYawPitchRoll(this.YawRotation, this.PitchRotation, this.RollRotation);
 
@@ -403,7 +405,7 @@ namespace Gdd.Game.Engine.Levels
                 {
                     if (count < this.ModelTextures.Count)
                     {
-                        ShaderManager.SetValue("Texture", this.ModelTextures[count++]);
+                         ShaderManager.SetValue("Texture", this.ModelTextures[count++]);
                     }
 
                     ShaderManager.SetValue("ID", this.ID);
@@ -498,6 +500,11 @@ namespace Gdd.Game.Engine.Levels
                                 InverseOffsetMatrix * this.PhysicsBody.GetBodyRotationMatrix() * OffsetMatrix;
             }
 
+            if (this.PhysicsGeometry != null)
+            {
+                this.aabb = this.PhysicsGeometry.AABB;                
+            }
+
             this.World = this.ScaleMatrix * this.Rotation * this.Translation;
             this.isUpdating = false;
         }
@@ -513,9 +520,10 @@ namespace Gdd.Game.Engine.Levels
         {
             this.CreatePhysics();
 
-            //this.offset = this.PhysicsBody.Position;
             this.PhysicsBody.Position = this.Position2D + this.offset;
 
+            /*
+             * this.ModelTextures.Clear();
             foreach (Effect effect in this.ObjectModel.Meshes.SelectMany(mesh => mesh.Effects))
             {
                 if (effect.Parameters["Texture"] != null)
@@ -526,7 +534,7 @@ namespace Gdd.Game.Engine.Levels
                 {
                     this.ModelTextures.Add(effect.Parameters["BasicTexture"].GetValueTexture2D());
                 }
-            }
+            }*/
 
             base.LoadContent();
         }
@@ -536,7 +544,11 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         protected override void LoadContent()
         {
-            this.ObjectModel = this.Game.Content.Load<Model>(this.modelName);
+            this.offset = Vector2.Zero;
+            GddModel gddModel = ModelManager.LoadModel(this.modelName, this.Game, this.ScaleMatrix * this.Rotation);
+            this.ObjectModel = gddModel.Model;
+            this.ModelTextures.Clear();
+            this.ModelTextures.AddRange(gddModel.Textures);
 
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.STATICMODEL, "Effects\\StaticModel", this.Game);
             this.DefaultEffectID = ShaderManager.EFFECT_ID.STATICMODEL;
@@ -544,8 +556,8 @@ namespace Gdd.Game.Engine.Levels
 
             if (this.GeometryType == GeometryType.Polygon)
             {
-                this.PhysicsVertices = ModelToVertices.TransformStaticModel(this, this.Game, out this.mass);
-                this.mass *= 100.0f;
+                this.PhysicsVertices = gddModel.Vertices;
+                this.mass = gddModel.Mass * 100.0f;
             }
 
             this.LoadCommonContent();
