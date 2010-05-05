@@ -86,7 +86,7 @@ namespace Gdd.Game.LevelEditor
             this.OnCameraPositionChanged(new CameraPositionChangedEventArgs(newPosition));
             this.Light = new DirectionalLight(this.Game)
                 {
-                   Position3D = new Vector3(0.0f, 0.0f, 10.0f), Color = Color.CornflowerBlue 
+                   Position2D = new Vector2(0.0f, 0.0f), Color = Color.CornflowerBlue 
                 };
 
             this.cameraUp = new GameAction("cameraUp");

@@ -15,7 +15,7 @@ namespace Gdd.Game.Engine.Scenes.Lights
     /// <summary>
     /// This is a game component that implements SceneComponent
     /// </summary>
-    public abstract class Light : SceneComponent
+    public abstract class Light : DrawableSceneComponent
     {
         #region Constructors and Destructors
 
@@ -44,16 +44,19 @@ namespace Gdd.Game.Engine.Scenes.Lights
         /// <summary>
         /// Gets or sets Position3D.
         /// </summary>
-        public override Vector3 Position3D
+        public override Vector2 Position2D
         {
             get
             {
-                return base.Position3D;
+                return pos2D;
             }
 
             set
             {
-                this.pos3D = value;
+                this.pos2D = value;
+                this.pos3D.X = value.X;
+                this.pos3D.Y = value.Y;
+                this.pos3D.Z = SceneManager.LIGHT_Z_POSITION;
             }
         }
 

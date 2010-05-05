@@ -1,3 +1,4 @@
+using FarseerGames.FarseerPhysics.Factories;
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="PointLight.cs" company="UAD">
 //   Game Design and Development
@@ -7,7 +8,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
- // --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="PointLight.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
@@ -40,6 +41,7 @@ namespace Gdd.Game.Engine.Scenes.Lights
         {
             this.pos3D.Z = -1.0f;
             this.Color = this.Color;
+            this.Radius = 10.0f;
         }
 
         #endregion
@@ -47,9 +49,29 @@ namespace Gdd.Game.Engine.Scenes.Lights
         #region Properties
 
         /// <summary>
+        /// The has changed.
+        /// </summary>
+        private bool hasChanged;
+
+        /// <summary>
         /// Gets or sets Radius.
         /// </summary>
-        public float Radius { get; set; }
+        private float radius;
+
+        public float Radius
+        {
+            get
+            {
+                return this.radius;
+            }
+
+            set
+            {
+                this.radius= value;
+                this.hasChanged = true;
+            }
+        }
+
 
         #endregion
 
@@ -61,11 +83,30 @@ namespace Gdd.Game.Engine.Scenes.Lights
         public override void Initialize()
         {
             base.Initialize();
-            var min = new Vector2(-this.Radius, -this.Radius);
-            var max = new Vector2(this.Radius, this.Radius);
-            this.aabb = new AABB(ref min, ref max);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (this.hasChanged)
+            {
+                this.LoadContent();
+                this.hasChanged = false;
+            }
+
+            base.Update(gameTime);
+            this.PhysicsBody.Position = this.pos2D;
+            this.aabb = this.PhysicsGeometry.AABB;
         }
 
         #endregion
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+
+            this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(2 * this.Radius, 2 * this.Radius, 1.0f);
+            this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(this.PhysicsBody, 2 * this.Radius, 2 * this.Radius);
+            this.aabb = this.PhysicsGeometry.AABB;
+        }
     }
 }
