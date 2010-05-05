@@ -1,3 +1,4 @@
+using System;
 using FarseerGames.FarseerPhysics.Collisions;
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Hero.cs" company="UAD">
@@ -61,7 +62,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// <summary>
         /// The jump impulse.
         /// </summary>
-        private Vector2 jumpImpulse = new Vector2(0.0f, 4.0f);
+        private Vector2 jumpImpulse = new Vector2(0.0f, 750.0f);
 
         /// <summary>
         /// The last state.
@@ -196,7 +197,7 @@ namespace Gdd.Game.Engine.Levels.Characters
                     life = targetLife;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && Math.Abs(PhysicsBody.LinearVelocity.Y) <= 0.0001f)
             {
                 this.PhysicsBody.ApplyImpulse(ref this.jumpImpulse);
             }
@@ -250,7 +251,6 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.animations[this.animationIndex]]);
             this.AnimationPlayer.StartClip();
 
-            this.PhysicsBody.Mass = 10.0f;
             HeroGeometry = PhysicsGeometry;
         }
 
