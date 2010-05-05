@@ -66,7 +66,7 @@ namespace Gdd.Game.Engine.Scenes
             this.multiplier = 1.0f;
             this.targetMultiplier = 1.0f;
             this.lookatOffset = new Vector3(15.0f * this.multiplier, 10.0f, 0.0f);
-            this.positionOffset = new Vector3(15.0f * this.multiplier, 15.0f, 35.0f);
+            this.positionOffset = new Vector3(15.0f * this.multiplier, 15.0f, 60.0f);
         }
 
         #endregion

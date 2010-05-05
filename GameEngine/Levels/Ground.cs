@@ -11,6 +11,7 @@ namespace Gdd.Game.Engine.Levels
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
 
     using FarseerGames.FarseerPhysics;
@@ -33,12 +34,12 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// The ground bodies.
         /// </summary>
-        private List<Body> GroundBodies;
+        private List<Body> groundBodies;
 
         /// <summary>
         /// The ground geometries.
         /// </summary>
-        private List<Geom> GroundGeometries;
+        private List<Geom> groundGeometries;
 
         #endregion
 
@@ -53,8 +54,35 @@ namespace Gdd.Game.Engine.Levels
         public Ground(Game game)
             : base(game)
         {
-            AddOffset = true;
+            this.AddOffset = true;
+
             // this.Rotation = Matrix.Identity;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets GroundBodies.
+        /// </summary>
+        public ReadOnlyCollection<Body> GroundBodies
+        {
+            get
+            {
+                return this.groundBodies.AsReadOnly();
+            }
+        }
+
+        /// <summary>
+        /// Gets GroundGeometries.
+        /// </summary>
+        public ReadOnlyCollection<Geom> GroundGeometries
+        {
+            get
+            {
+                return this.groundGeometries.AsReadOnly();
+            }
         }
 
         #endregion
@@ -66,10 +94,10 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         public override void DrawPhysicsVertices()
         {
-            for (int i = 0; i < this.GroundBodies.Count; i++)
+            for (int i = 0; i < this.groundBodies.Count; i++)
             {
-                this.PhysicsBody = this.GroundBodies[i];
-                this.PhysicsGeometry = this.GroundGeometries[i];
+                this.PhysicsBody = this.groundBodies[i];
+                this.PhysicsGeometry = this.groundGeometries[i];
                 base.DrawPhysicsVertices();
             }
         }
@@ -123,8 +151,8 @@ namespace Gdd.Game.Engine.Levels
             int sizeofVertex = GetSizeOfMesh(this.ObjectModel);
 
             Vector2[] temp;
-            this.GroundBodies = new List<Body>();
-            this.GroundGeometries = new List<Geom>();
+            this.groundBodies = new List<Body>();
+            this.groundGeometries = new List<Geom>();
             Vertices vertices;
 
             foreach (ModelMesh mesh in this.ObjectModel.Meshes)
@@ -136,7 +164,7 @@ namespace Gdd.Game.Engine.Levels
                 // modelBuffer.AddRange(meshBuffer.Select(v => new Vector3(v.Position.Z, v.Position.Y, v.Position.X)));
                 mesh.IndexBuffer.GetData(indexBuffer);
 
-                for (int i = 0; i < indexBuffer.Length; i += 3)
+                for (int i = 0; i < indexBuffer.Length; i += 6)
                 {
                     if (Math.Abs(meshBuffer[indexBuffer[i]].Position.X - meshBuffer[indexBuffer[i + 1]].Position.X) <
                         0.05f &&
@@ -149,16 +177,18 @@ namespace Gdd.Game.Engine.Levels
                               new Vector2(
                                   meshBuffer[indexBuffer[i + 1]].Position.Z, meshBuffer[indexBuffer[i + 1]].Position.Y), 
                               new Vector2(
-                                  meshBuffer[indexBuffer[i + 2]].Position.Z, meshBuffer[indexBuffer[i + 2]].Position.Y)
+                                  meshBuffer[indexBuffer[i + 2]].Position.Z, meshBuffer[indexBuffer[i + 2]].Position.Y),
+                              new Vector2(
+                                  meshBuffer[indexBuffer[i + 4]].Position.Z, meshBuffer[indexBuffer[i + 4]].Position.Y)
                             };
 
                         vertices = new Vertices(ref temp);
-                        vertices.SubDivideEdges(3.0f);
+                        //vertices.SubDivideEdges(0.5f);
 
                         this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
-                            this.scene.PhysicsSimulator, vertices, 1);
+                            this.scene.PhysicsSimulator, vertices, 1000);
                         this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(
-                            this.scene.PhysicsSimulator, this.PhysicsBody, vertices, 0.0f);
+                            this.scene.PhysicsSimulator, this.PhysicsBody, vertices, 0.3f);
 
                         this.PhysicsGeometry.FrictionCoefficient = 4.0f;
 
@@ -166,14 +196,14 @@ namespace Gdd.Game.Engine.Levels
                         this.PhysicsGeometry.CollidesWith = CollisionCategory.All & ~CollisionCategory.Cat1;
 
                         this.offset = this.PhysicsBody.Position;
-                        OffsetMatrix = Matrix.CreateTranslation(new Vector3(offset, 0.0f));
-                        InverseOffsetMatrix = Matrix.CreateTranslation(new Vector3(-offset, 0.0f));
+                        this.OffsetMatrix = Matrix.CreateTranslation(new Vector3(this.offset, 0.0f));
+                        this.InverseOffsetMatrix = Matrix.CreateTranslation(new Vector3(-this.offset, 0.0f));
                         this.PhysicsBody.Position = this.Position2D + this.offset;
 
                         this.PhysicsBody.IsStatic = true;
 
-                        this.GroundGeometries.Add(this.PhysicsGeometry);
-                        this.GroundBodies.Add(this.PhysicsBody);
+                        this.groundGeometries.Add(this.PhysicsGeometry);
+                        this.groundBodies.Add(this.PhysicsBody);
                     }
                 }
             }

@@ -36,12 +36,12 @@ namespace Gdd.Game.Engine.Physics
         private static Vector3 physicsLookat = new Vector3(0.0f, 0.0f, 0.0f);
         private static Vector3 physicsPos = new Vector3(0.0f, 0.0f, 150.0f);
 
-        public static Vertices TransformStaticModel(StaticModel model, Microsoft.Xna.Framework.Game game, out float mass)
+        public static Vertices TransformStaticModel(Model model, Microsoft.Xna.Framework.Game game, Matrix worldMatrix, out float mass)
         {
             renderTarget = GfxComponent.CreateCustomRenderTarget(game.GraphicsDevice, 1, SurfaceFormat.Color, MultiSampleType.None, (int)TextureSize.X, (int)TextureSize.Y);
             depthBuffer = GfxComponent.CreateDepthStencil(renderTarget);
             Texture2D tex;
-            Vertices v = GetVertices(RenderToTarget(model, null, game, out tex), model.ObjectModel.Meshes[0].BoundingSphere);
+            Vertices v = GetVertices(RenderToTarget(model, null, game, worldMatrix, out tex), model.Meshes[0].BoundingSphere);
             Color[] bmp = new Color[tex.Width * tex.Height];
             tex.GetData(bmp);
             mass = bmp.Where(c => c.R != 0.0f).Count();
@@ -51,9 +51,9 @@ namespace Gdd.Game.Engine.Physics
             return v;
         }
 
-        public static void TransformAnimatedModel(AnimatedModel model, Microsoft.Xna.Framework.Game game)
+        public static void TransformAnimatedModel(Model model, Microsoft.Xna.Framework.Game game, Matrix world)
         {
-            SkinningData skinningData = (SkinningData)model.ObjectModel.Tag;
+            SkinningData skinningData = (SkinningData)model.Tag;
 
             renderTarget = GfxComponent.CreateCustomRenderTarget(game.GraphicsDevice, 1, SurfaceFormat.Color, MultiSampleType.None, (int)TextureSize.X, (int)TextureSize.Y);
             depthBuffer = GfxComponent.CreateDepthStencil(renderTarget);
@@ -77,12 +77,12 @@ namespace Gdd.Game.Engine.Physics
 
 
                 while(!hasGoneThrough){
-                    RenderToTarget(model, player, game, out tex);
-                    vertices = GetVertices(tex, model.ObjectModel.Meshes[0].BoundingSphere);
+                    RenderToTarget(model, player, game, world, out tex);
+                    vertices = GetVertices(tex, model.Meshes[0].BoundingSphere);
 
                     if (vertices.Count != 1)
                     {
-                         clip.vertices[(int)ModelDirection.Right][player.CurrentKeyframe] = GetVertices(tex, model.ObjectModel.Meshes[0].BoundingSphere);
+                         clip.vertices[(int)ModelDirection.Right][player.CurrentKeyframe] = GetVertices(tex, model.Meshes[0].BoundingSphere);
                         
                         // flip the texture and the vertices
                         tex.GetData<Color>(originalTexture);
@@ -96,9 +96,9 @@ namespace Gdd.Game.Engine.Physics
                         }
 
                         tex.SetData<Color>(reverseTexture);
-                        vertices = GetVertices(tex, model.ObjectModel.Meshes[0].BoundingSphere);
+                        vertices = GetVertices(tex, model.Meshes[0].BoundingSphere);
 
-                        clip.vertices[(int)ModelDirection.Left][player.CurrentKeyframe] = GetVertices(tex, model.ObjectModel.Meshes[0].BoundingSphere);                    
+                        clip.vertices[(int)ModelDirection.Left][player.CurrentKeyframe] = GetVertices(tex, model.Meshes[0].BoundingSphere);                    
                         lastKeyFrame = player.CurrentKeyframe;                        
                     }
                     player.StepClip();
@@ -161,19 +161,19 @@ namespace Gdd.Game.Engine.Physics
             return angle;
         }
 
-        private static Texture2D RenderToTarget(StaticModel model, ModelAnimationPlayer player, Microsoft.Xna.Framework.Game game, out Texture2D Sillouette)
+        private static Texture2D RenderToTarget(Model model, ModelAnimationPlayer player, Microsoft.Xna.Framework.Game game, Matrix world, out Texture2D Sillouette)
         {
             DepthStencilBuffer old = ShadowMapManager.SetupShadowMap(game.GraphicsDevice, ref renderTarget, ref depthBuffer);
 
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.PHYSICS, "PhysicsRenderer", game);
             ShaderManager.SetCurrentEffect(ShaderManager.EFFECT_ID.PHYSICS);
-            ShaderManager.SetValue("World", model.Rotation);
+            ShaderManager.SetValue("World", world);
                         
             Matrix m = Matrix.Identity;
             m.M33 = 0;
             m.M43 = 0.5f;
             ShaderManager.SetValue("Projection", m);
-            BoundingSphere bs = model.ObjectModel.Meshes[0].BoundingSphere;
+            BoundingSphere bs = model.Meshes[0].BoundingSphere;
             bs.Center.X = bs.Center.Z;
             bs.Radius *= 1.5f;
 
@@ -193,7 +193,7 @@ namespace Gdd.Game.Engine.Physics
 
             game.GraphicsDevice.Clear(Color.Black);
 
-            foreach(ModelMesh mesh in model.ObjectModel.Meshes){
+            foreach(ModelMesh mesh in model.Meshes){
                 effects.Clear();
 
                 foreach (ModelMeshPart part in mesh.MeshParts)

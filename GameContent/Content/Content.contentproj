@@ -360,6 +360,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="mesh\Final_terrian _Y _X _Half.fbx">
+      <Name>Final_terrian _Y _X _Half</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Textures\lollypop.jpg">
       <Name>lollypop</Name>
       <Importer>TextureImporter</Importer>
