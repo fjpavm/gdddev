@@ -10,18 +10,18 @@ FBXHeaderExtension:  {
         Version: 1000
         Year: 2010
         Month: 5
-        Day: 3
-        Hour: 15
-        Minute: 50
-        Second: 35
-        Millisecond: 46
+        Day: 4
+        Hour: 13
+        Minute: 23
+        Second: 17
+        Millisecond: 687
     }
     Creator: "FBX SDK/FBX Plugins build 20061101"
     OtherFlags:  {
         FlagPLE: 0
     }
 }
-CreationTime: "2010-05-03 15:50:35:046"
+CreationTime: "2010-05-04 13:23:17:687"
 Creator: "FBX SDK/FBX Plugins build 20061101"
 
 ; Object definitions
@@ -158,7 +158,7 @@ Objects:  {
             Property: "RotationSpaceForLimitOnly", "bool", "",0
             Property: "AxisLen", "double", "",10
             Property: "PreRotation", "Vector3D", "",90,-0,0
-            Property: "PostRotation", "Vector3D", "",-0,-0,-0
+            Property: "PostRotation", "Vector3D", "",0,-0,0
             Property: "RotationActive", "bool", "",1
             Property: "RotationMin", "Vector3D", "",0,0,0
             Property: "RotationMax", "Vector3D", "",0,0,0

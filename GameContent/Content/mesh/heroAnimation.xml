@@ -1,27 +1,27 @@
 ﻿<info>
   <animation>
     <name>idle</name>
-    <startframe>1</startframe>
-    <endframe>59</endframe>
+    <startframe>2</startframe>
+    <endframe>61</endframe>
   </animation>
   <animation>
     <name>Act</name>
-    <startframe>61</startframe>
-    <endframe>116</endframe>
-  </animation>
-  <animation>
-    <name>Move</name>
-    <startframe>117</startframe>
-    <endframe>173</endframe>
+    <startframe>62</startframe>
+    <endframe>117</endframe>
   </animation>
   <animation>
     <name>Reach</name>
+    <startframe>118</startframe>
+    <endframe>174</endframe>
+  </animation>
+  <animation>
+    <name>Move</name>
     <startframe>175</startframe>
-    <endframe>233</endframe>
+    <endframe>250</endframe>
   </animation>
   <animation>
     <name>Death</name>
-    <startframe>234</startframe>
+    <startframe>251</startframe>
     <endframe>314</endframe>
   </animation> 
   

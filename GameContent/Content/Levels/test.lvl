@@ -12,7 +12,7 @@
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
-      <ModelName>mesh/Final_terrian _Y _X _Half</ModelName>
+      <ModelName>mesh/terrain</ModelName>
     </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
       <Enabled>true</Enabled>

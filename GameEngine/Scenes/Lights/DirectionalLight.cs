@@ -29,6 +29,11 @@ namespace Gdd.Game.Engine.Scenes.Lights
         {
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            // do nothing
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DirectionalLight"/> class.
         /// </summary>

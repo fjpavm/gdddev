@@ -103,6 +103,7 @@ namespace Gdd.Game.Engine.Scenes
         /// used for drawing objects in the correct z- position
         /// </summary>
         public static float Z_POSITION { get; private set; }
+        public static float LIGHT_Z_POSITION { get; private set; }
 
         #endregion
 
@@ -186,6 +187,7 @@ namespace Gdd.Game.Engine.Scenes
         public static void Construct(Game game)
         {
             Z_POSITION = -10.0f;
+            LIGHT_Z_POSITION = -1.0f;
             scenes = new SceneCollection();
 
             SceneManager.game = game;

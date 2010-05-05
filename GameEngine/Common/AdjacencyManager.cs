@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Gdd.Game.Engine.Scenes;
 using FarseerGames.FarseerPhysics.Collisions;
+using Gdd.Game.Engine.Scenes.Lights;
 
 namespace Gdd.Game.Engine.Common
 {
@@ -32,7 +33,7 @@ namespace Gdd.Game.Engine.Common
                     aabb2 = sceneDS.aabb;
                     if (adjSceneDSC.aabb != null && sceneDS.aabb != null && AABB.Intersect(ref aabb1, ref aabb2))
                     {
-                        if (sceneDS is DrawableSceneComponent)
+                        if (sceneDS is DrawableSceneComponent && !(sceneDS is PointLight))
                         {
                             adjSceneDSC.AddAdjacentDrawableSceneComponent((DrawableSceneComponent)sceneDS);
                         }
