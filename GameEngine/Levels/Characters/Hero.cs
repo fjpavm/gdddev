@@ -201,10 +201,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             {
                 this.PhysicsBody.ApplyImpulse(ref this.jumpImpulse);
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Space)){
-                string ble = "";
-            }
-
+            
             if (Keyboard.GetState().IsKeyDown(Keys.O) && lastState.IsKeyUp(Keys.O))
             {
                 IncreaseLife();
