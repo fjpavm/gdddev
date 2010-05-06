@@ -197,9 +197,12 @@ namespace Gdd.Game.Engine.Levels.Characters
                     life = targetLife;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && Math.Abs(PhysicsBody.LinearVelocity.Y) <= 0.0001f)
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && Math.Abs(PhysicsBody.LinearVelocity.Y) <= 0.03f)
             {
                 this.PhysicsBody.ApplyImpulse(ref this.jumpImpulse);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Space)){
+                string ble = "";
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.O) && lastState.IsKeyUp(Keys.O))
