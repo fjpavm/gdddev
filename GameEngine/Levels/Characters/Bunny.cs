@@ -195,8 +195,8 @@ namespace Gdd.Game.Engine.Levels.Characters
 
             // Loading Bunny State Machines
             // some test patrol points
-            var patrol1 = new Vector2(-1000000.0f, 0.0f);
-            var patrol2 = new Vector2(10, 0);
+            var patrol1 = new Vector2(-15.0f, 0.0f);
+            var patrol2 = new Vector2(-5, 0);
             this.AnimationStateMachine = new BunnyAnimationStateMachine(this);
             this.MonsterStateMachine = new BunnyStateMachine(this, patrol1, patrol2);
         }
