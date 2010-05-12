@@ -36,7 +36,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
             int direction = (chargingDirection.X > 0 ? +1 : -1);
             //do physics action
             AIMonster thisBunny = thisObject as AIMonster;
-            thisBunny.Position2D = thisBunny.Position2D + new Vector2((float)(speed * timeDiff > Math.Abs(chargingDirection.X) ? chargingDirection.X : direction * speed * timeDiff),0);
+            thisBunny.Position2D = new Vector2(thisBunny.Position2D.X + (float)(speed * timeDiff > Math.Abs(chargingDirection.X) ? chargingDirection.X : direction * speed * timeDiff), thisBunny.Position2D.Y);
 
         }
 
@@ -68,7 +68,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
         const int maxSetBacks = 500;
         int direction; // -1 left, +1 right
         Vector2 setPoint;
-        float speed = 1; // default speed for patrol
+        float speed = 5.0f; // default speed for patrol
 
         public MoveToSetpointBunnyState(Vector2 _setPoint) : base("MoveToSetpointBunnyState")
         {
@@ -119,7 +119,6 @@ namespace Gdd.Game.Engine.AI.StateMachines
                         AIManager.messageQueue.sendMessage(new NextSetPointMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor));
                         movingToNext = true;
                     }
-                    return;
                 }
             }
             lastDistanceSquared = distanceSquared;
@@ -140,7 +139,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
             // do physics action
             double distance = (setPoint - bunny.Position2D).Length();
             AIMonster thisBunny = thisObject as AIMonster;
-            thisBunny.Position2D = thisBunny.Position2D + new Vector2((float)(speed * timeDiff > distance ? direction* distance : direction * speed * timeDiff), 0);
+            thisBunny.Position2D =  new Vector2(thisBunny.Position2D.X + (float)(speed * timeDiff > distance ? direction* distance : direction * speed * timeDiff), thisBunny.Position2D.Y);
         }
     
     }
