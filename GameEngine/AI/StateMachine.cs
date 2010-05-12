@@ -45,10 +45,10 @@ namespace Gdd.Game.Engine.AI
 			nextState = initialState;
 			currentState.OnEnter();
 		}
-		
-		public override void Update()
+
+        public override void Update(double timeDiff)
 		{
-            base.Update();
+            base.Update(timeDiff);
             // In case it's not started yet
             if (currentState == dummyState) 
             {
@@ -60,7 +60,7 @@ namespace Gdd.Game.Engine.AI
 				nextState.OnEnter();
 				currentState = nextState;
 			}else{
-				currentState.Update();
+				currentState.Update(timeDiff);
 			}
 		}
 		

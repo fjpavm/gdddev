@@ -53,8 +53,8 @@ namespace Gdd.Game.Engine.AI
 
         public void UpdateAI(GameTime t) 
         {
-            stateMachine.Update();
-            animationStateMachine.Update();
+            stateMachine.Update(t.ElapsedGameTime.TotalSeconds);
+            animationStateMachine.Update(t.ElapsedGameTime.TotalSeconds);
             
         }
 
