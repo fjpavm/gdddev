@@ -11,6 +11,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
         Microsoft.Xna.Framework.Vector2 chargingDirection = new Microsoft.Xna.Framework.Vector2();
         bool directionChanged = false;
         int moveRightAnimationCommand, moveLeftAnimationCommand;
+        float speed = 1.5f; // default speed for charging
 
         public ChargingBunnyState() : base("ChargingBunnyState")
         {
@@ -32,7 +33,10 @@ namespace Gdd.Game.Engine.AI.StateMachines
                     AIManager.messageQueue.sendMessage(new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, moveLeftAnimationCommand));
                 }
             }
-            //TODO: do physics action
+            int direction = (chargingDirection.X > 0 ? +1 : -1);
+            //do physics action
+            AIMonster thisBunny = thisObject as AIMonster;
+            thisBunny.Position2D = thisBunny.Position2D + new Vector2((float)(speed * timeDiff > Math.Abs(chargingDirection.X) ? chargingDirection.X : direction * speed * timeDiff),0);
 
         }
 
@@ -64,6 +68,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
         const int maxSetBacks = 500;
         int direction; // -1 left, +1 right
         Vector2 setPoint;
+        float speed = 1; // default speed for patrol
 
         public MoveToSetpointBunnyState(Vector2 _setPoint) : base("MoveToSetpointBunnyState")
         {
@@ -132,7 +137,10 @@ namespace Gdd.Game.Engine.AI.StateMachines
                     AIManager.messageQueue.sendMessage(new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, moveLeftAnimationCommand));
                 }
             }
-            //TODO: do physics action
+            // do physics action
+            double distance = (setPoint - bunny.Position2D).Length();
+            AIMonster thisBunny = thisObject as AIMonster;
+            thisBunny.Position2D = thisBunny.Position2D + new Vector2((float)(speed * timeDiff > distance ? direction* distance : direction * speed * timeDiff), 0);
         }
     
     }
