@@ -50,9 +50,9 @@ namespace Gdd.Game.Engine.AI
             first = true;
         }
 
-        public override void Update()
+        public override void Update(double timeDiff)
         {
-            base.Update();
+            base.Update(timeDiff);
             AIMonster thisMonster = thisObject as AIMonster;
             if ( first && thisMonster.Player.IsStopped) 
             {

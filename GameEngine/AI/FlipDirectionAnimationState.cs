@@ -18,9 +18,9 @@ namespace Gdd.Game.Engine.AI
             this.name = _animationName + wantedDirection + "_FlipAnimationState";
         }
 
-        public override void Update()
+        public override void Update(double timeDiff)
         {
-            base.Update();
+            base.Update(timeDiff);
             AIMonster thisMonster = thisObject as AIMonster;
             if (!first && thisMonster.ModelDirection != wantedDirection)
             {

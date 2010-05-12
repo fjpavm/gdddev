@@ -18,7 +18,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
             moveLeftAnimationCommand = AnimationCommandDictionary.lookUp("MovingLeftBunny");
         }
 
-        public override void Update() 
+        public override void Update(double timeDiff) 
         { 
             //set proper animation
             if (directionChanged)
@@ -91,9 +91,9 @@ namespace Gdd.Game.Engine.AI.StateMachines
         }
 
 
-        public override void Update()
+        public override void Update(double timeDiff)
         {
-            base.Update();
+            base.Update(timeDiff);
             Scenes.SceneComponent bunny = thisObject as Scenes.SceneComponent;
             double distanceSquared = (setPoint - bunny.Position2D).LengthSquared();
             int currentDirection = (setPoint.X - bunny.Position2D.X) > 0 ? right : left;

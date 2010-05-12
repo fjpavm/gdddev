@@ -14,7 +14,7 @@ namespace Gdd.Game.Engine.AI
 		void addTransition(int messageType, Transition t);
 		IState checkTransitions(Message msg);
 		void OnEnter();
-		void Update();
+        void Update(double timeDiff);
 		void OnExit();
         void setThisObject(object obj);
 		

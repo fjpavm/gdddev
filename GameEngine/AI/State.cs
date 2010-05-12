@@ -60,8 +60,9 @@ namespace Gdd.Game.Engine.AI
                 Console.WriteLine(name + ".OnEnter()");
             }
         }
-		
-		public virtual void Update(){
+
+        public virtual void Update(double timeDiff)
+        {
             IDebugable thisDebugable = thisObject as IDebugable;
             if (thisDebugable != null) if (thisDebugable.Debug)
                 {
