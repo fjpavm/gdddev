@@ -278,7 +278,7 @@ namespace Gdd.Game
 
             var dl1 = new DirectionalLight(this) { Direction = new Vector3(-0.3f, -0.7f, 0.0f), Color = Color.White };
 
-            var scene1 = new MyScene(this) { EnableScripts = true, MainGameScene = true };
+            var scene1 = new MyScene(this) { EnableAI = true, EnableScripts = true, MainGameScene = true };
 
             // this camera is movable
             this.camera = new MyCamera(this, new Vector3(0.0f, 0.0f, 10.0f));

@@ -145,6 +145,11 @@ namespace Gdd.Game.Engine.Levels
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether EnableAI.
+        /// </summary>
+        public bool EnableAI { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether EnableScripts.
         /// </summary>
         public bool EnableScripts { get; set; }
@@ -270,7 +275,11 @@ namespace Gdd.Game.Engine.Levels
             {
                 this.levelScript.Update(gameTime);
             }
-            this.aiManager.Update(gameTime);
+
+            if (this.EnableAI)
+            {
+                this.aiManager.Update(gameTime);
+            }
         }
 
         #endregion
