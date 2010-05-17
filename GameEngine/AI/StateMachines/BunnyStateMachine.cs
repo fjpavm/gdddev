@@ -174,8 +174,8 @@ namespace Gdd.Game.Engine.AI.StateMachines
     class AliveBunnyState : StateMachine 
     {
         DistanceTest patrolToCharge, chargeToPatrol;
-        const float patrolTochargeDist = 5.0f;
-        const float patrolToChargeHisteresis = 0.2f;
+        const float patrolTochargeDist = 10.0f;
+        const float patrolToChargeHisteresis = 2.0f;
         
 
         public AliveBunnyState(object thisObject, Vector2 setpoint1, Vector2 setpoint2)
