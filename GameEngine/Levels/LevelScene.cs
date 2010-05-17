@@ -283,16 +283,16 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         protected override void DrawBackground()
         {
-            IEnumerable<Ground> groundObjects = from dsc in this.DrawableSceneComponents
+            var groundObjects = (from dsc in this.DrawableSceneComponents
                                                 where dsc is Ground
                                                 let g = (Ground)dsc
-                                                where g.PhysicsGeometry != null
-                                                select g;
+                                 where g.GroundGeometries != null
+                                 select g.GroundGeometries).SelectMany(g => g);
             if (groundObjects.Count() != 0)
             {
                 this.background.SetBounds(
-                    groundObjects.Min(g => g.PhysicsGeometry.AABB.Min.X), 
-                    groundObjects.Max(g => g.PhysicsGeometry.AABB.Max.X));
+                    groundObjects.Min(g => g.AABB.Min.X), 
+                    groundObjects.Max(g => g.AABB.Max.X));
             }
 
             this.background.Draw();
