@@ -293,8 +293,8 @@ namespace Gdd.Game
             this.monster = bunny;
 
             // bunny.Debug = true;
-            scene1.AIManager.objectList.Add(bunny);
-            scene1.AIManager.objectList.Add(secondBunny);
+            //scene1.AIManager.objectList.Add(bunny);
+            //scene1.AIManager.objectList.Add(secondBunny);
             scene1.AddComponent(bunny);
             scene1.AddComponent(secondBunny);
             scene1.AddComponent(lollypop);
