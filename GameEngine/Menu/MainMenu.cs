@@ -237,8 +237,7 @@ namespace Gdd.Game.Engine.Menu
                     this.Visible = false;
                     SceneManager.ChangeScene(Scenes.SceneManager.SCENE_ID.MAIN_GAME);
                     
-                    // ohh, cant stand this music
-                    Audio.PlayBackgroundMusic();
+                   // Audio.PlayBackgroundMusic();
                 }
             }
 

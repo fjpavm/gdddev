@@ -407,7 +407,6 @@ namespace Gdd.Game.Engine.Levels
                         ShaderManager.SetValue("Texture", this.ModelTextures[count++]);
                     }
 
-                    ShaderManager.SetValue("ID", this.ID);
                     ShaderManager.SetValue("life", Hero.GetHeroLife());
                     ShaderManager.SetValue("World", this.World);
 
@@ -603,7 +602,7 @@ namespace Gdd.Game.Engine.Levels
                     100, 
                     this.gridCellSize);
 
-                this.offset = new Vector2(0.0f, -this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length());
+                this.offset = Vector2.Zero;
             }
             else if (this.GeometryType == GeometryType.Rectangle)
             {

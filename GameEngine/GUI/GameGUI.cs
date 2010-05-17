@@ -225,6 +225,7 @@ namespace Gdd.Game.Engine.GUI
                             GeometryType = t.GeometryType, 
                             Position2D = new Vector2(currentWorldCoordinates.X, currentWorldCoordinates.Y) 
                         };
+                    this.model.DrawOrder = int.MaxValue-2;
                     this.scene.AddComponent(this.model);
                     this.model.Initialize();
                     this.model.PhysicsBody.IsStatic = true;

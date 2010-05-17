@@ -350,11 +350,6 @@
       <Importer>LevelImporter</Importer>
       <Processor>LevelProcessor</Processor>
     </Compile>
-    <Compile Include="mesh\sphere.fbx">
-      <Name>sphere</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
     <Compile Include="mesh\tent.fbx">
       <Name>tent</Name>
       <Importer>FbxImporter</Importer>
@@ -363,6 +358,11 @@
     <Compile Include="mesh\Final_terrian _Y _X _Half.fbx">
       <Name>Final_terrian _Y _X _Half</Name>
       <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="mesh\sphere.x">
+      <Name>sphere</Name>
+      <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
     <None Include="Textures\lollypop.jpg">

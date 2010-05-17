@@ -7,22 +7,22 @@
   <animation>
     <name>Act</name>
     <startframe>62</startframe>
-    <endframe>117</endframe>
+    <endframe>121</endframe>
   </animation>
   <animation>
     <name>Reach</name>
-    <startframe>118</startframe>
-    <endframe>174</endframe>
+    <startframe>123</startframe>
+    <endframe>182</endframe>
   </animation>
   <animation>
     <name>Move</name>
-    <startframe>175</startframe>
-    <endframe>250</endframe>
+    <startframe>184</startframe>
+    <endframe>241</endframe>
   </animation>
   <animation>
     <name>Death</name>
-    <startframe>251</startframe>
-    <endframe>314</endframe>
+    <startframe>244</startframe>
+    <endframe>350</endframe>
   </animation> 
   
   <shader>

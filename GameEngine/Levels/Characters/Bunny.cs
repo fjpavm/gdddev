@@ -27,11 +27,6 @@ namespace Gdd.Game.Engine.Levels.Characters
         #region Constants and Fields
 
         /// <summary>
-        /// The animations.
-        /// </summary>
-        private readonly string[] animations = new[] { "idle", "Death", "Skating" };
-
-        /// <summary>
         /// The bunny model.
         /// </summary>
         private static Model BunnyModel;
@@ -67,6 +62,8 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.ModelName = "mesh//rabbit";
             this.Position2D = new Vector2(0.0f, 0.0f);
             this.mass = 10.0f;
+
+            Animations = new[] { "idle", "Death", "Skating" }; 
         }
 
         #endregion
@@ -150,13 +147,13 @@ namespace Gdd.Game.Engine.Levels.Characters
             if (Keyboard.GetState().IsKeyDown(Keys.I) && !this.lastState.IsKeyDown(Keys.I))
             {
                 this.animationIndex++;
-                if (this.animationIndex >= this.animations.Length)
+                if (this.animationIndex >= this.Animations.Length)
                 {
                     this.animationIndex = 0;
                 }
 
                 // currentClip = skinningData.AnimationClips[animations[animationIndex]];
-                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.animations[this.animationIndex]]);
+                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.Animations[this.animationIndex]]);
                 this.AnimationPlayer.StartClip();
             }
 

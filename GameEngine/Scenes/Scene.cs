@@ -27,7 +27,7 @@ namespace Gdd.Game.Engine.Scenes
     using Microsoft.Xna.Framework.Graphics;
 
     /// <summary>
-    /// The s.
+    /// The scene
     /// </summary>
     public class Scene : DrawableGameComponent
     {
@@ -69,11 +69,6 @@ namespace Gdd.Game.Engine.Scenes
         private Viewport PIPViewPort;
 
         /// <summary>
-        /// The b.
-        /// </summary>
-        private BoundingSphere b;
-
-        /// <summary>
         /// The bounds.
         /// </summary>
         private BoundingSphere bounds;
@@ -99,7 +94,7 @@ namespace Gdd.Game.Engine.Scenes
         private bool gameGUI_Run;
 
         /// <summary>
-        /// Is this Scene the main game s (for shadowmapping)
+        /// Is this Scene the main game scene (for shadowmapping)
         /// </summary>
         private bool mainGameScene;
 
@@ -305,10 +300,6 @@ namespace Gdd.Game.Engine.Scenes
                 ObjectManager.drawableSceneComponents[this.ID].Select(c => (SceneComponent)c).Union(
                     ObjectManager.sceneComponents[this.ID]);
 
-            /*  foreach (SceneComponent sceneComponent in sceneComponents)
-              {
-                  this.Game.Components.Remove(sceneComponent);
-              }*/
             ObjectManager.ClearSceneComponents(this.ID);
         }
 
@@ -339,7 +330,7 @@ namespace Gdd.Game.Engine.Scenes
             {
                 this.DrawSceneComponent(gameTime);
 
-                // DrawSecondViewport(this.shadowMap);
+                DrawSecondViewport(this.shadowMap);
             }
         }
 
@@ -355,7 +346,7 @@ namespace Gdd.Game.Engine.Scenes
                 dsc.Initialize();
             }
 
-            this.bounds.Radius = 120.0f;
+            this.bounds.Radius = 200.0f;
 
             foreach (SceneComponent sc in ObjectManager.sceneComponents[this.ID])
             {
@@ -509,7 +500,6 @@ namespace Gdd.Game.Engine.Scenes
                 ShaderManager.SetCurrentEffect(dsc.DefaultEffectID);
                 ShaderManager.SetValue("Texture", dsc.texture);
                 ShaderManager.SetValue("life", Hero.GetHeroLife());
-                ShaderManager.SetValue("ID", dsc.ID);
                 ShaderManager.SetValue("LightDir", -this.directionalLight.Direction);
                 ShaderManager.SetValue(
                     "LightProj", 
