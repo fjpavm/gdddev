@@ -10,10 +10,15 @@ sampler MeshTextureSampler =
 sampler_state
 {
     Texture = <Texture>;
+//     MipFilter = LINEAR;
+//     MinFilter = LINEAR;
+//     MagFilter = LINEAR;
+	MaxAnisotropy = 16;
+    MinFilter = Anisotropic;
+    MagFilter = Anisotropic;
     MipFilter = LINEAR;
-    MinFilter = LINEAR;
-    MagFilter = LINEAR;
 };
+
 
 //------------------------------------------------------------------------------
 // Vertex shader output structure
@@ -70,13 +75,13 @@ VS_OUTPUT StaticModelVertexShader(VS_INPUT input)
 float4 StaticModelPixelShader(PS_INPUT input) : COLOR0
 { 
     float4 shadow;
-    if(!input.inTheDark){
+  //  if(!input.inTheDark){
 		shadow = ConsultShadowMap(input.LightPosition);	
-	}
+/*	}
 	else{
 		shadow = float4(0.6f, 0.6f, 0.6f, 1.0f);
 	}
-	
+*/	
     float4 lightDiffuse = (float4(input.pointLightColor, 1.0f)) * shadow;
 	float4 outColor = tex2D(MeshTextureSampler, input.TextureUV);
 	

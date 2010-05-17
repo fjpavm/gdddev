@@ -6279,7 +6279,7 @@ Objects:  {
         }
         UseMipMap: 0
         Filename: "H:/craig/plant texture3.jpg"
-        RelativeFilename: "plant texture3.jpg"
+        RelativeFilename: "..\Textures\plant texture3.jpg"
     }
     Texture: "Texture::file1", "TextureVideoClip" {
         Type: "TextureVideoClip"
@@ -6304,7 +6304,7 @@ Objects:  {
         }
         Media: "Video::file1"
         FileName: "H:/craig/plant texture3.jpg"
-        RelativeFilename: "plant texture3.jpg"
+        RelativeFilename: "..\Textures\plant texture3.jpg"
         ModelUVTranslation: 0,0
         ModelUVScaling: 1,1
         Texture_Alpha_Source: "None"

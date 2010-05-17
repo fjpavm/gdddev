@@ -66,23 +66,20 @@ namespace Gdd.Game.Engine.Physics
             ModelAnimationPlayer player = new ModelAnimationPlayer(skinningData);
             foreach(AnimationClip clip in skinningData.AnimationClips.Values){
                 clip.vertices = new Dictionary<int, Vertices>[]{new Dictionary<int, Vertices>(), new Dictionary<int, Vertices>()};
-                //clip.textures = new Dictionary<int, Texture2D>[]{new Dictionary<int, Texture2D>(), new Dictionary<int, Texture2D>()};
                 
-        /*        clip.bodies = new Dictionary<int, Body>[] { new Dictionary<int, Body>(), new Dictionary<int, Body>() };
-                clip.geometries = new Dictionary<int, Geom>[] { new Dictionary<int, Geom>(), new Dictionary<int, Geom>() };
-                */
                 player.SetClip(clip);
+
                 bool hasGoneThrough = false;
                 int lastKeyFrame = 0;
-
-
-                while(!hasGoneThrough){
+                
+                while (!hasGoneThrough)
+                {
                     RenderToTarget(model, player, game, world, out tex);
                     vertices = GetVertices(tex, model.Meshes[0].BoundingSphere);
 
                     if (vertices.Count != 1)
                     {
-                         clip.vertices[(int)ModelDirection.Right][player.CurrentKeyframe] = GetVertices(tex, model.Meshes[0].BoundingSphere);
+                         clip.vertices[(int)ModelDirection.Right][player.CurrentKeyframe] = vertices;
                         
                         // flip the texture and the vertices
                         tex.GetData<Color>(originalTexture);
@@ -99,10 +96,10 @@ namespace Gdd.Game.Engine.Physics
                         vertices = GetVertices(tex, model.Meshes[0].BoundingSphere);
 
                         clip.vertices[(int)ModelDirection.Left][player.CurrentKeyframe] = GetVertices(tex, model.Meshes[0].BoundingSphere);                    
-                        lastKeyFrame = player.CurrentKeyframe;                        
+                        lastKeyFrame = player.CurrentKeyframe;
                     }
                     player.StepClip();
-                    hasGoneThrough = player.CurrentKeyframe == 1 && lastKeyFrame != 0;
+                    hasGoneThrough = (player.CurrentKeyframe  - lastKeyFrame < 1);
                 }
             }
 
@@ -114,8 +111,7 @@ namespace Gdd.Game.Engine.Physics
             bs.Center.X = bs.Center.Z;
             bs.Radius *= 1.5f;
             Vertices textureVertices = new Vertices();
-
-
+            
 
             // do marching squares
             Vertices v = new Vertices();

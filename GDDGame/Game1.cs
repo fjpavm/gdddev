@@ -200,9 +200,11 @@ namespace Gdd.Game
                     };
                 AIManager.messageQueue.sendMessage(m);
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 this.hero.Position2D = new Vector2(this.hero.Position2D.X - 0.1f, this.hero.Position2D.Y);
+                this.hero.Walk();
                 if (this.hero.ModelDirection == ModelDirection.Right)
                 {
                     this.hero.Flip();
@@ -211,20 +213,16 @@ namespace Gdd.Game
             else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 this.hero.Position2D = new Vector2(this.hero.Position2D.X + 0.1f, this.hero.Position2D.Y);
+                this.hero.Walk();
                 if (this.hero.ModelDirection == ModelDirection.Left)
                 {
                     this.hero.Flip();
                 }
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.W))
-            {
-                this.hero.Position2D = new Vector2(this.hero.Position2D.X, this.hero.Position2D.Y + 0.1f);
+            else{// if(Keyboard.GetState().IsKeyDown(Keys.Y) && lastState.IsKeyUp(Keys.Y)){
+                this.hero.Idle();
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                this.hero.Position2D = new Vector2(this.hero.Position2D.X, this.hero.Position2D.Y - 0.1f);
-            }
-
+            
             if (Keyboard.GetState().IsKeyDown(Keys.F12) && this.lastState.IsKeyUp(Keys.F12))
             {
                 Globals.displayState = (DISPLAY_STATE)((int)(Globals.displayState + 1) % 3);
@@ -276,7 +274,7 @@ namespace Gdd.Game
             var rock = new StaticModel(this) { ModelName = "mesh//rock", Position2D = new Vector2(10.0f, 10.0f) };
             var candy = new StaticModel(this) { ModelName = "mesh//candy", Position2D = new Vector2(-10.0f, 10.0f) };
 
-            var dl1 = new DirectionalLight(this) { Direction = new Vector3(-0.3f, -0.7f, 0.0f), Color = Color.White };
+            var dl1 = new DirectionalLight(this) { Direction = new Vector3(-0.5f, -0.5f, 0.0f), Color = Color.White };
 
             var scene1 = new MyScene(this) { EnableAI = true, EnableScripts = true, MainGameScene = true };
 

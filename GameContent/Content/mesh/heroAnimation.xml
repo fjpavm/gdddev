@@ -1,8 +1,8 @@
 ﻿<info>
   <animation>
-    <name>idle</name>
-    <startframe>2</startframe>
-    <endframe>61</endframe>
+    <name>Idle</name>
+    <startframe>4</startframe>
+    <endframe>60</endframe>
   </animation>
   <animation>
     <name>Act</name>
@@ -15,9 +15,9 @@
     <endframe>182</endframe>
   </animation>
   <animation>
-    <name>Move</name>
+    <name>Walk</name>
     <startframe>184</startframe>
-    <endframe>241</endframe>
+    <endframe>240</endframe>
   </animation>
   <animation>
     <name>Death</name>
