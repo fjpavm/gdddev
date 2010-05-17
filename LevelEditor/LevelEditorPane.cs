@@ -256,8 +256,9 @@ namespace Gdd.Game.LevelEditor
         {
             this.ResumeUpdate();
             this.isPreviewRunning = true;
-            this.levelPreviewScene.EnableScripts = true;
+            this.levelPreviewScene.EnableAI = true;
             this.levelPreviewScene.EnablePhysics = true;
+            this.levelPreviewScene.EnableScripts = true;
             this.levelPreviewScene.CurrentLevel = (Level)this.levelEditorScene.CurrentLevel.Clone();
             SceneManager.SetCurrentScene(this.levelPreviewScene);
         }
@@ -295,8 +296,9 @@ namespace Gdd.Game.LevelEditor
         public void StopPreview()
         {
             this.isPreviewRunning = false;
-            this.levelPreviewScene.EnableScripts = false;
+            this.levelPreviewScene.EnableAI = false;
             this.levelPreviewScene.EnablePhysics = false;
+            this.levelPreviewScene.EnableScripts = false;
             SceneManager.SetCurrentScene(this.levelEditorScene);
         }
 

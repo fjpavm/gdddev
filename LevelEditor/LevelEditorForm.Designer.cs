@@ -300,10 +300,11 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxLevelScript.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLevelScript.Location = new System.Drawing.Point(6, 6);
+            this.textBoxLevelScript.Location = new System.Drawing.Point(3, 3);
             this.textBoxLevelScript.Multiline = true;
             this.textBoxLevelScript.Name = "textBoxLevelScript";
-            this.textBoxLevelScript.Size = new System.Drawing.Size(394, 410);
+            this.textBoxLevelScript.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBoxLevelScript.Size = new System.Drawing.Size(394, 364);
             this.textBoxLevelScript.TabIndex = 0;
             // 
             // toolStripContainer
@@ -343,7 +344,7 @@
             this.tsmiPreviewToolStripStop});
             this.toolStripPreview.Location = new System.Drawing.Point(114, 0);
             this.toolStripPreview.Name = "toolStripPreview";
-            this.toolStripPreview.Size = new System.Drawing.Size(212, 25);
+            this.toolStripPreview.Size = new System.Drawing.Size(181, 25);
             this.toolStripPreview.TabIndex = 1;
             // 
             // tsmiPreviewToolStripRun
