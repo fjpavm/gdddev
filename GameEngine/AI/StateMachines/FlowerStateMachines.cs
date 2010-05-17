@@ -93,6 +93,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
         public AliveFlowerState(object thisObject)
             : base("AliveFlowerState_StateMachine")
         {
+            this.thisObject = thisObject;
             IState idle = new IdleFlowerState();
             IState evil = new EvilFlowerState();
             IState attack = new AttackingFlowerState();
