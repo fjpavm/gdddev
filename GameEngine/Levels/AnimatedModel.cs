@@ -72,9 +72,19 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         protected ModelAnimationPlayer AnimationPlayer { get; set; }
 
+        /// <summary>
+        /// Gets or sets the animation names
+        /// </summary>
+        public string[] Animations { get; protected set; }
+
         #endregion
 
         #region Public Methods
+
+        public void ChangeAnimation(){
+
+
+        }
 
         /// <summary>
         /// The draw.
@@ -86,8 +96,6 @@ namespace Gdd.Game.Engine.Levels
         {
             base.Draw(gameTime);
         }
-
-        // flip from left to right or right to left
 
         /// <summary>
         /// The draw with technique.
@@ -116,7 +124,6 @@ namespace Gdd.Game.Engine.Levels
                     e.CurrentTechnique = e.Techniques[technique];
                     e.Parameters["Texture"].SetValue(this.ModelTextures[count++]);
                     e.Parameters["life"].SetValue(Hero.GetHeroLife());
-                    e.Parameters["ID"].SetValue(this.ID);
                     e.Parameters["World"].SetValue(this.World);
                     e.Parameters["Bones"].SetValue(this.AnimationPlayer.GetSkinTransforms());
                     e.CommitChanges();

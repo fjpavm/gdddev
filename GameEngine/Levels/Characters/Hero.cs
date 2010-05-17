@@ -25,11 +25,6 @@ namespace Gdd.Game.Engine.Levels.Characters
         #region Constants and Fields
 
         /// <summary>
-        /// The animations.
-        /// </summary>
-        private readonly string[] animations = new[] { "idle", "Act", "Move", "Reach", "Death" };
-
-        /// <summary>
         /// The hero direction.
         /// </summary>
         private static ModelDirection HeroModelDirection;
@@ -85,6 +80,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.ModelName = "mesh//hero";
             this.Position2D = new Vector2(0.0f, 0.0f);
             this.mass = 20.0f;
+            Animations = new[] { "idle", "Act", "Reach", "Move", "Death" }; 
         }
 
         #endregion
@@ -213,13 +209,13 @@ namespace Gdd.Game.Engine.Levels.Characters
             else if (Keyboard.GetState().IsKeyDown(Keys.V) && !this.lastState.IsKeyDown(Keys.V))
             {
                 this.animationIndex++;
-                if (this.animationIndex >= this.animations.Length)
+                if (this.animationIndex >= this.Animations.Length)
                 {
                     this.animationIndex = 0;
                 }
 
                 // currentClip = skinningData.AnimationClips[animations[animationIndex]];
-                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.animations[this.animationIndex]]);
+                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.Animations[this.animationIndex]]);
                 this.AnimationPlayer.StartClip();
             }
 
@@ -248,7 +244,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.skinningData = (SkinningData)this.ObjectModel.Tag;
 
             // currentClip = skinningData.AnimationClips[animations[animationIndex]];
-            this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.animations[this.animationIndex]]);
+            this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.Animations[this.animationIndex]]);
             this.AnimationPlayer.StartClip();
 
             HeroGeometry = PhysicsGeometry;

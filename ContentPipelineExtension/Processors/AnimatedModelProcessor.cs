@@ -9,7 +9,7 @@
 //   SkinnedModelProcessor.cs
 //   Microsoft XNA Community Game Platform
 //   Copyright (C) Microsoft Corporation. All rights reserved.
-//   Amended by Olafur Thor Gunnarsson to add axis aligned bounding boxes to the keyframes
+//   Amended by Olafur Thor Gunnarsson.
 //   -----------------------------------------------------------------------------
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------

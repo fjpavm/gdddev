@@ -70,7 +70,7 @@ VS_OUTPUT StaticModelVertexShader(VS_INPUT input)
 float4 StaticModelPixelShader(PS_INPUT input) : COLOR0
 { 
     float4 shadow;
-	if(!input.inTheDark){
+    if(!input.inTheDark){
 		shadow = ConsultShadowMap(input.LightPosition);	
 	}
 	else{
