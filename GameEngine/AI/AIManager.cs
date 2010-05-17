@@ -21,14 +21,46 @@ namespace Gdd.Game.Engine.AI
     {
         public static MessageQueue messageQueue =  new MessageQueue();
 
-        //NOTE: Needs to be changed to our gameObject
-        //NOTE: Needs to be set to the Scene's gameObject list
-        public ICollection<IAIEntity> objectList;
+        protected ICollection<IAIEntity> objectList;
+
+        protected MessageProcessorGroup heroPositionListners = new MessageProcessorGroup();
+
+        protected Levels.Characters.Hero hero;
+
+        public void addSceneComponent(Scenes.SceneComponent sc)
+        {
+            AI.IAIEntity ai = sc as AI.IAIEntity;
+            if (ai != null)
+            {
+                objectList.Add(ai);
+                heroPositionListners.addMessageProcessor(ai);
+            }
+            Levels.Characters.Hero h = sc as Levels.Characters.Hero;
+            if (h != null) 
+            {
+                hero = h;
+            }
+        }
+
+        public void removeSceneComponent(Scenes.SceneComponent sc)
+        {
+            AI.IAIEntity ai = sc as AI.IAIEntity;
+            if (ai != null)
+            {
+                objectList.Remove(ai);
+                heroPositionListners.removeMessageProcessor(ai);
+            }
+            Levels.Characters.Hero h = sc as Levels.Characters.Hero;
+            if (h != null)
+            {
+                hero = null;
+            }
+        }
 
         public AIManager(Microsoft.Xna.Framework.Game game)
             : base(game)
         {
-            // TODO: Construct any child components here
+            objectList = new List<IAIEntity>();
         }
 
         /// <summary>
@@ -38,7 +70,6 @@ namespace Gdd.Game.Engine.AI
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-
             base.Initialize();
         }
 
@@ -48,6 +79,15 @@ namespace Gdd.Game.Engine.AI
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            if (hero != null) 
+            {
+                Message m = new Message();
+                m.from = hero;
+                m.to = heroPositionListners;
+                m.timeDelivery = 0;
+                m.MessageType = MessageTypes.characterPosition;
+                messageQueue.sendMessage(m);
+            }
             double t = gameTime.TotalGameTime.TotalSeconds;
             messageQueue.updateCurrentTime(t);
             messageQueue.deliverMessages();

@@ -85,7 +85,6 @@ namespace Gdd.Game.Engine.Levels
             this.background = new Background(this);
             this.Camera = new Camera(this.Game, new Vector3(0.0f, 0.0f, 30.0f)) { FieldOfView = 70.0f };
             this.aiManager = new AI.AIManager(this.Game);
-            this.aiManager.objectList = new List<AI.IAIEntity>();
         }
 
         #endregion
@@ -181,11 +180,7 @@ namespace Gdd.Game.Engine.Levels
             this.currentLevel.Components.Add(sceneComponent);
             
             // add AI entities to AI manager list
-            AI.IAIEntity ai = sceneComponent as AI.IAIEntity;
-            if (ai != null)
-            {
-                aiManager.objectList.Add(ai);
-            }
+            this.aiManager.addSceneComponent(sceneComponent);
         }
 
         /// <summary>
@@ -253,12 +248,9 @@ namespace Gdd.Game.Engine.Levels
         {
             base.RemoveComponent(sceneComponent);
             this.currentLevel.Components.Remove(sceneComponent);
+            
             // remove AI entities from AI manager list
-            AI.IAIEntity ai = sceneComponent as AI.IAIEntity;
-            if (ai != null)
-            {
-                aiManager.objectList.Remove(ai);
-            }
+            this.aiManager.removeSceneComponent(sceneComponent);
         }
 
         /// <summary>

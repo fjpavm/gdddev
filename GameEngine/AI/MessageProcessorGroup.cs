@@ -5,10 +5,9 @@ using System.Collections.Generic;
 namespace Gdd.Game.Engine.AI
 {
 	
-	
 	public class MessageProcessorGroup : IMessageProcessor
 	{
-        LinkedList<IMessageProcessor> messageProcessors = new LinkedList<IMessageProcessor>();
+        List<IMessageProcessor> messageProcessors = new List<IMessageProcessor>();
 		
 		public MessageProcessorGroup()
 		{
@@ -16,7 +15,12 @@ namespace Gdd.Game.Engine.AI
 
         public void addMessageProcessor(IMessageProcessor mp)
         {
-            messageProcessors.AddLast(mp);
+            messageProcessors.Add(mp);
+        }
+
+        public void removeMessageProcessor(IMessageProcessor mp)
+        {
+            messageProcessors.Remove(mp);
         }
 		
 		public bool ProcessMessage(Message m)

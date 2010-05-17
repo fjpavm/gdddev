@@ -20,7 +20,7 @@ namespace Gdd.Game.Engine.Levels.Characters
     /// <summary>
     /// The hero class.
     /// </summary>
-    public class Hero : AnimatedModel
+    public class Hero : AnimatedModel, AI.IMessageProcessor
     {
         #region Constants and Fields
 
@@ -86,6 +86,14 @@ namespace Gdd.Game.Engine.Levels.Characters
         #endregion
 
         #region Public Methods
+
+
+        /// <summary>
+        /// Dummy function to make Hero a Message Processor
+        /// </summary>
+        public bool ProcessMessage(AI.Message m){
+            return false;
+        }
 
         /// <summary>
         /// The get hero direction.
