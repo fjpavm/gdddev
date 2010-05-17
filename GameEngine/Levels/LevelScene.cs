@@ -48,6 +48,11 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         private LevelScript levelScript;
 
+        /// <summary>
+        /// The aiManager
+        /// </summary>
+        private AI.AIManager aiManager;
+
         #endregion
 
         #region Constructors and Destructors
@@ -79,11 +84,24 @@ namespace Gdd.Game.Engine.Levels
             ObjectManager.SetUpLists(this.ID);
             this.background = new Background(this);
             this.Camera = new Camera(this.Game, new Vector3(0.0f, 0.0f, 30.0f)) { FieldOfView = 70.0f };
+            this.aiManager = new AI.AIManager(this.Game);
+            this.aiManager.objectList = new List<AI.IAIEntity>();
         }
 
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets AIManager.
+        /// </summary>
+        public AI.AIManager AIManager
+        {
+            get
+            {
+                return aiManager;
+            }
+        }
 
         /// <summary>
         /// Gets LevelEntityTypeBindings.
@@ -156,6 +174,13 @@ namespace Gdd.Game.Engine.Levels
         {
             base.AddComponent(sceneComponent);
             this.currentLevel.Components.Add(sceneComponent);
+            
+            // add AI entities to AI manager list
+            AI.IAIEntity ai = sceneComponent as AI.IAIEntity;
+            if (ai != null)
+            {
+                aiManager.objectList.Add(ai);
+            }
         }
 
         /// <summary>
@@ -193,6 +218,9 @@ namespace Gdd.Game.Engine.Levels
             var levelSerializer = new LevelSerializer();
             this.CurrentLevel = levelSerializer.ConvertToLevel(serializableLevel, this);
             this.background.LoadContent();
+
+
+
         }
 
         /// <summary>
@@ -220,6 +248,12 @@ namespace Gdd.Game.Engine.Levels
         {
             base.RemoveComponent(sceneComponent);
             this.currentLevel.Components.Remove(sceneComponent);
+            // remove AI entities from AI manager list
+            AI.IAIEntity ai = sceneComponent as AI.IAIEntity;
+            if (ai != null)
+            {
+                aiManager.objectList.Remove(ai);
+            }
         }
 
         /// <summary>
@@ -236,6 +270,7 @@ namespace Gdd.Game.Engine.Levels
             {
                 this.levelScript.Update(gameTime);
             }
+            this.aiManager.Update(gameTime);
         }
 
         #endregion
