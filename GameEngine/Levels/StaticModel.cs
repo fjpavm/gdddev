@@ -19,7 +19,6 @@ namespace Gdd.Game.Engine.Levels
 
     using Gdd.Game.Engine.Common;
     using Gdd.Game.Engine.Levels.Characters;
-    using Gdd.Game.Engine.Physics;
     using Gdd.Game.Engine.Render;
     using Gdd.Game.Engine.Scenes;
 
@@ -44,14 +43,14 @@ namespace Gdd.Game.Engine.Levels
         protected bool AddOffset;
 
         /// <summary>
+        /// The inverse offset matrix.
+        /// </summary>
+        protected Matrix InverseOffsetMatrix;
+
+        /// <summary>
         /// The offset matrix.
         /// </summary>
         protected Matrix OffsetMatrix;
-
-        /// <summary>
-        /// The inverse offset matrix.
-        /// </summary>
-        protected Matrix InverseOffsetMatrix; 
 
         /// <summary>
         /// The grid cell size.
@@ -405,7 +404,7 @@ namespace Gdd.Game.Engine.Levels
                 {
                     if (count < this.ModelTextures.Count)
                     {
-                         ShaderManager.SetValue("Texture", this.ModelTextures[count++]);
+                        ShaderManager.SetValue("Texture", this.ModelTextures[count++]);
                     }
 
                     ShaderManager.SetValue("ID", this.ID);
@@ -466,17 +465,12 @@ namespace Gdd.Game.Engine.Levels
                     {
                         if (this.PhysicsVertices != null)
                         {
-                            IEnumerable<Vector2> vertices = from vertex in this.PhysicsVertices
-                                                            let scaledVertex =
-                                                                Vector3.Transform(
-                                                                    new Vector3(0, vertex.Y, vertex.X), this.ScaleMatrix)
-                                                            select new Vector2(scaledVertex.Z, scaledVertex.Y);
-                            this.physicsVertices = new Vertices(vertices.ToArray());
+                            this.physicsVertices.Scale(ref this.scale);
                         }
 
                         float rotation = this.PhysicsBody.Rotation;
                         this.CreatePhysics();
-                      //  this.offset = new Vector2(this.offset.X * this.scale.X, this.offset.Y * this.scale.Y);
+
                         this.PhysicsBody.Position = this.Position2D + this.offset;
                         this.PhysicsBody.Rotation = rotation;
                         this.scaleChanged = false;
@@ -493,16 +487,17 @@ namespace Gdd.Game.Engine.Levels
                 }
 
                 this.Translation = Matrix.CreateTranslation(this.Position3D);
-               /* Matrix translateOffset = Matrix.CreateTranslation(this.offset.X, this.offset.Y, 0);
+
+                /* Matrix translateOffset = Matrix.CreateTranslation(this.offset.X, this.offset.Y, 0);
                 Matrix translateOffsetBack = Matrix.CreateTranslation(-this.offset.X, -this.offset.Y, 0);
                 */
                 this.Rotation = Matrix.CreateFromYawPitchRoll(this.YawRotation, this.PitchRotation, this.RollRotation) *
-                                InverseOffsetMatrix * this.PhysicsBody.GetBodyRotationMatrix() * OffsetMatrix;
+                                this.InverseOffsetMatrix * this.PhysicsBody.GetBodyRotationMatrix() * this.OffsetMatrix;
             }
 
             if (this.PhysicsGeometry != null)
             {
-                this.aabb = this.PhysicsGeometry.AABB;                
+                this.aabb = this.PhysicsGeometry.AABB;
             }
 
             this.World = this.ScaleMatrix * this.Rotation * this.Translation;
@@ -535,7 +530,6 @@ namespace Gdd.Game.Engine.Levels
                     this.ModelTextures.Add(effect.Parameters["BasicTexture"].GetValueTexture2D());
                 }
             }*/
-
             base.LoadContent();
         }
 
@@ -556,7 +550,7 @@ namespace Gdd.Game.Engine.Levels
 
             if (this.GeometryType == GeometryType.Polygon)
             {
-                this.PhysicsVertices = gddModel.Vertices;
+                this.PhysicsVertices = new Vertices(gddModel.Vertices.Select(v => new Vector2(v.X, v.Y)).ToArray());
                 this.mass = gddModel.Mass * 100.0f;
             }
 
@@ -590,6 +584,7 @@ namespace Gdd.Game.Engine.Levels
 
                 this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(
                     this.scene.PhysicsSimulator, this.PhysicsBody, this.PhysicsVertices, this.gridCellSize);
+                this.offset *= this.scale;
             }
             else if (this.GeometryType == GeometryType.Circle)
             {
@@ -630,11 +625,14 @@ namespace Gdd.Game.Engine.Levels
                 this.offset = new Vector2(0.0f, (box.Max.Y - box.Min.Y) * this.scale.Y / 2.0f);
             }
 
-            this.offset += this.PhysicsBody.Position;// +this.PhysicsGeometry.LocalVertices.GetCentroid();
+            if (!this.scaleChanged || this.GeometryType != GeometryType.Polygon)
+            {
+                this.offset += this.PhysicsBody.Position; // +this.PhysicsGeometry.LocalVertices.GetCentroid();
+            }
 
-            OffsetMatrix = Matrix.CreateTranslation(new Vector3(offset, 0.0f));
-            InverseOffsetMatrix = Matrix.CreateTranslation(new Vector3(-offset, 0.0f));
-            
+            this.OffsetMatrix = Matrix.CreateTranslation(new Vector3(this.offset, 0.0f));
+            this.InverseOffsetMatrix = Matrix.CreateTranslation(new Vector3(-this.offset, 0.0f));
+
             this.aabb = this.PhysicsGeometry.AABB;
         }
 
