@@ -1,0 +1,32 @@
+﻿<info>
+  <animation>
+    <name>idle</name>
+    <startframe>2</startframe>
+    <endframe>61</endframe>
+  </animation>
+  <animation>
+    <name>Act</name>
+    <startframe>62</startframe>
+    <endframe>117</endframe>
+  </animation>
+  <animation>
+    <name>Reach</name>
+    <startframe>118</startframe>
+    <endframe>174</endframe>
+  </animation>
+  <animation>
+    <name>Move</name>
+    <startframe>175</startframe>
+    <endframe>250</endframe>
+  </animation>
+  <animation>
+    <name>Death</name>
+    <startframe>251</startframe>
+    <endframe>314</endframe>
+  </animation> 
+  
+  <shader>
+    Effects\\ShadowMap.fx
+  </shader>
+</info>
+

@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<SerializableLevel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Author>GDD</Author>
+  <LevelEntityCollection>
+    <LevelEntity xsi:type="GroundEntity">
+      <Enabled>true</Enabled>
+      <Name>ground</Name>
+      <Position2D>
+        <X>0</X>
+        <Y>-30</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh/Final_terrian _Y _X _Half</ModelName>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut1Txt</Name>
+      <Position2D>
+        <X>-358.624023</X>
+        <Y>-0.353027344</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>20</X>
+        <Y>20</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="TutorialTextEntity">
+      <Enabled>true</Enabled>
+      <Name>tutorialText1</Name>
+      <Position2D>
+        <X>-335.857422</X>
+        <Y>14.6225586</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <BodyText>Click and drag the sphere to paint it\ninto the world.\nSpheres can roll over flowers,\nbut are outrun by bunnies.\nPainting objects or getting injured\nremoves paint from your bar.\nIf this bar becomes empty,\nyou will have to restart the game.</BodyText>
+      <HeaderText>Tutorial 1</HeaderText>
+      <TextBoxSize>
+        <X>20</X>
+        <Y>20</Y>
+      </TextBoxSize>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>enemyTut1Bun1</Name>
+      <Position2D>
+        <X>-343.18457</X>
+        <Y>-7.290039</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>enemyTut1Bun2</Name>
+      <Position2D>
+        <X>-330.0713</X>
+        <Y>-14.9082079</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>enemyTut1Bun3</Name>
+      <Position2D>
+        <X>-318.390137</X>
+        <Y>-22.3491211</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>boundsTut1</Name>
+      <Position2D>
+        <X>-343.020264</X>
+        <Y>16.8413086</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>100</X>
+        <Y>100</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut2Txt</Name>
+      <Position2D>
+        <X>-261.021729</X>
+        <Y>-24.83496</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="TutorialTextEntity">
+      <Enabled>true</Enabled>
+      <Name>tutorialText2</Name>
+      <Position2D>
+        <X>-263.384766</X>
+        <Y>-9.722473</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <BodyText>Cubes can be used to block bunnies\nfrom charging, dropping on enemies\nand to reach otherwise unaccesible\nplaces. You can push the cube a short\ndistance, or stack them to create\na staircase.</BodyText>
+      <HeaderText>Tutorial 2</HeaderText>
+      <TextBoxSize>
+        <X>20</X>
+        <Y>15</Y>
+      </TextBoxSize>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut2Goal</Name>
+      <Position2D>
+        <X>-225.890137</X>
+        <Y>3.7980957</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut3Txt</Name>
+      <Position2D>
+        <X>-199.7771</X>
+        <Y>4.002075</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>pitBunnieh</Name>
+      <Position2D>
+        <X>-187.6813</X>
+        <Y>-30.2773438</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+    </LevelEntity>
+    <LevelEntity xsi:type="TutorialTextEntity">
+      <Enabled>true</Enabled>
+      <Name>tutorialText3</Name>
+      <Position2D>
+        <X>-181.926147</X>
+        <Y>12.6938477</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <BodyText>Ledges can act as bridges across\notherwise incrossable terrain.\nLedges cannot be pushed, so be\ncareful about placing them.</BodyText>
+      <HeaderText>Tutorial 3</HeaderText>
+      <TextBoxSize>
+        <X>20</X>
+        <Y>13</Y>
+      </TextBoxSize>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut3Goal</Name>
+      <Position2D>
+        <X>-176.674316</X>
+        <Y>4.88977051</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+  </LevelEntityCollection>
+  <Script>
+    <string>using Gdd.Game.Engine.Levels;</string>
+    <string>using Gdd.Game.Engine.Levels.Information;</string>
+    <string>using Gdd.Game.Engine.Scenes;</string>
+    <string />
+    <string>using System;</string>
+    <string>using System.Linq;</string>
+    <string />
+    <string>using Microsoft.Xna.Framework;</string>
+    <string />
+    <string>public class MyLevel : LevelScript</string>
+    <string>{</string>
+    <string>    private bool[] tutComplete;</string>
+    <string />
+    <string>    public MyLevel() {</string>
+    <string>        this.tutComplete = new bool[4];</string>
+    <string>    }</string>
+    <string />
+    <string>    public override void Initialize()</string>
+    <string>    {</string>
+    <string>        foreach (TutorialText t in this.Level.Components.Where(c =&gt; c is TutorialText)) {</string>
+    <string>            t.Visible = false;</string>
+    <string>        }</string>
+    <string>    }</string>
+    <string />
+    <string>    public override void Update(GameTime gameTime)</string>
+    <string>    {</string>
+    <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText1"]).Visible = </string>
+    <string>            ((Bounds)this.Level.Components["bndTut1Txt"]).IsColliding;</string>
+    <string />
+    <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText2"]).Visible = </string>
+    <string>            ((Bounds)this.Level.Components["bndTut2Txt"]).IsColliding &amp;&amp; !this.tutComplete[2];</string>
+    <string />
+    <string>        if (this.tutComplete[2] == false &amp;&amp; ((Bounds)this.Level.Components["bndTut2Goal"]).IsColliding)</string>
+    <string>        {</string>
+    <string>            this.tutComplete[2] = true;</string>
+    <string>        }</string>
+    <string />
+    <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText3"]).Visible = </string>
+    <string>            ((Bounds)this.Level.Components["bndTut3Txt"]).IsColliding &amp;&amp; !this.tutComplete[3];</string>
+    <string />
+    <string>        if (this.tutComplete[3] == false &amp;&amp; ((Bounds)this.Level.Components["bndTut3Goal"]).IsColliding)</string>
+    <string>        {</string>
+    <string>            this.tutComplete[3] = true;</string>
+    <string>        }</string>
+    <string />
+    <string />
+    <string>    } </string>
+    <string>}</string>
+  </Script>
+  <StartPosition>
+    <X>-380</X>
+    <Y>0</Y>
+  </StartPosition>
+</SerializableLevel>
