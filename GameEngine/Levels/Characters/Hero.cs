@@ -80,7 +80,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.ModelName = "mesh//hero";
             this.Position2D = new Vector2(0.0f, 0.0f);
             this.mass = 20.0f;
-            Animations = new[] { "idle", "Act", "Reach", "Move", "Death" }; 
+            Animations = new[] { "Idle", "Act", "Reach", "Walk", "Death" }; 
         }
 
         #endregion
@@ -213,8 +213,10 @@ namespace Gdd.Game.Engine.Levels.Characters
             else if (Keyboard.GetState().IsKeyDown(Keys.L) && lastState.IsKeyUp(Keys.L))
             {
                 DecreaseLife();
+                if (targetLife == 0.0f)
+                    Die();
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.V) && !this.lastState.IsKeyDown(Keys.V))
+        /*    else if (Keyboard.GetState().IsKeyDown(Keys.V) && !this.lastState.IsKeyDown(Keys.V))
             {
                 this.animationIndex++;
                 if (this.animationIndex >= this.Animations.Length)
@@ -225,7 +227,7 @@ namespace Gdd.Game.Engine.Levels.Characters
                 // currentClip = skinningData.AnimationClips[animations[animationIndex]];
                 this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.Animations[this.animationIndex]]);
                 this.AnimationPlayer.StartClip();
-            }
+            }*/
 
             this.lastState = Keyboard.GetState();
 

@@ -102,8 +102,8 @@ namespace Gdd.Game.Engine.Animation
 
             isStopped = false;
 
-            currentTimeValue = currentClipValue.Keyframes[0][0].Time;
-            CurrentKeyframe = 0;
+            CurrentKeyframe = 1;
+            currentTimeValue = currentClipValue.Keyframes[CurrentKeyframe][0].Time;            
 
             // Initialize bone transforms to the bind pose.
             skinningDataValue.BindPose.CopyTo(boneTransforms, 0);
@@ -131,8 +131,8 @@ namespace Gdd.Game.Engine.Animation
             if (currentClipValue == null)
                 throw new ArgumentNullException("clip");
 
-            currentTimeValue = CurrentClip.Keyframes[0][0].Time;
-            CurrentKeyframe = 0;
+            CurrentKeyframe = 1;
+            currentTimeValue = CurrentClip.Keyframes[CurrentKeyframe][0].Time;            
 
             // Initialize bone transforms to the bind pose.
             skinningDataValue.BindPose.CopyTo(boneTransforms, 0);
@@ -158,8 +158,8 @@ namespace Gdd.Game.Engine.Animation
 
             if (CurrentKeyframe >= currentClipValue.Keyframes.Count - 1)
             {
-                currentTimeValue = CurrentClip.Keyframes[0][0].Time;
-                CurrentKeyframe = 0;
+                CurrentKeyframe = 1;
+                currentTimeValue = CurrentClip.Keyframes[1][0].Time;                
             }
 
             foreach (Keyframe k in currentClipValue.Keyframes[CurrentKeyframe])
@@ -196,7 +196,7 @@ namespace Gdd.Game.Engine.Animation
             {
                 if (!runOnce)
                 {
-                    CurrentKeyframe = 1;
+                    CurrentKeyframe =1;
                     currentTimeValue = CurrentClip.Keyframes[CurrentKeyframe][0].Time;
 
                     skinningDataValue.BindPose.CopyTo(boneTransforms, 0);

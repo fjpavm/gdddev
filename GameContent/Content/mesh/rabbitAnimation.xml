@@ -1,11 +1,11 @@
 ﻿<info>
   <animation>
-    <name>idle</name>
+    <name>Idle</name>
     <startframe>1</startframe>
     <endframe>58</endframe>
   </animation>
   <animation>
-    <name>Skating</name>
+    <name>Walk</name>
     <startframe>59</startframe>
     <endframe>116</endframe>
   </animation>

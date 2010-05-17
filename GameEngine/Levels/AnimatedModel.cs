@@ -150,6 +150,30 @@ namespace Gdd.Game.Engine.Levels
             }
         }
 
+        public void Die(){
+            if (this.AnimationPlayer.CurrentClip != this.skinningData.AnimationClips["Death"] || this.AnimationPlayer.IsStopped)
+            {
+                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips["Death"]);
+                this.AnimationPlayer.RunOnce();
+            }
+        }
+
+        public void Walk(){
+            if (this.AnimationPlayer.CurrentClip != this.skinningData.AnimationClips["Walk"] || this.AnimationPlayer.IsStopped)
+            {
+                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips["Walk"]);
+                this.AnimationPlayer.RunOnce();
+            }
+        }
+
+        public void Idle()
+        {
+            if (this.AnimationPlayer.CurrentClip != this.skinningData.AnimationClips["Death"] && this.AnimationPlayer.CurrentClip != this.skinningData.AnimationClips["Idle"])            {
+                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips["Idle"]);
+                this.AnimationPlayer.StartClip();
+            }
+        }
+
         /// <summary>
         /// The initialize.
         /// </summary>
@@ -170,19 +194,20 @@ namespace Gdd.Game.Engine.Levels
             if (!this.AnimationPlayer.IsStopped)
             {
                 this.AnimationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
-            }
+                
+                // disgusting fix, the model animation player does some strange things....
+                if (this.AnimationPlayer.CurrentKeyframe > 2)
+                {
+                    this.currentPhysicsVertices =
+                        this.AnimationPlayer.CurrentClip.vertices[(int)this.ModelDirection][
+                            this.AnimationPlayer.CurrentKeyframe];
 
-            if (this.AnimationPlayer.CurrentKeyframe != 0)
-            {
-                this.currentPhysicsVertices =
-                    this.AnimationPlayer.CurrentClip.vertices[(int)this.ModelDirection][
-                        this.AnimationPlayer.CurrentKeyframe];
+                    Matrix m = this.PhysicsGeometry.Matrix;
+                    this.PhysicsGeometry.SetVertices(this.currentPhysicsVertices);
+                    this.PhysicsGeometry.Matrix = m; 
 
-                Matrix m = this.PhysicsGeometry.Matrix;
-                this.PhysicsGeometry.SetVertices(this.currentPhysicsVertices);
-                this.PhysicsGeometry.Matrix = m; // *this.OffsetMatrix;
-
-                this.aabb = this.PhysicsGeometry.AABB;
+                    this.aabb = this.PhysicsGeometry.AABB;
+                }                
             }
         }
 

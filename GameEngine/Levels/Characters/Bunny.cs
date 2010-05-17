@@ -63,7 +63,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.Position2D = new Vector2(0.0f, 0.0f);
             this.mass = 10.0f;
 
-            Animations = new[] { "idle", "Death", "Skating" }; 
+            Animations = new[] { "Idle", "Death", "Walk" }; 
         }
 
         #endregion
@@ -169,7 +169,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         protected override void LoadContent()
         {
-            this.gridCellSize = 100.0f;
+            //this.gridCellSize = 5.0f;
             if (BunnyModel != null)
             {
                 this.ObjectModel = BunnyModel;

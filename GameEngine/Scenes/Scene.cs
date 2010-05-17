@@ -330,7 +330,7 @@ namespace Gdd.Game.Engine.Scenes
             {
                 this.DrawSceneComponent(gameTime);
 
-                DrawSecondViewport(this.shadowMap);
+                //DrawSecondViewport(this.shadowMap);
             }
         }
 
