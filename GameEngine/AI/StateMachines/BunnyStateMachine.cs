@@ -149,6 +149,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
         public PatrolBunnyState(object thisObject, Vector2 setpoint1, Vector2 setpoint2)
             : base("PatrolBunnyState_StateMachine")
         {
+            this.thisObject = thisObject;
             IState moveToSetpoint1 = new MoveToSetpointBunnyState(setpoint1);
             IState moveToSetpoint2 = new MoveToSetpointBunnyState(setpoint2);
 
@@ -180,6 +181,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
         public AliveBunnyState(object thisObject, Vector2 setpoint1, Vector2 setpoint2)
             : base("AliveBunnyState_StateMachine")
         {
+            this.thisObject = thisObject;
             IState patrol = new PatrolBunnyState(thisObject, setpoint1, setpoint2);
             IState charge = new ChargingBunnyState();
 
@@ -229,7 +231,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
         {
             IState alive = new AliveBunnyState(thisObject, setpoint1, setpoint2);
             IState dead = new DeadBunnyState();
-
+            this.thisObject = thisObject;
                                    
             dead.setThisObject(thisObject);
 
