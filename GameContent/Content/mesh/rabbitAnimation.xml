@@ -7,12 +7,12 @@
   <animation>
     <name>Skating</name>
     <startframe>59</startframe>
-    <endframe>107</endframe>
+    <endframe>116</endframe>
   </animation>
   <animation>
     <name>Death</name>
-    <startframe>108</startframe>
-    <endframe>170</endframe>
+    <startframe>117</startframe>
+    <endframe>180</endframe>
   </animation>
   
   <shader>

@@ -211,7 +211,7 @@ namespace Gdd.Game.Engine.Animation
             UpdateWorldTransforms(rootTransform);
             UpdateSkinTransforms();
             
-            currentTimeValue += new TimeSpan((long)(time.Ticks * 0.8f));
+            currentTimeValue += new TimeSpan((long)(time.Ticks));
             
         }
 

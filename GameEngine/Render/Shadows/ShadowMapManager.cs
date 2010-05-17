@@ -115,7 +115,7 @@ namespace Gdd.Game.Engine.Render.Shadow
                 return Matrix.Identity;
             }
 
-            return Matrix.CreateOrthographic(2*bounds.Radius, 2*bounds.Radius, near, far);
+            return Matrix.CreateOrthographic(0.25f*bounds.Radius, 2*bounds.Radius, near, far);
         }
 
         private static double AngleBetweenVectors(Vector3 first, Vector3 second)

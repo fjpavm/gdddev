@@ -127,7 +127,6 @@ namespace Gdd.Game.Engine.Physics
                 v[i] = new Vector2(v[i].X * 2 * bs.Radius / (texture.Width - 1) + bs.Center.X - bs.Radius, (texture.Height - 1 - v[i].Y) * 2 * bs.Radius / (texture.Height - 1) + bs.Center.Y - bs.Radius);
             }
 
-
             List<Vector2> points = new List<Vector2>(v);
 
             for (int i = 3; i < points.Count; i++)
@@ -148,7 +147,7 @@ namespace Gdd.Game.Engine.Physics
         private static bool isColinear(Vector2 p1, Vector2 p2, Vector2 p3){
 
             float triangleArea = 0.5f*(p1.X * (p2.Y - p3.Y) - p2.X * (p1.Y - p3.Y) + p3.X*(p1.Y - p2.Y));
-            float delta = 0.01f;
+            float delta = 0.0075f;
 
             return Math.Abs(triangleArea) < delta;
         }

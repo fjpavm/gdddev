@@ -19,7 +19,6 @@ float4 LightAmbient;              // Light's ambient color
 
 texture Texture;              // Color texture for mesh
 texture ShadowMapTexture;			// Shadow map texture for lighting
-int ID;
 
 
 //------------------------------------------------------------------------------
@@ -57,7 +56,7 @@ struct VS_INPUT
 struct VS_SHADOW_OUTPUT
 {
 	float4 Position : POSITION;
-	int ID			: TEXCOORD0;
+	float Depth		: TEXCOORD0;
 };
 //------------------------------------------------------------------------------
 // Utility function(s)
@@ -105,8 +104,11 @@ VS_SHADOW_OUTPUT RenderShadowMapVS(VS_INPUT input, uniform bool skinTransform)
 	}		
     
 	Out.Position = GetPositionFromLight(position); 
-	// Set the object's ID into the depth buffer
-	Out.ID = ID;
+	
+	// Depth is Z/W.  This is returned by the pixel shader.
+	// Subtracting from 1 gives us more precision in floating point.
+	Out.Depth.x = 1-(Out.Position.z/Out.Position.w);
+	
 	return Out;
 }
 
@@ -116,13 +118,15 @@ float4 RenderShadowMapPS( VS_SHADOW_OUTPUT In ) : COLOR
 	// this value entirely in a 32-bit red channel
 	// using SurfaceFormat.Single.  This preserves the
 	// floating-point data for finer detail.
-	float4 color = float4(In.ID,0,0,1);
+	/*float4 color = float4(In.ID,0,0,1);
 	if(In.ID == 0.0f)
 	{
 		color = float4(In.ID,0,0,255);
 	}
 	
-    return color;
+    return color;*/
+    
+    return float4(In.Depth.x,0,0,1);
 }
 
 technique ShadowMapRenderAnimation

@@ -64,22 +64,22 @@ namespace Gdd.Game.Engine.Scenes
         #region Enums
 
         /// <summary>
-        /// The scen e_ id.
+        /// The scene_id.
         /// </summary>
         public enum SCENE_ID
         {
             /// <summary>
-            /// The mai n_ menu.
+            /// The main_menu.
             /// </summary>
             MAIN_MENU, 
 
             /// <summary>
-            /// The mai n_ game.
+            /// The main_game.
             /// </summary>
             MAIN_GAME, 
 
             /// <summary>
-            /// The i n_ gam e_ menu.
+            /// The in_game_menu.
             /// </summary>
             IN_GAME_MENU
         } ;
@@ -154,7 +154,7 @@ namespace Gdd.Game.Engine.Scenes
                 vb = new VertexBuffer(game.GraphicsDevice, VertexPositionColor.SizeInBytes * 4, BufferUsage.None);
                 vb.SetData(overlayVertexArray);
 
-                Vector4 overlayColor = Color.TransparentBlack.ToVector4();
+                Vector4 overlayColor = Color.Black.ToVector4();
                 overlayColor.W = 0.85f;
 
                 ShaderManager.AddEffect(ShaderManager.EFFECT_ID.OVERLAY, "overlay", game);

@@ -287,7 +287,8 @@ namespace Gdd.Game
 
             // this camera is movable
             this.camera = new MyCamera(this, new Vector3(0.0f, 0.0f, 10.0f));
-            scene1.Camera = this.camera;
+            //scene1.Camera = this.camera;
+            scene1.Camera = heroCamera;
             scene1.LoadContent("levels/test");
             scene1.AddComponent(this.hero);
             this.hero.Position2D = scene1.CurrentLevel.StartPosition;
@@ -313,8 +314,8 @@ namespace Gdd.Game
                         HeaderText = "Drawing effects", 
                         BodyText = "Use F12 to switch through the\n drawing effects (3D, 2D or Both)", 
                         Position2D = new Vector2(0.0f, 0.0f), 
-                        TextBoxSize = new Vector2(30.0f, 25.0f) 
- });
+                        TextBoxSize = new Vector2(30.0f, 25.0f) });
+
             scene1.Light = dl1;
 
             scene1.AddComponent(
