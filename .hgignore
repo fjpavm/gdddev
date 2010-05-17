@@ -9,3 +9,5 @@ glob:*.csproj.Debug.cachefile
 glob:*.contentproj.XactOutput.FileList.txt
 glob:*.csproj.user
 glob:*.contentproj.user
+relre:/Release/
+relre:.cachefile
