@@ -35,11 +35,6 @@ namespace Gdd.Game
         #region Constants and Fields
 
         /// <summary>
-        /// The aiManager
-        /// </summary>
-        private readonly AIManager aiManager;
-
-        /// <summary>
         /// The graphics.
         /// </summary>
         private readonly GraphicsDeviceManager graphics;
@@ -91,7 +86,7 @@ namespace Gdd.Game
         public Game1()
         {
             this.graphics = new GraphicsDeviceManager(this);
-            this.aiManager = new AIManager(this);
+            //this.aiManager = new AIManager(this);
             this.Content.RootDirectory = "Content";
 
             // add the GFXComponent into the components
@@ -135,7 +130,7 @@ namespace Gdd.Game
             // calls initialize for all objects in the components array
             base.Initialize();
 
-            this.SetupAI();
+            //this.SetupAI();
             this.SetupScenes();
 
             SceneManager.ChangeScene(SceneManager.SCENE_ID.MAIN_MENU);
@@ -239,7 +234,7 @@ namespace Gdd.Game
 
             SceneManager.Update(gameTime);
 
-            this.aiManager.Update(gameTime);
+            //AIManager.Update(gameTime);
 
             // scenemanager.Update(gameTime);
             // TODO: Add your update logic here
@@ -251,12 +246,12 @@ namespace Gdd.Game
         /// <summary>
         /// The setup ai.
         /// </summary>
-        private void SetupAI()
-        {
-            this.aiManager.objectList = new List<IAIEntity>();
+        //private void SetupAI()
+        //{
+        //    this.aiManager.objectList = new List<IAIEntity>();
 
-            // this.aiManager.objectList.Add(this.monster);
-        }
+        //    // this.aiManager.objectList.Add(this.monster);
+        //}
 
         /// <summary>
         /// The setup scenes.
@@ -298,8 +293,8 @@ namespace Gdd.Game
             this.monster = bunny;
 
             // bunny.Debug = true;
-            this.aiManager.objectList.Add(bunny);
-            this.aiManager.objectList.Add(secondBunny);
+            scene1.AIManager.objectList.Add(bunny);
+            scene1.AIManager.objectList.Add(secondBunny);
             scene1.AddComponent(bunny);
             scene1.AddComponent(secondBunny);
             scene1.AddComponent(lollypop);
