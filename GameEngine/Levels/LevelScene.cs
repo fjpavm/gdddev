@@ -84,6 +84,8 @@ namespace Gdd.Game.Engine.Levels
             ObjectManager.SetUpLists(this.ID);
             this.background = new Background(this);
             this.Camera = new Camera(this.Game, new Vector3(0.0f, 0.0f, 30.0f)) { FieldOfView = 70.0f };
+            this.aiManager = new AI.AIManager(this.Game);
+            this.aiManager.objectList = new List<AI.IAIEntity>();
         }
 
         #endregion
@@ -172,6 +174,13 @@ namespace Gdd.Game.Engine.Levels
         {
             base.AddComponent(sceneComponent);
             this.currentLevel.Components.Add(sceneComponent);
+            
+            // add AI entities to AI manager list
+            AI.IAIEntity ai = sceneComponent as AI.IAIEntity;
+            if (ai != null)
+            {
+                aiManager.objectList.Add(ai);
+            }
         }
 
         /// <summary>
@@ -188,8 +197,6 @@ namespace Gdd.Game.Engine.Levels
                        Position2D = new Vector2(0.0f, 0.0f), Color = Color.CornflowerBlue 
                     };
             }
-            this.aiManager = new AI.AIManager(this.Game);
-            this.aiManager.objectList = new List<AI.IAIEntity>();
 
             this.levelScript = Script.Load(this.currentLevel.Script) as LevelScript;
             if (this.EnableScripts && this.levelScript != null)
@@ -212,12 +219,7 @@ namespace Gdd.Game.Engine.Levels
             this.CurrentLevel = levelSerializer.ConvertToLevel(serializableLevel, this);
             this.background.LoadContent();
 
-            // add AI entities to AI manager list
-            List<DrawableSceneComponent> list = this.DrawableSceneComponents;
-            foreach (AI.IAIEntity ai in list) 
-            {
-                aiManager.objectList.Add(ai);
-            }
+
 
         }
 
@@ -246,6 +248,12 @@ namespace Gdd.Game.Engine.Levels
         {
             base.RemoveComponent(sceneComponent);
             this.currentLevel.Components.Remove(sceneComponent);
+            // remove AI entities from AI manager list
+            AI.IAIEntity ai = sceneComponent as AI.IAIEntity;
+            if (ai != null)
+            {
+                aiManager.objectList.Remove(ai);
+            }
         }
 
         /// <summary>
