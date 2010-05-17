@@ -25,6 +25,7 @@ namespace Gdd.Game.Engine.Levels.Information
     /// </summary>
     public class TutorialText : DrawableSceneComponent
     {
+        private static float Z_Position = -20.0f;
         #region Constants and Fields
 
         /// <summary>
@@ -411,6 +412,7 @@ namespace Gdd.Game.Engine.Levels.Information
             public TextureSprite(Vector3 position, Vector2 UV)
             {
                 this.position = position;
+                this.position.Z = Z_Position;
                 this.UV = UV;
             }
 
