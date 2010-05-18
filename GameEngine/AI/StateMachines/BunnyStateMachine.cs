@@ -11,12 +11,18 @@ namespace Gdd.Game.Engine.AI.StateMachines
         Microsoft.Xna.Framework.Vector2 chargingDirection = new Microsoft.Xna.Framework.Vector2();
         bool directionChanged = false;
         int moveRightAnimationCommand, moveLeftAnimationCommand;
-        float speed = 1.5f; // default speed for charging
+        float speed = 10.0f; // default speed for charging
 
         public ChargingBunnyState() : base("ChargingBunnyState")
         {
             moveRightAnimationCommand = AnimationCommandDictionary.lookUp("MovingRightBunny");
             moveLeftAnimationCommand = AnimationCommandDictionary.lookUp("MovingLeftBunny");
+        }
+
+        public override void OnEnter()
+        {
+            Audio.PlayAttackingBunny();
+            base.OnEnter();
         }
 
         public override void Update(double timeDiff) 
@@ -220,6 +226,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
             base.OnEnter();
             Message m = new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, animationCommand);
             AIManager.messageQueue.sendMessage(m);
+            Audio.PlayDyingBunny();
         }
 
     }

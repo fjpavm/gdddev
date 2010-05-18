@@ -8,11 +8,18 @@ using Microsoft.Xna.Framework;
 using System.IO;
 
 
+
 namespace Gdd.Game.Engine
 {
     public class Audio
     {
         #region Variables
+
+        /// <summary>
+        /// Random generator for multioption sounds
+        /// </summary>
+        static Random randomGenerator = new Random();
+
         /// <summary>
         /// Sound stuff for XAct
         /// </summary>
@@ -160,6 +167,7 @@ namespace Gdd.Game.Engine
                 backgroundMusic = soundBank.GetCue("GameBackgroundMusic");
             }
             backgroundMusic.Play();
+            
         }
 
         /// <summary>
@@ -187,8 +195,37 @@ namespace Gdd.Game.Engine
         }
 
         /// <summary>
+        /// Just a place holder for Play bunny dying sound
+        /// </summary>
+        /// 
+        public static void PlayDyingBunny()
+        {
+            PlayDyingFlower();
+        }
+
+        /// <summary>
+        /// Just a place holder for Play bunny attacking sound
+        /// </summary>
+        /// 
+        public static void PlayAttackingBunny()
+        {
+            PlayAttackingFlower();
+        }
+
+        /// <summary>
         /// Play hero dying sound
         /// </summary>
+        public static void PlayHeroDying()
+        {
+            PauseBackgroundMusic();
+            int choice = randomGenerator.Next(2);
+            switch (choice) {
+                case 0: PlayHeroDying1(); break;
+                case 1: PlayHeroDying2(); break;
+            }
+
+        }
+
         public static void PlayHeroDying1()
         {
             if (!heroDying1.IsPrepared)
@@ -210,6 +247,18 @@ namespace Gdd.Game.Engine
         /// <summary>
         /// Play flower attacking sound
         /// </summary>
+        public static void PlayAttackingFlower()
+        {
+            int choice = randomGenerator.Next(4);
+            switch (choice)
+            {
+                case 0: PlayAttackingFlower1(); break;
+                case 1: PlayAttackingFlower2(); break;
+                case 2: PlayAttackingFlower3(); break;
+                case 3: PlayAttackingFlower4(); break;  
+            }
+        }
+
         public static void PlayAttackingFlower1()
         {
             if (!attackingFlower1.IsPrepared)
@@ -246,9 +295,23 @@ namespace Gdd.Game.Engine
             attackingFlower4.Play();
         }
 
+
         /// <summary>
         /// Play flower dying sound
         /// </summary>
+        /// 
+        public static void PlayDyingFlower()
+        {
+            int choice = randomGenerator.Next(4);
+            switch (choice)
+            {
+                case 0: PlayDyingFlower1(); break;
+                case 1: PlayDyingFlower2(); break;
+                case 2: PlayDyingFlower3(); break;
+                case 3: PlayDyingFlower4(); break;
+            }
+        }
+
         public static void PlayDyingFlower1()
         {
             if (!dyingFlower1.IsPrepared)

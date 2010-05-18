@@ -294,6 +294,12 @@ namespace Gdd.Game.Engine.Levels.Characters
             HeroGeometry = PhysicsGeometry;
         }
 
+        public override void Die() 
+        {
+            base.Die();
+            Audio.PlayHeroDying();
+        }
+
         #endregion
     }
 }

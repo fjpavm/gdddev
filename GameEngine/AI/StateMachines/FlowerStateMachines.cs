@@ -72,6 +72,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
             Console.WriteLine(name + ".OnEnter()");
             Message m = new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, animationCommand);
             AIManager.messageQueue.sendMessage(m);
+            Audio.PlayAttackingFlower();
         }
 
         //public override void Update() { Console.WriteLine(name + ".Update()"); }
@@ -150,6 +151,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
             Console.WriteLine(name + ".OnEnter()");
             Message m = new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, animationCommand);
             AIManager.messageQueue.sendMessage(m);
+            Audio.PlayDyingFlower();
         }
 
         //public override void Update() { Console.WriteLine(name + ".Update()"); }

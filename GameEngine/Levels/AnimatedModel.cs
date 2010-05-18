@@ -177,7 +177,7 @@ namespace Gdd.Game.Engine.Levels
             }
         }
 
-        public void Die(){
+        public virtual void Die(){
             Dead = true;
             ChangeAnimation("Death", true, true);
         }
