@@ -173,13 +173,13 @@ namespace Gdd.Game.Engine.Levels
                     {
                         temp = new[]
                             {
-                               new Vector2(meshBuffer[indexBuffer[i]].Position.Z, meshBuffer[indexBuffer[i]].Position.Y), 
+                               new Vector2(meshBuffer[indexBuffer[i]].Position.Z * this.Scale.X, meshBuffer[indexBuffer[i]].Position.Y * this.Scale.Y), 
                               new Vector2(
-                                  meshBuffer[indexBuffer[i + 1]].Position.Z, meshBuffer[indexBuffer[i + 1]].Position.Y), 
+                                  meshBuffer[indexBuffer[i + 1]].Position.Z * this.Scale.X, meshBuffer[indexBuffer[i + 1]].Position.Y * this.Scale.Y), 
                               new Vector2(
-                                  meshBuffer[indexBuffer[i + 2]].Position.Z, meshBuffer[indexBuffer[i + 2]].Position.Y),
+                                  meshBuffer[indexBuffer[i + 2]].Position.Z * this.Scale.X, meshBuffer[indexBuffer[i + 2]].Position.Y * this.Scale.Y),
                               new Vector2(
-                                  meshBuffer[indexBuffer[i + 4]].Position.Z, meshBuffer[indexBuffer[i + 4]].Position.Y)
+                                  meshBuffer[indexBuffer[i + 4]].Position.Z * this.Scale.X, meshBuffer[indexBuffer[i + 4]].Position.Y * this.Scale.Y)
                             };
 
                         vertices = new Vertices(ref temp);
