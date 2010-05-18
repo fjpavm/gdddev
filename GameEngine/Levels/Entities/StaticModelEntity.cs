@@ -34,6 +34,11 @@ namespace Gdd.Game.Engine.Levels.Entities
         /// </summary>
         public string ModelName { get; set; }
 
+        /// <summary>
+        /// Gets or sets ModelName.
+        /// </summary>
+        public Vector2 Scale{ get; set; }
+
         #endregion
     }
 }

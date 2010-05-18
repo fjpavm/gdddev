@@ -65,9 +65,9 @@ VS_OUTPUT StaticModelVertexShader(VS_INPUT input)
 	 Output.pointLightColor = GetPointLightColor(mul(input.Normal, World), mul(input.Position, World)) + GetLighting(input.Position, mul(input.Normal, World));
 	 
 	 // check if the normal is facing away from the lightsource
-	 float angle = dot(normalize(LightDir), mul(input.Normal, World));
+	 float angle = acos(dot( mul(input.Normal, World), normalize(LightDir)));
 	 
-	 Output.inTheDark = (angle < 0.0f);
+	 Output.inTheDark = (angle > 3.14/2.0f);
 	 
 	 return Output;
 }
@@ -75,17 +75,20 @@ VS_OUTPUT StaticModelVertexShader(VS_INPUT input)
 float4 StaticModelPixelShader(PS_INPUT input) : COLOR0
 { 
     float4 shadow;
-  //  if(!input.inTheDark){
+    if(!input.inTheDark){
 		shadow = ConsultShadowMap(input.LightPosition);	
-/*	}
+//		shadow = float4(0.0f, 1.0f, 0.0f, 1.0f);
+	}
 	else{
 		shadow = float4(0.6f, 0.6f, 0.6f, 1.0f);
+//		shadow = float4(1.0f, 0.0f, 0.0f, 1.0f);
 	}
-*/	
+	
     float4 lightDiffuse = (float4(input.pointLightColor, 1.0f)) * shadow;
 	float4 outColor = tex2D(MeshTextureSampler, input.TextureUV);
 	
     return Grayscale(outColor * lightDiffuse);
+    //return shadow;
 }
 
 technique StaticModelTechnique
