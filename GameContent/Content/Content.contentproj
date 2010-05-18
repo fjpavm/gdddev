@@ -119,22 +119,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Effects\Model.fx">
-      <Name>Model</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Effects\PointLights.fx">
       <Name>PointLights</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Effects\SkinnedModel.fx">
-      <Name>SkinnedModel</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
@@ -305,8 +291,8 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </Content>
-    <Compile Include="Textures\plant texture3.jpg">
-      <Name>plant texture3</Name>
+    <Compile Include="Textures\plant texture.jpg">
+      <Name>plant texture</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -369,11 +355,6 @@
       <Name>sphere</Name>
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="mesh\flower test 01.fbx">
-      <Name>flower test 01</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>AnimatedModelProcessor</Processor>
     </Compile>
     <None Include="Textures\lollypop.jpg">
       <Name>lollypop</Name>

@@ -51,8 +51,9 @@ namespace Gdd.Game.Engine.Levels
             this.modelName = "mesh\\Hero";
             this.ModelDirection = ModelDirection.Right;
             this.AddOffset = false;
-            this.mass = 0.01f;
+            this.mass = 10.0f;
             this.Dead = false;
+            this.Scale = Vector2.One;
         }
 
         #endregion

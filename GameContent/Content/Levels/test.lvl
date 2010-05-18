@@ -9,10 +9,14 @@
         <X>0</X>
         <Y>-30</Y>
       </Position2D>
+      <Scale>
+        <X>0.5</X>
+        <Y>0.5</Y>
+      </Scale>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
-      <ModelName>mesh/Final_terrian _Y _X _Half</ModelName>
+      <ModelName>mesh/terrain</ModelName>
     </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
       <Enabled>true</Enabled>
@@ -49,6 +53,10 @@
         <X>-343.18457</X>
         <Y>-7.290039</Y>
       </Position2D>
+      <Scale>
+        <X>1.0</X>
+        <Y>1.0</Y>
+      </Scale>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
@@ -61,6 +69,10 @@
         <X>-330.0713</X>
         <Y>-14.9082079</Y>
       </Position2D>
+      <Scale>
+        <X>1.0</X>
+        <Y>1.0</Y>
+      </Scale>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
@@ -73,6 +85,10 @@
         <X>-318.390137</X>
         <Y>-22.3491211</Y>
       </Position2D>
+      <Scale>
+        <X>1.0</X>
+        <Y>1.0</Y>
+      </Scale>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
@@ -152,6 +168,10 @@
         <X>-187.6813</X>
         <Y>-30.2773438</Y>
       </Position2D>
+      <Scale>
+        <X>1.0</X>
+        <Y>1.0</Y>
+      </Scale>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
