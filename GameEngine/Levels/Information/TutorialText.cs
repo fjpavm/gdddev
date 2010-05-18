@@ -347,8 +347,8 @@ namespace Gdd.Game.Engine.Levels.Information
 
             this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(
                 halfTextBoxSizeWidth.X * 2, halfTextBoxSizeHeight.Y * 2, 1.0f);
-            this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(
-                this.PhysicsBody, halfTextBoxSizeWidth.X * 2, halfTextBoxSizeHeight.Y * 2);
+            this.PhysicsGeometry = new Physics.GeomDC(this,GeomFactory.Instance.CreateRectangleGeom(
+                this.PhysicsBody, halfTextBoxSizeWidth.X * 2, halfTextBoxSizeHeight.Y * 2));
             this.aabb = this.PhysicsGeometry.AABB;
         }
 

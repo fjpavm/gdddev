@@ -39,7 +39,7 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// The ground geometries.
         /// </summary>
-        private List<Geom> groundGeometries;
+        private List<Physics.GeomDC> groundGeometries;
 
         #endregion
 
@@ -77,7 +77,7 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// Gets GroundGeometries.
         /// </summary>
-        public ReadOnlyCollection<Geom> GroundGeometries
+        public ReadOnlyCollection<Physics.GeomDC> GroundGeometries
         {
             get
             {
@@ -152,7 +152,7 @@ namespace Gdd.Game.Engine.Levels
 
             Vector2[] temp;
             this.groundBodies = new List<Body>();
-            this.groundGeometries = new List<Geom>();
+            this.groundGeometries = new List<Physics.GeomDC>();
             Vertices vertices;
 
             foreach (ModelMesh mesh in this.ObjectModel.Meshes)
@@ -187,8 +187,9 @@ namespace Gdd.Game.Engine.Levels
 
                         this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
                             this.scene.PhysicsSimulator, vertices, 1000);
-                        this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(
-                            this.scene.PhysicsSimulator, this.PhysicsBody, vertices, 0.3f);
+                        this.PhysicsGeometry = new Physics.GeomDC(this,GeomFactory.Instance.CreatePolygonGeom(
+                             this.PhysicsBody, vertices, 0.3f));
+                        this.scene.PhysicsSimulator.Add(this.PhysicsGeometry);
 
                         this.PhysicsGeometry.FrictionCoefficient = 4.0f;
 
@@ -202,7 +203,7 @@ namespace Gdd.Game.Engine.Levels
 
                         this.PhysicsBody.IsStatic = true;
 
-                        this.groundGeometries.Add(this.PhysicsGeometry);
+                        this.groundGeometries.Add(new Physics.GeomDC(this,this.PhysicsGeometry));
                         this.groundBodies.Add(this.PhysicsBody);
                     }
                 }
