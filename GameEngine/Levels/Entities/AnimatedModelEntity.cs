@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Gdd.Game.Engine.Animation;
 namespace Gdd.Game.Engine.Levels.Entities
 {
     /// <summary>

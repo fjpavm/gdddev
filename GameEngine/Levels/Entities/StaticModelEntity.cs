@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Microsoft.Xna.Framework;
 namespace Gdd.Game.Engine.Levels.Entities
 {
     /// <summary>

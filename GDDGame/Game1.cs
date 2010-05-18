@@ -201,28 +201,6 @@ namespace Gdd.Game
                 AIManager.messageQueue.sendMessage(m);
             }
             
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                this.hero.Position2D = new Vector2(this.hero.Position2D.X - 0.1f, this.hero.Position2D.Y);
-                this.hero.Walk();
-                if (this.hero.ModelDirection == ModelDirection.Right)
-                {
-                    this.hero.Flip();
-                }
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                this.hero.Position2D = new Vector2(this.hero.Position2D.X + 0.1f, this.hero.Position2D.Y);
-                this.hero.Walk();
-                if (this.hero.ModelDirection == ModelDirection.Left)
-                {
-                    this.hero.Flip();
-                }
-            }
-            else{// if(Keyboard.GetState().IsKeyDown(Keys.Y) && lastState.IsKeyUp(Keys.Y)){
-                this.hero.Idle();
-            }
-            
             if (Keyboard.GetState().IsKeyDown(Keys.F12) && this.lastState.IsKeyUp(Keys.F12))
             {
                 Globals.displayState = (DISPLAY_STATE)((int)(Globals.displayState + 1) % 3);
@@ -293,12 +271,12 @@ namespace Gdd.Game
 
             // bunny.Debug = true;
             //scene1.AIManager.objectList.Add(bunny);
-            //scene1.AIManager.objectList.Add(secondBunny);
             scene1.AddComponent(bunny);
             scene1.AddComponent(secondBunny);
             scene1.AddComponent(lollypop);
             scene1.AddComponent(rock);
             scene1.AddComponent(candy);
+
             scene1.AddComponent(new HeroHealthBar(this) { DrawOrder = int.MaxValue });
 
             scene1.AddComponent(

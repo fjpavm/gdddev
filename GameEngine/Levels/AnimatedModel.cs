@@ -1,4 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿using Gdd.Game.Engine.Scenes;
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="AnimatedModel.cs" company="UAD">
 //   Game Design and Development
 // </copyright>
@@ -51,11 +52,14 @@ namespace Gdd.Game.Engine.Levels
             this.ModelDirection = ModelDirection.Right;
             this.AddOffset = false;
             this.mass = 0.01f;
+            this.Dead = false;
         }
 
         #endregion
 
         #region Properties
+
+        public bool Dead { get; protected set; }
 
         /// <summary>
         /// The current physics vertices.
@@ -77,13 +81,35 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         public string[] Animations { get; protected set; }
 
+        private string currentAnimation;
+
+        public string CurrentAnimation { 
+            get{
+                return currentAnimation;
+            } 
+
+            set{
+                currentAnimation = value;
+            }
+        }
+
+
+
         #endregion
 
         #region Public Methods
 
-        public void ChangeAnimation(){
+        public void ChangeAnimation(string animation, bool runOnce, bool interupt){
+            if (interupt && animation != CurrentAnimation || this.AnimationPlayer.IsStopped)
+            {
+                CurrentAnimation = animation;
+                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[CurrentAnimation]);
 
-
+                if (runOnce)
+                    this.AnimationPlayer.RunOnce();
+                else
+                    this.AnimationPlayer.StartClip();
+            }
         }
 
         /// <summary>
@@ -151,27 +177,19 @@ namespace Gdd.Game.Engine.Levels
         }
 
         public void Die(){
-            if (this.AnimationPlayer.CurrentClip != this.skinningData.AnimationClips["Death"] || this.AnimationPlayer.IsStopped)
-            {
-                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips["Death"]);
-                this.AnimationPlayer.RunOnce();
-            }
+            Dead = true;
+            ChangeAnimation("Death", true, true);
         }
 
         public void Walk(){
-            if (this.AnimationPlayer.CurrentClip != this.skinningData.AnimationClips["Walk"] || this.AnimationPlayer.IsStopped)
-            {
-                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips["Walk"]);
-                this.AnimationPlayer.RunOnce();
-            }
+            if (CurrentAnimation != "Death")
+                ChangeAnimation("Walk", true, true);
         }
 
         public void Idle()
         {
-            if (this.AnimationPlayer.CurrentClip != this.skinningData.AnimationClips["Death"] && this.AnimationPlayer.CurrentClip != this.skinningData.AnimationClips["Idle"])            {
-                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips["Idle"]);
-                this.AnimationPlayer.StartClip();
-            }
+            if(CurrentAnimation != "Death")
+                ChangeAnimation("Idle", false, true);
         }
 
         /// <summary>
@@ -229,13 +247,14 @@ namespace Gdd.Game.Engine.Levels
             this.DefaultTechnique = "AnimatedModelTechnique";
             this.AnimationPlayer = new ModelAnimationPlayer(this.ObjectModel.Tag as SkinningData);
 
+            this.skinningData = (SkinningData)this.ObjectModel.Tag;
+
             this.AnimationPlayer.SetClip((this.ObjectModel.Tag as SkinningData).AnimationClips.Values.First());
             this.AnimationPlayer.StartClip();
             this.AnimationPlayer.StepClip();
 
             this.currentPhysicsVertices =
-                this.AnimationPlayer.CurrentClip.vertices[(int)this.ModelDirection][this.AnimationPlayer.CurrentKeyframe
-                    ];
+                this.AnimationPlayer.CurrentClip.vertices[(int)this.ModelDirection][this.AnimationPlayer.CurrentKeyframe];
 
             this.PhysicsVertices = this.currentPhysicsVertices;
 

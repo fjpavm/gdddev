@@ -26,7 +26,7 @@ namespace Gdd.Game.Engine.Physics
         ///
         /// The width and height of the texture
         /// 
-        public static Vector2 TextureSize = new Vector2(256, 256);
+        public static Vector2 TextureSize = new Vector2(512, 512);
 
         /// <summary>
         /// The DepthBuffer
@@ -41,7 +41,7 @@ namespace Gdd.Game.Engine.Physics
             renderTarget = GfxComponent.CreateCustomRenderTarget(game.GraphicsDevice, 1, SurfaceFormat.Color, MultiSampleType.None, (int)TextureSize.X, (int)TextureSize.Y);
             depthBuffer = GfxComponent.CreateDepthStencil(renderTarget);
             Texture2D tex;
-            Vertices v = GetVertices(RenderToTarget(model, null, game, worldMatrix, out tex), model.Meshes[0].BoundingSphere);
+            Vertices v = GetVertices(RenderToTarget(model, null, game, worldMatrix, out tex), model);
             Color[] bmp = new Color[tex.Width * tex.Height];
             tex.GetData(bmp);
             mass = bmp.Where(c => c.R != 0.0f).Count();
@@ -75,7 +75,8 @@ namespace Gdd.Game.Engine.Physics
                 while (!hasGoneThrough)
                 {
                     RenderToTarget(model, player, game, world, out tex);
-                    vertices = GetVertices(tex, model.Meshes[0].BoundingSphere);
+
+                    vertices = GetVertices(tex, model);
 
                     if (vertices.Count != 1)
                     {
@@ -93,21 +94,33 @@ namespace Gdd.Game.Engine.Physics
                         }
 
                         tex.SetData<Color>(reverseTexture);
-                        vertices = GetVertices(tex, model.Meshes[0].BoundingSphere);
-
-                        clip.vertices[(int)ModelDirection.Left][player.CurrentKeyframe] = GetVertices(tex, model.Meshes[0].BoundingSphere);                    
+                        clip.vertices[(int)ModelDirection.Left][player.CurrentKeyframe] = GetVertices(tex, model);                    
                         lastKeyFrame = player.CurrentKeyframe;
                     }
                     player.StepClip();
                     hasGoneThrough = (player.CurrentKeyframe  - lastKeyFrame < 1);
                 }
             }
-
-
         }
 
-        private static Vertices GetVertices(Texture2D texture, BoundingSphere bs)
+        private static Vertices GetVertices(Texture2D texture, Model model)
         {
+            BoundingSphere bs = new BoundingSphere();
+
+            bool first = true;
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                if (first)
+                {
+                    bs = mesh.BoundingSphere;
+                    first = false;
+                }
+                else
+                {
+                    bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
+                }
+            }
+            
             bs.Center.X = bs.Center.Z;
             bs.Radius *= 1.5f;
             Vertices textureVertices = new Vertices();
@@ -143,7 +156,7 @@ namespace Gdd.Game.Engine.Physics
         private static bool isColinear(Vector2 p1, Vector2 p2, Vector2 p3){
 
             float triangleArea = 0.5f*(p1.X * (p2.Y - p3.Y) - p2.X * (p1.Y - p3.Y) + p3.X*(p1.Y - p2.Y));
-            float delta = 0.0075f;
+            float delta = 0.003f;
 
             return Math.Abs(triangleArea) < delta;
         }
@@ -160,6 +173,25 @@ namespace Gdd.Game.Engine.Physics
         {
             DepthStencilBuffer old = ShadowMapManager.SetupShadowMap(game.GraphicsDevice, ref renderTarget, ref depthBuffer);
 
+            BoundingSphere bs = new BoundingSphere();
+
+            bool first = true;
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                if (first)
+                {
+                    bs = mesh.BoundingSphere;
+                    first = false;
+                }
+                else
+                {
+                    bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
+                }
+            }
+            
+            bs.Center.X = bs.Center.Z;
+            bs.Radius *= 1.5f;
+
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.PHYSICS, "PhysicsRenderer", game);
             ShaderManager.SetCurrentEffect(ShaderManager.EFFECT_ID.PHYSICS);
             ShaderManager.SetValue("World", world);
@@ -168,10 +200,8 @@ namespace Gdd.Game.Engine.Physics
             m.M33 = 0;
             m.M43 = 0.5f;
             ShaderManager.SetValue("Projection", m);
-            BoundingSphere bs = model.Meshes[0].BoundingSphere;
-            bs.Center.X = bs.Center.Z;
-            bs.Radius *= 1.5f;
-
+            
+            
             Matrix view;
             view = Matrix.CreateTranslation(-bs.Center) * Matrix.CreateScale(1 / bs.Radius, 1 / bs.Radius, 1);
                 
