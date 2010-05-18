@@ -9,6 +9,8 @@
 
 namespace Gdd.Game.Engine.Levels
 {
+    using System;
+
     using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework.Graphics;
@@ -76,6 +78,8 @@ namespace Gdd.Game.Engine.Levels
         /// Gets or sets WidthBias.
         /// </summary>
         public float WidthBias { get; set; }
+
+        public float ScrollSpeed { get; set; }
 
         #endregion
 
