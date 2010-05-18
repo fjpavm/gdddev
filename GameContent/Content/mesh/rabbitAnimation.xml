@@ -1,0 +1,22 @@
+﻿<info>
+  <animation>
+    <name>Idle</name>
+    <startframe>1</startframe>
+    <endframe>58</endframe>
+  </animation>
+  <animation>
+    <name>Walk</name>
+    <startframe>59</startframe>
+    <endframe>116</endframe>
+  </animation>
+  <animation>
+    <name>Death</name>
+    <startframe>117</startframe>
+    <endframe>180</endframe>
+  </animation>
+  
+  <shader>
+    Effects\\ShadowMap.fx
+  </shader>
+</info>
+
