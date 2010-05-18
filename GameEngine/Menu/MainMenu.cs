@@ -194,6 +194,67 @@ namespace Gdd.Game.Engine.Menu
             gamePad2Down = gamePad2.DPad.Down == ButtonState.Pressed ||
                 gamePad2.ThumbSticks.Left.Y < -0.5f;
 
+            // Sound test for new sound files声音测试
+            if (keyboard.IsKeyDown(Keys.D9) && remDownPressed == false)
+            {
+                Audio.PlayIntroductionDialogue();
+            }
+
+            if (keyboard.IsKeyDown(Keys.D0) && remDownPressed == false)
+            {
+                Audio.PlayEndDialogue();
+            }
+
+            if (keyboard.IsKeyDown(Keys.Left) && remDownPressed == false)
+            {
+                Audio.PlayHeroDying1();
+            }
+
+            if (keyboard.IsKeyDown(Keys.Right) && remDownPressed == false)
+            {
+                Audio.PlayHeroDying2();
+            }
+
+            if (keyboard.IsKeyDown(Keys.D1) && remDownPressed == false)
+            {
+                Audio.PlayAttackingFlower1();
+            }
+
+            if (keyboard.IsKeyDown(Keys.D2) && remDownPressed == false)
+            {
+                Audio.PlayAttackingFlower2();
+            }
+
+            if (keyboard.IsKeyDown(Keys.D3) && remDownPressed == false)
+            {
+                Audio.PlayAttackingFlower3();
+            }
+
+            if (keyboard.IsKeyDown(Keys.D4) && remDownPressed == false)
+            {
+                Audio.PlayAttackingFlower4();
+            }
+
+            if (keyboard.IsKeyDown(Keys.D5) && remDownPressed == false)
+            {
+                Audio.PlayDyingFlower1();
+            }
+
+            if (keyboard.IsKeyDown(Keys.D6) && remDownPressed == false)
+            {
+                Audio.PlayDyingFlower2();
+            }
+
+            if (keyboard.IsKeyDown(Keys.D7) && remDownPressed == false)
+            {
+                Audio.PlayDyingFlower3();
+            }
+
+            if (keyboard.IsKeyDown(Keys.D8) && remDownPressed == false)
+            {
+                Audio.PlayDyingFlower4();
+            }
+
             // Menu control(菜单控制)
             if ((keyboard.IsKeyDown(Keys.Down) ||
                     gamePadDown) &&
