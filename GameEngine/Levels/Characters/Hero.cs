@@ -20,7 +20,7 @@ namespace Gdd.Game.Engine.Levels.Characters
     /// <summary>
     /// The hero class.
     /// </summary>
-    public class Hero : AnimatedModel, AI.IMessageProcessor
+    public class Hero : AnimatedModel, AI.IMessageProcessor, Physics.ICollides
     {
         #region Constants and Fields
 
@@ -38,6 +38,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// The life.
         /// </summary>
         private static float life = 1.0f;
+        private static double timeSinceLifeDecrease = 1.0;
 
         /// <summary>
         /// The target life.
@@ -96,6 +97,28 @@ namespace Gdd.Game.Engine.Levels.Characters
         }
 
         /// <summary>
+        /// Handles collisions of Hero with AIEntities
+        /// </summary>
+        public bool OnCollision(Scenes.DrawableSceneComponent dsc) 
+        {
+            AI.AIMonster monster = dsc as AI.AIMonster;
+            if (monster == null) 
+            {
+                return true;
+            }
+            if (monster.life > 0)
+            {
+                DecreaseLife();
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+
+        }
+
+        /// <summary>
         /// The get hero direction.
         /// </summary>
         /// <returns>
@@ -118,6 +141,8 @@ namespace Gdd.Game.Engine.Levels.Characters
 
         public static void DecreaseLife()
         {
+            if (timeSinceLifeDecrease < 1.0) return;
+            timeSinceLifeDecrease = 0;
             targetLife -= 0.1f;
 
             if (targetLife < 0.0f)
@@ -189,7 +214,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            
+            timeSinceLifeDecrease += gameTime.ElapsedGameTime.TotalSeconds;
             if(targetLife < life){
                 life -= 0.5f * gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
                 if (targetLife > life)
@@ -237,9 +262,10 @@ namespace Gdd.Game.Engine.Levels.Characters
                 else if (Keyboard.GetState().IsKeyDown(Keys.L) && lastState.IsKeyUp(Keys.L))
                 {
                     DecreaseLife();
-                    if (targetLife == 0.0f)
-                        Die();
+                    
                 }
+                if (targetLife == 0.0f)
+                    Die();
             }
 
             this.lastState = Keyboard.GetState();

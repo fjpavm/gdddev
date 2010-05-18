@@ -41,11 +41,6 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         private KeyboardState lastState;
 
-        /// <summary>
-        /// The life.
-        /// </summary>
-        private int life;
-
         #endregion
 
         #region Public Properties
