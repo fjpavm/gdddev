@@ -4,13 +4,20 @@ using System.Linq;
 using System.Text;
 using Gdd.Game.Engine.Scenes;
 using Gdd.Game.Engine.Levels;
+using Gdd.Game.Engine.Physics;
 
 namespace Gdd.Game.Engine.AI
 {
     using Microsoft.Xna.Framework;
-    public class AIMonster : AnimatedModel, IAIEntity, IDebugable
+    public class AIMonster : AnimatedModel, IAIEntity, IDebugable, ICollides
     {
         StateMachine stateMachine;
+
+        const float minMomentOfInertia = 10.0f;
+
+        public int life;
+        public bool hasPaint = true;
+
         private bool debug;
         public bool Debug 
         {
@@ -47,9 +54,52 @@ namespace Gdd.Game.Engine.AI
             debug = false;  
         }
 
-        protected AIMonster() : this(null) 
-        { 
+        public bool OnCollision(DrawableSceneComponent dsc) 
+        {
+            Ground g = dsc as Ground;
+            if (g != null)
+            {
+                return true;
+            }
+            Levels.Characters.Hero h = dsc as Levels.Characters.Hero;
+            if (life <= 0)
+            {
+                if (h != null)
+                {
+                    if (hasPaint) 
+                    {
+                        Levels.Characters.Hero.IncreaseLife();
+                        hasPaint = false;
+                        this.Visible = false;
+                    }
+                }
+                return false;
+            }
+            AI.AIMonster ai = dsc as AI.AIMonster;
+            if (ai != null)
+            {
+                return true;
+            }
+            if (h == null)
+            {
+                if (dsc.PhysicsBody.MomentOfInertia > minMomentOfInertia) {
+                    life--;
+                    if (life == 0) 
+                    {
+                        Message m = new Message
+                        {
+                            MessageType = MessageTypes.die,
+                            timeDelivery = 0,
+                            to = this
+                        };
+                        AIManager.messageQueue.sendMessage( m );
+                    }
+                    return false;
+                }
+            }
+            return true;
         }
+
 
         public void UpdateAI(GameTime t) 
         {
