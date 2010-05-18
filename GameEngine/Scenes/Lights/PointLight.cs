@@ -105,7 +105,7 @@ namespace Gdd.Game.Engine.Scenes.Lights
             base.LoadContent();
 
             this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(2 * this.Radius, 2 * this.Radius, 1.0f);
-            this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(this.PhysicsBody, 2 * this.Radius, 2 * this.Radius);
+            this.PhysicsGeometry = new Physics.GeomDC(this,GeomFactory.Instance.CreateRectangleGeom(this.PhysicsBody, 2 * this.Radius, 2 * this.Radius));
             this.aabb = this.PhysicsGeometry.AABB;
         }
     }

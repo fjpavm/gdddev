@@ -581,8 +581,9 @@ namespace Gdd.Game.Engine.Levels
                 this.PhysicsBody = BodyFactory.Instance.CreatePolygonBody(
                     this.scene.PhysicsSimulator, this.PhysicsVertices, this.mass * this.scale.X * this.scale.Y);
 
-                this.PhysicsGeometry = GeomFactory.Instance.CreatePolygonGeom(
-                    this.scene.PhysicsSimulator, this.PhysicsBody, this.PhysicsVertices, this.gridCellSize);
+                this.PhysicsGeometry = new Physics.GeomDC(this,GeomFactory.Instance.CreatePolygonGeom(
+                    this.PhysicsBody, this.PhysicsVertices, this.gridCellSize));
+                this.scene.PhysicsSimulator.Add(this.PhysicsGeometry);
                 this.offset *= this.scale;
             }
             else if (this.GeometryType == GeometryType.Circle)
@@ -595,12 +596,12 @@ namespace Gdd.Game.Engine.Levels
                     this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
                     this.mass);
 
-                this.PhysicsGeometry = GeomFactory.Instance.CreateCircleGeom(
-                    this.scene.PhysicsSimulator, 
+                this.PhysicsGeometry = new Physics.GeomDC(this,GeomFactory.Instance.CreateCircleGeom( 
                     this.PhysicsBody, 
                     this.ObjectModel.Meshes[0].BoundingSphere.Radius * this.scale.Length(), 
                     100, 
-                    this.gridCellSize);
+                    this.gridCellSize));
+                this.scene.PhysicsSimulator.Add(this.PhysicsGeometry);
 
                 this.offset = Vector2.Zero;
             }
@@ -614,12 +615,12 @@ namespace Gdd.Game.Engine.Levels
                     (box.Max.Y - box.Min.Y) * this.scale.Y, 
                     this.mass);
 
-                this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(
-                    this.scene.PhysicsSimulator, 
+                this.PhysicsGeometry = new Physics.GeomDC(this,GeomFactory.Instance.CreateRectangleGeom(
                     this.PhysicsBody, 
                     (box.Max.X - box.Min.X) * this.scale.X, 
                     (box.Max.Y - box.Min.Y) * this.scale.Y, 
-                    this.gridCellSize);
+                    this.gridCellSize));
+                this.scene.PhysicsSimulator.Add(this.PhysicsGeometry);
 
                 this.offset = new Vector2(0.0f, (box.Max.Y - box.Min.Y) * this.scale.Y / 2.0f);
             }

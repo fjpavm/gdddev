@@ -115,7 +115,7 @@ namespace Gdd.Game.Engine.Levels
             base.LoadContent();
 
             this.PhysicsBody = BodyFactory.Instance.CreateRectangleBody(this.Size.X, this.Size.Y, 1.0f);
-            this.PhysicsGeometry = GeomFactory.Instance.CreateRectangleGeom(this.PhysicsBody, this.Size.X, this.Size.Y);
+            this.PhysicsGeometry = new Physics.GeomDC(this,GeomFactory.Instance.CreateRectangleGeom(this.PhysicsBody, this.Size.X, this.Size.Y));
             this.aabb = this.PhysicsGeometry.AABB;
         }
 

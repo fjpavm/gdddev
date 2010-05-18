@@ -44,7 +44,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// <summary>
         /// The life.
         /// </summary>
-        private float life;
+        private int life;
 
         #endregion
 

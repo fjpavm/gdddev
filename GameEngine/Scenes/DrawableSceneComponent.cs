@@ -181,7 +181,7 @@ namespace Gdd.Game.Engine.Scenes
         /// <summary>
         /// Gets or sets PhysicsGeometry.
         /// </summary>
-        public Geom PhysicsGeometry { get; protected set; }
+        public Physics.GeomDC PhysicsGeometry { get; protected set; }
 
         /// <summary>
         /// Gets or sets Texture.
