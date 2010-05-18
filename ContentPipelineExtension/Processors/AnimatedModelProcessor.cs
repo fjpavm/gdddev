@@ -27,7 +27,6 @@ namespace Gdd.Game.Engine.Content.Pipeline.Processors
     using Microsoft.Xna.Framework.Content.Pipeline;
     using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
     using Microsoft.Xna.Framework.Content.Pipeline.Processors;
-    using System.Diagnostics;
 
     /// <summary>
     /// Custom processor extends the builtin framework ModelProcessor class,
@@ -263,8 +262,6 @@ namespace Gdd.Game.Engine.Content.Pipeline.Processors
         {
             // map of a list of keyframes
             var keyframes = new Dictionary<int, List<Keyframe>>();
-
-             Debugger.Launch();
 
             // For each input animation channel.
             foreach (var channel in animation.Channels)

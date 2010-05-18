@@ -200,34 +200,47 @@ namespace Gdd.Game.Engine.Levels.Characters
                 if (targetLife < life)
                     life = targetLife;
             }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && Math.Abs(PhysicsBody.LinearVelocity.Y) <= 0.03f)
+            if (!Dead)
             {
-                this.PhysicsBody.ApplyImpulse(ref this.jumpImpulse);
-            }
-            
-            if (Keyboard.GetState().IsKeyDown(Keys.O) && lastState.IsKeyUp(Keys.O))
-            {
-                IncreaseLife();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.L) && lastState.IsKeyUp(Keys.L))
-            {
-                DecreaseLife();
-                if (targetLife == 0.0f)
-                    Die();
-            }
-        /*    else if (Keyboard.GetState().IsKeyDown(Keys.V) && !this.lastState.IsKeyDown(Keys.V))
-            {
-                this.animationIndex++;
-                if (this.animationIndex >= this.Animations.Length)
+                if (Keyboard.GetState().IsKeyDown(Keys.Space) && Math.Abs(PhysicsBody.LinearVelocity.Y) <= 0.03f)
                 {
-                    this.animationIndex = 0;
+                    this.PhysicsBody.ApplyImpulse(ref this.jumpImpulse);
                 }
 
-                // currentClip = skinningData.AnimationClips[animations[animationIndex]];
-                this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.Animations[this.animationIndex]]);
-                this.AnimationPlayer.StartClip();
-            }*/
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                {
+                    Position2D = new Vector2(Position2D.X - 0.1f, Position2D.Y);
+                    Walk();
+                    if (ModelDirection == ModelDirection.Right)
+                    {
+                        Flip();
+                    }
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                {
+                    Position2D = new Vector2(Position2D.X + 0.1f, Position2D.Y);
+                    Walk();
+                    if (ModelDirection == ModelDirection.Left)
+                    {
+                        Flip();
+                    }
+                }
+                else
+                {
+                    Idle();
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.O) && lastState.IsKeyUp(Keys.O))
+                {
+                    IncreaseLife();
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.L) && lastState.IsKeyUp(Keys.L))
+                {
+                    DecreaseLife();
+                    if (targetLife == 0.0f)
+                        Die();
+                }
+            }
 
             this.lastState = Keyboard.GetState();
 
@@ -245,18 +258,13 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         protected override void LoadContent()
         {
-            gridCellSize = 5.0f;
+            gridCellSize = 1.8f;
             base.LoadContent();
 
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL, "AnimatedModel", this.Game);
             this.DefaultEffectID = ShaderManager.EFFECT_ID.ANIMATEDMODEL;
             this.DefaultTechnique = "AnimatedModelTechnique";
-            this.skinningData = (SkinningData)this.ObjectModel.Tag;
-
-            // currentClip = skinningData.AnimationClips[animations[animationIndex]];
-            this.AnimationPlayer.SetClip(this.skinningData.AnimationClips[this.Animations[this.animationIndex]]);
-            this.AnimationPlayer.StartClip();
-
+            
             HeroGeometry = PhysicsGeometry;
         }
 

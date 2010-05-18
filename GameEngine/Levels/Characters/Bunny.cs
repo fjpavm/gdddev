@@ -187,7 +187,7 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </summary>
         protected override void LoadContent()
         {
-            //this.gridCellSize = 5.0f;
+            this.gridCellSize = 1.8f;
             if (BunnyModel != null)
             {
                 this.ObjectModel = BunnyModel;

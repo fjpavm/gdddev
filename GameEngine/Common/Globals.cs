@@ -14,6 +14,6 @@ namespace Gdd.Game.Engine.Common
 
     public class Globals
     {
-        public static DISPLAY_STATE displayState = DISPLAY_STATE.BOTH;
+        public static DISPLAY_STATE displayState = DISPLAY_STATE.THREE_DIM;
     }
 }

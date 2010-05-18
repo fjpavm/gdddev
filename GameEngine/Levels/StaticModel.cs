@@ -102,6 +102,7 @@ namespace Gdd.Game.Engine.Levels
         /// </summary>
         private bool scaleChanged;
 
+
         /// <summary>
         /// Gets or sets ModelTexture.
         /// </summary>
@@ -281,7 +282,7 @@ namespace Gdd.Game.Engine.Levels
         /// <summary>
         /// Gets or sets ScaleMatrix.
         /// </summary>
-        public Matrix ScaleMatrix { get; set; }
+        public Matrix ScaleMatrix{ get; set; }
 
         /// <summary>
         /// Gets or sets YawRotation.
