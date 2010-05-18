@@ -48,6 +48,20 @@ namespace Gdd.Game.Engine.Levels.Characters
 
         #endregion
 
+        #region Public Properties
+
+        /// <summary>
+        /// Patrol point to the left of the bunny
+        /// </summary>
+        public Vector2 PatrolPointLeft { get; set; }
+
+        /// <summary>
+        /// Patrol point to the right of the bunny
+        /// </summary>
+        public Vector2 PatrolPointRight { get; set; }
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -62,6 +76,10 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.ModelName = "mesh//rabbit";
             this.Position2D = new Vector2(0.0f, 0.0f);
             this.mass = 10.0f;
+            this.PatrolPointLeft = new Vector2(this.Position2D.X - 5, this.Position2D.Y);
+            this.PatrolPointRight = new Vector2(this.Position2D.X + 5, this.Position2D.Y);
+            this.life = 1;
+
 
             Animations = new[] { "Idle", "Death", "Walk" }; 
         }
@@ -191,11 +209,8 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.AnimationPlayer.StartClip();
 
             // Loading Bunny State Machines
-            // some test patrol points
-            var patrol1 = new Vector2(this.Position2D.X - 5, this.Position2D.Y);
-            var patrol2 = new Vector2(this.Position2D.X + 5, this.Position2D.Y);
             this.AnimationStateMachine = new BunnyAnimationStateMachine(this);
-            this.MonsterStateMachine = new BunnyStateMachine(this, patrol1, patrol2);
+            this.MonsterStateMachine = new BunnyStateMachine(this, this.PatrolPointLeft, this.PatrolPointRight);
         }
 
         #endregion
