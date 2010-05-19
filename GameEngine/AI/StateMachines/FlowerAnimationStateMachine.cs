@@ -12,22 +12,22 @@ namespace Gdd.Game.Engine.AI.StateMachines
         public FlowerAnimationStateMachine(object _thisObject) 
         {
             thisObject = _thisObject;
-            AnimationState idleAnim = new AnimationState(_thisObject, "idle");
+            AnimationState idleAnim = new AnimationState(_thisObject, "Idle");
             idleAnim.Repeat = true;
             idle = new AnimationCommandTest(AnimationCommandDictionary.register("IdleFlower"));
 
-            AnimationState attackAnim = new AnimationState(_thisObject, "attack");
+            AnimationState attackAnim = new AnimationState(_thisObject, "Attack");
             attackAnim.Repeat = true;
             attack = new AnimationCommandTest(AnimationCommandDictionary.register("AttackingFlower"));
 
-            AnimationState evilAnim = new AnimationState(_thisObject, "evil");
+            AnimationState evilAnim = new AnimationState(_thisObject, "Evil");
             evilAnim.Repeat = true;
             evil = new AnimationCommandTest(AnimationCommandDictionary.register("EvilFlower"));
 
-            AnimationState dieAnim = new AnimationState(_thisObject, "die");
+            AnimationState dieAnim = new AnimationState(_thisObject, "Die");
             dieAnim.Repeat = false;
             die = new AnimationCommandTest(AnimationCommandDictionary.register("DyingFlower"));
-
+            
             Transition toDeath = new Transition();
             toDeath.nextState = dieAnim;
             toDeath.transitionTest = die.thisCommand;

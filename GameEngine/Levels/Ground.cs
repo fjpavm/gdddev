@@ -113,9 +113,9 @@ namespace Gdd.Game.Engine.Levels
         /// </param>
         public override void DrawWithEffect(ShaderManager.EFFECT_ID effect, string technique)
         {
-            this.Game.GraphicsDevice.RenderState.CullMode = CullMode.None;
+         //   this.Game.GraphicsDevice.RenderState.CullMode = CullMode.None;
             base.DrawWithEffect(effect, technique);
-            this.Game.GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
+           // this.Game.GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
         }
 
         #endregion
@@ -154,7 +154,7 @@ namespace Gdd.Game.Engine.Levels
             this.groundBodies = new List<Body>();
             this.groundGeometries = new List<Physics.GeomDC>();
             Vertices vertices;
-
+            int index = 0;
             foreach (ModelMesh mesh in this.ObjectModel.Meshes)
             {
                 var meshBuffer = new MyStruct[mesh.VertexBuffer.SizeInBytes / sizeofVertex];
@@ -163,7 +163,7 @@ namespace Gdd.Game.Engine.Levels
 
                 // modelBuffer.AddRange(meshBuffer.Select(v => new Vector3(v.Position.Z, v.Position.Y, v.Position.X)));
                 mesh.IndexBuffer.GetData(indexBuffer);
-
+                
                 for (int i = 0; i < indexBuffer.Length; i += 6)
                 {
                     if (Math.Abs(meshBuffer[indexBuffer[i]].Position.X - meshBuffer[indexBuffer[i + 1]].Position.X) <

@@ -5,17 +5,14 @@
 #include "includes\Grayscale.inc"
 
 texture Texture;
+bool isGround;
 
 sampler MeshTextureSampler = 
 sampler_state
 {
     Texture = <Texture>;
-//     MipFilter = LINEAR;
-//     MinFilter = LINEAR;
-//     MagFilter = LINEAR;
-	MaxAnisotropy = 16;
-    MinFilter = Anisotropic;
-    MagFilter = Anisotropic;
+    MinFilter = LINEAR;
+    MagFilter = LINEAR;
     MipFilter = LINEAR;
 };
 

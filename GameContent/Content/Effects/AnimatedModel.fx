@@ -11,13 +11,9 @@ sampler MeshTextureSampler =
 sampler_state
 {
     Texture = <Texture>;
-//     MipFilter = LINEAR;
-//     MinFilter = LINEAR;
-//     MagFilter = LINEAR;
-	MaxAnisotropy = 16;
-    MinFilter = Anisotropic;
-    MagFilter = Anisotropic;
-    MipFilter = LINEAR;
+     MipFilter = LINEAR;
+     MinFilter = LINEAR;
+     MagFilter = LINEAR;
 };
 
 
