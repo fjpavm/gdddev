@@ -1,23 +1,23 @@
 ﻿<info>
   <animation>
     <name>Idle</name>
-    <startframe>0</startframe>
-    <endframe>300</endframe>
+    <startframe>1</startframe>
+    <endframe>118</endframe>
   </animation>
   <animation>
     <name>Attack</name>
-    <startframe>0</startframe>
-    <endframe>300</endframe>
+    <startframe>119</startframe>
+    <endframe>229</endframe>
   </animation>
   <animation>
     <name>Evil</name>
     <startframe>0</startframe>
-    <endframe>300</endframe>
+    <endframe>1</endframe>
   </animation>
   <animation>
     <name>Die</name>
-    <startframe>0</startframe>
-    <endframe>300</endframe>
+    <startframe>230</startframe>
+    <endframe>286</endframe>
   </animation>
 
   <shader>

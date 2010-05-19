@@ -126,7 +126,7 @@ Objects:  {
         MultiTake: 1
         Hidden: "True"
         Shading: W
-        Culling: "CullingOff"
+        Culling: "CullingOn"
         Version: 101
         Name: "Model::Camera Switcher"
         CameraId: 0
@@ -209,7 +209,7 @@ Objects:  {
         MultiLayer: 0
         MultiTake: 1
         Shading: T
-        Culling: "CullingOff"
+        Culling: "CullingOn"
         Vertices: 1.9412385225296,0,-1.9412385225296,-1.9412385225296,0,-1.9412385225296,1.9412385225296,3.8824770450592,-1.9412385225296
         ,-1.9412385225296,3.8824770450592,-1.9412385225296,1.9412385225296,3.8824770450592,1.9412385225296,-1.9412385225296
         ,3.8824770450592,1.9412385225296,1.9412385225296,0,1.9412385225296,-1.9412385225296,0,1.9412385225296
@@ -416,7 +416,7 @@ Objects:  {
         MultiTake: 0
         Hidden: "True"
         Shading: Y
-        Culling: "CullingOff"
+        Culling: "CullingOn"
         TypeFlags: "Camera"
         GeometryVersion: 124
         Position: 0,71.3,287.5
@@ -570,7 +570,7 @@ Objects:  {
         MultiTake: 0
         Hidden: "True"
         Shading: Y
-        Culling: "CullingOff"
+        Culling: "CullingOn"
         TypeFlags: "Camera"
         GeometryVersion: 124
         Position: 0,4000,0
@@ -724,7 +724,7 @@ Objects:  {
         MultiTake: 0
         Hidden: "True"
         Shading: Y
-        Culling: "CullingOff"
+        Culling: "CullingOn"
         TypeFlags: "Camera"
         GeometryVersion: 124
         Position: 0,-4000,0
@@ -878,7 +878,7 @@ Objects:  {
         MultiTake: 0
         Hidden: "True"
         Shading: Y
-        Culling: "CullingOff"
+        Culling: "CullingOn"
         TypeFlags: "Camera"
         GeometryVersion: 124
         Position: 0,0,4000
@@ -1032,7 +1032,7 @@ Objects:  {
         MultiTake: 0
         Hidden: "True"
         Shading: Y
-        Culling: "CullingOff"
+        Culling: "CullingOn"
         TypeFlags: "Camera"
         GeometryVersion: 124
         Position: 0,0,-4000
@@ -1186,7 +1186,7 @@ Objects:  {
         MultiTake: 0
         Hidden: "True"
         Shading: Y
-        Culling: "CullingOff"
+        Culling: "CullingOn"
         TypeFlags: "Camera"
         GeometryVersion: 124
         Position: 4000,0,0
@@ -1340,7 +1340,7 @@ Objects:  {
         MultiTake: 0
         Hidden: "True"
         Shading: Y
-        Culling: "CullingOff"
+        Culling: "CullingOn"
         TypeFlags: "Camera"
         GeometryVersion: 124
         Position: -4000,0,0

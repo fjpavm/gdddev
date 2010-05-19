@@ -36,9 +36,9 @@ sampler ShadowMapSampler =
 sampler_state
 {
 	Texture = <ShadowMapTexture>;
-    MinFilter = POINT;
-    MagFilter = POINT;
-    MipFilter = POINT;
+    MinFilter = LINEAR;
+    MagFilter = LINEAR;
+    MipFilter = LINEAR;
     AddressU = Clamp;
     AddressV = Clamp;
 };
@@ -76,6 +76,7 @@ float4x4 CreateLookAt(float3 cameraPos, float3 target, float3 up)
 
 	return view;
 }
+
 float4 GetPositionFromLight(float4 position)
 {
 	float4x4 WorldViewProjection =
@@ -107,7 +108,7 @@ VS_SHADOW_OUTPUT RenderShadowMapVS(VS_INPUT input, uniform bool skinTransform)
 	
 	// Depth is Z/W.  This is returned by the pixel shader.
 	// Subtracting from 1 gives us more precision in floating point.
-	Out.Depth.x = 1-(Out.Position.z/Out.Position.w);
+	Out.Depth.x = /*1-*/(Out.Position.z/*/Out.Position.w*/);
 	
 	return Out;
 }
@@ -118,14 +119,7 @@ float4 RenderShadowMapPS( VS_SHADOW_OUTPUT In ) : COLOR
 	// this value entirely in a 32-bit red channel
 	// using SurfaceFormat.Single.  This preserves the
 	// floating-point data for finer detail.
-	/*float4 color = float4(In.ID,0,0,1);
-	if(In.ID == 0.0f)
-	{
-		color = float4(In.ID,0,0,255);
-	}
-	
-    return color;*/
-    
+	    
     return float4(In.Depth.x,0,0,1);
 }
 

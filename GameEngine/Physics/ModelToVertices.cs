@@ -71,11 +71,9 @@ namespace Gdd.Game.Engine.Physics
 
                 bool hasGoneThrough = false;
                 int lastKeyFrame = 0;
-                
                 while (!hasGoneThrough)
                 {
                     RenderToTarget(model, player, game, world, out tex);
-
                     vertices = GetVertices(tex, model);
 
                     if (vertices.Count != 1)
@@ -95,8 +93,9 @@ namespace Gdd.Game.Engine.Physics
 
                         tex.SetData<Color>(reverseTexture);
                         clip.vertices[(int)ModelDirection.Left][player.CurrentKeyframe] = GetVertices(tex, model);                    
-                        lastKeyFrame = player.CurrentKeyframe;
+                        
                     }
+                    lastKeyFrame = player.CurrentKeyframe;
                     player.StepClip();
                     hasGoneThrough = (player.CurrentKeyframe  - lastKeyFrame < 1);
                 }

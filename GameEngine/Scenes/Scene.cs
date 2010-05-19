@@ -1,3 +1,4 @@
+using Gdd.Game.Engine.Levels;
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Scene.cs" company="UAD">
 //   Game Design and Development
@@ -329,8 +330,6 @@ namespace Gdd.Game.Engine.Scenes
             if (this.MainGameScene)
             {
                 this.DrawSceneComponent(gameTime);
-
-                //DrawSecondViewport(this.shadowMap);
             }
         }
 
@@ -499,6 +498,7 @@ namespace Gdd.Game.Engine.Scenes
 
                 ShaderManager.SetCurrentEffect(dsc.DefaultEffectID);
                 ShaderManager.SetValue("Texture", dsc.texture);
+
                 ShaderManager.SetValue("life", Hero.GetHeroLife());
                 ShaderManager.SetValue("LightDir", -this.directionalLight.Direction);
                 ShaderManager.SetValue(

@@ -44,7 +44,6 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.Position2D = new Vector2(0.0f, 0.0f);
             this.mass = 10.0f;
             this.life = 1;
-            this.ScaleMatrix = Matrix.CreateScale(0.2f);
             Animations = new[] { "Idle" }; 
         }
 

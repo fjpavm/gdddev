@@ -73,7 +73,7 @@ VS_OUTPUT AnimatedModelVertexShader(VS_INPUT input)
 	 //do not transform the position needed for the
 	 //shadow map determination
 	 Output.LightPosition = mul(input.Position, mul(mul(World, LightView), LightProj));
-          
+	      
      //pass the texture coordinate as-is
 	 Output.TextureUV = input.TexCoord;
 
@@ -91,7 +91,7 @@ float4 AnimatedModelPixelShader(PS_INPUT input) : COLOR0
 {   	
 	float4 shadow;
 	if(!input.inTheDark){
-		shadow = ConsultShadowMap(input.LightPosition);	
+		shadow = ConsultShadowMap(input.LightPosition, 0.006f);	
 	}
 	else{
 		shadow = float4(0.6f, 0.6f, 0.6f, 1.0f);
@@ -107,6 +107,7 @@ technique AnimatedModelTechnique
 {
     pass Pass1
     {
+		CullMode = CCW;
 		AlphaBlendEnable = false;
 		ZWriteEnable = true;
 	    ZEnable = true;

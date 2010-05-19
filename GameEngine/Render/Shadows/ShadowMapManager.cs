@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Gdd.Game.Engine.Levels;
 
 // code taken from ShadowMapping example from Microsoft
 // Effect code taken from http://www.docstoc.com/docs/18464364/Shadowing-in-XNA
@@ -28,6 +29,9 @@ namespace Gdd.Game.Engine.Render.Shadow
             foreach (DrawableSceneComponent
                 dsc in ObjectManager.drawableSceneComponents[SceneId])
             {
+                if (!dsc.Visible)
+                    continue;
+
                 if (dsc is AnimatedModel)
                     dsc.DrawWithEffect(ShaderManager.EFFECT_ID.SHADOWMAP, "ShadowMapRenderAnimation");
                 else

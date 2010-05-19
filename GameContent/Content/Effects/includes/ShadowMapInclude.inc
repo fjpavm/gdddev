@@ -11,14 +11,15 @@ sampler_state
 {
 	Texture = <ShadowMapTexture>;
 	
-    MinFilter = LINEAR;
-    MagFilter = LINEAR;
-    MipFilter = LINEAR;
+    MinFilter = Linear;
+    MagFilter = Linear;
+    MipFilter = Linear;
+    
     AddressU = Clamp;
     AddressV = Clamp;
 };
 
-shared float4 ConsultShadowMap(uniform float4 lightingPosition){
+shared float4 ConsultShadowMap(uniform float4 lightingPosition, float epsilon){
     
     // Get the shadow map depth value for this pixel   
     float2 ShadowTexC = 
@@ -26,15 +27,15 @@ shared float4 ConsultShadowMap(uniform float4 lightingPosition){
     ShadowTexC.y = 1.0f - ShadowTexC.y;
 
     float shadowdepth = tex2D(ShadowMapSampler, ShadowTexC).r;    
-      
+	  
     // Check our value against the depth value
-    float ourdepth = 1 - (lightingPosition.z / lightingPosition.w);
+    float ourdepth = (lightingPosition.z);
     
     
     // Check the shadowdepth against the depth of this pixel
     // a fudge factor is added to account for floating-point error
     float4 vTotalLightDiffuse = float4(1,1,1,1);	
-	if (shadowdepth-0.006f > ourdepth)
+	if (shadowdepth+epsilon < ourdepth)
 	{
 	    // we're in shadow, cut the light
 		vTotalLightDiffuse.xyz -= 0.4;
