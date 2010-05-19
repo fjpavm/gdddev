@@ -50,8 +50,7 @@ namespace Gdd.Game.Engine.Render.Shadow
             graphicsDevice.DepthStencilBuffer = old;
             // Reset the CullMode and AlphaBlendEnable 
             // that the previous effect changed
-            graphicsDevice.RenderState.CullMode =
-                CullMode.CullCounterClockwiseFace;
+            graphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
             graphicsDevice.RenderState.AlphaBlendEnable = true;
 
             // Render our scene

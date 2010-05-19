@@ -74,8 +74,8 @@ namespace Gdd.Game.Engine.Levels.Characters
         /// </param>
         public override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.RenderState.DepthBufferEnable = false;
-            this.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
+            /*this.GraphicsDevice.RenderState.DepthBufferEnable = false;
+            this.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;*/
 
             this.batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
 
@@ -95,8 +95,8 @@ namespace Gdd.Game.Engine.Levels.Characters
                 Color.White);
 
             this.batch.End();
-            this.GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
-            this.GraphicsDevice.RenderState.DepthBufferEnable = true;
+          /*  this.GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
+            this.GraphicsDevice.RenderState.DepthBufferEnable = true;*/
         }
 
         /// <summary>

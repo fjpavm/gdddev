@@ -242,9 +242,28 @@ namespace Gdd.Game.Engine.GUI
 
                 if (this.actionScale.IsPressed)
                 {
-                    float diffX = currentWorldCoordinates.X - this.previousWorldCoordinates.X;
-                    float diffY = currentWorldCoordinates.Y - this.previousWorldCoordinates.Y;
-                    this.model.Scale = new Vector2(this.model.Scale.X * (1 + diffX), this.model.Scale.Y * (1 + diffY));
+                    float diffX = this.model.Scale.X * (1+(currentWorldCoordinates.X - this.previousWorldCoordinates.X));
+                    float diffY = this.model.Scale.Y * (1+(currentWorldCoordinates.Y - this.previousWorldCoordinates.Y));
+
+                    if (diffX > 5.0f)
+                    {
+                        diffX = 5.0f;
+                    }
+                    else if (diffX < 0.5f)
+                    {
+                        diffX = 0.5f;
+                    }
+
+                    if (diffY > 5.0f)
+                    {
+                        diffY = 5.0f;
+                    }
+                    else if (diffY < 0.5f)
+                    {
+                        diffY = 0.5f;
+                    }
+
+                    this.model.Scale = new Vector2(diffX, diffY);
                 }
 
                 if (this.actionRotate.IsPressed)
@@ -271,6 +290,7 @@ namespace Gdd.Game.Engine.GUI
                 else
                 {
                     // the object has been "returned" to the menu
+
                     // remove the model from the scene and the physicssimulator
                     this.scene.PhysicsSimulator.Remove(this.model.PhysicsBody);
                     this.scene.PhysicsSimulator.Remove(this.model.PhysicsGeometry);

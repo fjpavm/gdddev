@@ -65,7 +65,7 @@ VS_OUTPUT StaticModelVertexShader(VS_INPUT input)
 	 Output.pointLightColor = GetPointLightColor(mul(input.Normal, World), mul(input.Position, World)) + GetLighting(input.Position, mul(input.Normal, World));
 	 
 	 // check if the normal is facing away from the lightsource
-	 float4 normal = mul(input.Normal, World);
+	 float4 normal = mul(input.Normal, mul(mul(World, View), Projection));
 	 
 	 float angle = acos(dot(normal , normalize(LightDir)));
 	 
@@ -77,11 +77,12 @@ VS_OUTPUT StaticModelVertexShader(VS_INPUT input)
 float4 StaticModelPixelShader(PS_INPUT input) : COLOR0
 { 
     float4 shadow = float4(0.0f, 0.0f, 0.0f, 0.0f);
-    if(isGround){
-		shadow = ConsultShadowMap(input.LightPosition, 0.00003f);			
+	
+	if(input.inTheDark && !isGround){
+		shadow = float4(0.6f, 0.6f, 0.6f, 1.0f);
 	}
 	else{
-		shadow = ConsultShadowMap(input.LightPosition, 0.006f);	
+		shadow = ConsultShadowMap(input.LightPosition, 0.003f);	
 	}
 	
     float4 lightDiffuse = (float4(input.pointLightColor, 1.0f)) * shadow;

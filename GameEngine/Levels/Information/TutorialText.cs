@@ -333,7 +333,7 @@ namespace Gdd.Game.Engine.Levels.Information
 
             ShadowMapManager.ResetGraphicsDevice(this.Game.GraphicsDevice, old);
             this.TextTexture = renderTarget.GetTexture();
-
+            
             var halfTextBoxSizeHeight = new Vector3(0.0f, this.TextBoxSize.Y / 2.0f, 0.0f);
             var halfTextBoxSizeWidth = new Vector3(this.TextBoxSize.X / 2.0f, 0.0f, 0.0f);
 
@@ -349,7 +349,7 @@ namespace Gdd.Game.Engine.Levels.Information
                 halfTextBoxSizeWidth.X * 2, halfTextBoxSizeHeight.Y * 2, 1.0f);
             this.PhysicsGeometry = new Physics.GeomDC(this,GeomFactory.Instance.CreateRectangleGeom(
                 this.PhysicsBody, halfTextBoxSizeWidth.X * 2, halfTextBoxSizeHeight.Y * 2));
-            this.aabb = this.PhysicsGeometry.AABB;
+            this.aabb = this.PhysicsGeometry.AABB; 
         }
 
         #endregion
