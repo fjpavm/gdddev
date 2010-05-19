@@ -99,37 +99,37 @@ namespace Gdd.Game.Engine.GUI
             this.pixel.SetData(new[] { Color.White });
 
             var button = new Button(
-                this.Game, 
-                "button_apply_normal", 
-                "button_apply_selected", 
+                this.Game,
+                "iconcubebutton",
+                "iconcubebutton", 
                 0, 
-                33 * 0, 
-                88, 
-                33, 
+                61 * 0, 
+                61, 
+                61, 
                 "mesh\\box", 
                 GeometryType.Rectangle);
             this.buttonModels.Add(button);
 
             button = new Button(
-                this.Game, 
-                "button_apply_normal", 
-                "button_apply_selected", 
+                this.Game,
+                "iconspherebutton",
+                "iconspherebutton", 
                 0, 
-                33 * 1, 
-                88, 
-                33,
+                61 * 1, 
+                61, 
+                61,
                 "mesh\\sphere", 
                 GeometryType.Circle);
             this.buttonModels.Add(button);
 
             button = new Button(
-                this.Game, 
-                "button_apply_normal", 
-                "button_apply_selected", 
+                this.Game,
+                "iconprismbutton",
+                "iconprismbutton", 
                 0, 
-                33 * 2, 
-                88, 
-                33,
+                61 * 2, 
+                61, 
+                61,
                 "mesh\\tent", 
                 GeometryType.Polygon);
             this.buttonModels.Add(button);

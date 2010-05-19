@@ -444,14 +444,17 @@ namespace Gdd.Game.Engine.Levels
         public override void Update(GameTime gameTime)
         {
             this.isUpdating = true;
-            if (this.GeometryType == GeometryType.Circle)
+            if (this.scaleChanged)
             {
-                float circleScale = this.scale.Length();
-                this.ScaleMatrix = Matrix.CreateScale(circleScale, -circleScale, circleScale);
-            }
-            else
-            {
-                this.ScaleMatrix = Matrix.CreateScale(1, this.scale.Y, this.scale.X);
+                if (this.GeometryType == GeometryType.Circle)
+                {
+                    float circleScale = this.scale.Length();
+                    this.ScaleMatrix = Matrix.CreateScale(circleScale, -circleScale, circleScale);
+                }
+                else
+                {
+                    this.ScaleMatrix = Matrix.CreateScale(1, this.scale.Y, this.scale.X);
+                }
             }
 
             if (this.PhysicsBody != null)
@@ -555,6 +558,7 @@ namespace Gdd.Game.Engine.Levels
             }
 
             this.LoadCommonContent();
+            this.PhysicsBody.IsStatic = true;
         }
 
         /// <summary>

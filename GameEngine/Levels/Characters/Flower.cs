@@ -44,8 +44,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.Position2D = new Vector2(0.0f, 0.0f);
             this.mass = 10.0f;
             this.life = 1;
-
-
+            this.ScaleMatrix = Matrix.CreateScale(0.2f);
             Animations = new[] { "Idle" }; 
         }
 
@@ -138,6 +137,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             this.gridCellSize = 1.8f;
             
             base.LoadContent();
+            this.PhysicsBody.IsStatic = true;
                         
             ShaderManager.AddEffect(ShaderManager.EFFECT_ID.ANIMATEDMODEL, "AnimatedModel", this.Game);
             this.DefaultEffectID = ShaderManager.EFFECT_ID.ANIMATEDMODEL;
