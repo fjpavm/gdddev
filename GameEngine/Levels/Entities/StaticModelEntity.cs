@@ -7,9 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Microsoft.Xna.Framework;
 namespace Gdd.Game.Engine.Levels.Entities
 {
+    using Microsoft.Xna.Framework;
+
     /// <summary>
     /// The static model entity.
     /// </summary>
@@ -35,9 +36,24 @@ namespace Gdd.Game.Engine.Levels.Entities
         public string ModelName { get; set; }
 
         /// <summary>
+        /// Gets or sets PitchRotation.
+        /// </summary>
+        public float PitchRotation { get; set; }
+
+        /// <summary>
+        /// Gets or sets RollRotation.
+        /// </summary>
+        public float RollRotation { get; set; }
+
+        /// <summary>
         /// Gets or sets ModelName.
         /// </summary>
-        public Vector2 Scale{ get; set; }
+        public Vector2 Scale { get; set; }
+
+        /// <summary>
+        /// Gets or sets YawRotation.
+        /// </summary>
+        public float YawRotation { get; set; }
 
         #endregion
     }

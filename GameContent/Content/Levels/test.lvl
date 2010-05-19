@@ -13,10 +13,13 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh/terrain</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>0.5</X>
         <Y>0.5</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
       <Enabled>true</Enabled>
@@ -180,10 +183,13 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
-        <X>1.0</X>
-        <Y>1.0</Y>
+        <X>1</X>
+        <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="FlowerEntity">
       <Enabled>true</Enabled>
@@ -196,10 +202,13 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="FlowerEntity">
       <Enabled>true</Enabled>
@@ -212,10 +221,13 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="FlowerEntity">
       <Enabled>true</Enabled>
@@ -228,62 +240,74 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="BunnyEntity">
       <Enabled>true</Enabled>
       <Name>bunny1</Name>
       <Position2D>
-        <X>-59.9461136</X>
-        <Y>-20.0147247</Y>
+        <X>-59.8901176</X>
+        <Y>-16.2965012</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//rabbit</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="StaticModelEntity">
       <Enabled>true</Enabled>
-      <Name>staticModel1</Name>
+      <Name>candy1</Name>
       <Position2D>
-        <X>-4.385803</X>
-        <Y>-30.66504</Y>
+        <X>-1.67855835</X>
+        <Y>-29.97754</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//candy</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>-0.6981317</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>3.14159274</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="FlowerEntity">
       <Enabled>true</Enabled>
       <Name>flower5</Name>
       <Position2D>
-        <X>-4.00216627</X>
-        <Y>-2.17749047</Y>
+        <X>4.3989563</X>
+        <Y>-29.89795</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="StaticModelEntity">
       <Enabled>true</Enabled>
-      <Name>staticModel2</Name>
+      <Name>rock1</Name>
       <Position2D>
         <X>22.64087</X>
         <Y>-22.3918457</Y>
@@ -292,10 +316,13 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//rock</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="BunnyEntity">
       <Enabled>true</Enabled>
@@ -308,42 +335,51 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//rabbit</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="StaticModelEntity">
       <Enabled>true</Enabled>
-      <Name>staticModel3</Name>
+      <Name>lollypop1</Name>
       <Position2D>
-        <X>100.0542</X>
-        <Y>-29.8754883</Y>
+        <X>91.00195</X>
+        <Y>-29.7202148</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//lollypop</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>0</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="StaticModelEntity">
       <Enabled>true</Enabled>
-      <Name>staticModel4</Name>
+      <Name>lollypop2</Name>
       <Position2D>
-        <X>108.39856</X>
-        <Y>-29.6835938</Y>
+        <X>104.022308</X>
+        <Y>-29.699707</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//lollypop</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>0</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="FlowerEntity">
       <Enabled>true</Enabled>
@@ -356,10 +392,13 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="FlowerEntity">
       <Enabled>true</Enabled>
@@ -372,10 +411,13 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="FlowerEntity">
       <Enabled>true</Enabled>
@@ -388,26 +430,32 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="StaticModelEntity">
       <Enabled>true</Enabled>
-      <Name>staticModel5</Name>
+      <Name>candy2</Name>
       <Position2D>
-        <X>250.523438</X>
-        <Y>-9.806091</Y>
+        <X>246.918945</X>
+        <Y>-6.265259</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//candy</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>2.12</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>3.14159274</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="FlowerEntity">
       <Enabled>true</Enabled>
@@ -420,10 +468,13 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="BunnyEntity">
       <Enabled>true</Enabled>
@@ -436,10 +487,13 @@
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//rabbit</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
       </Scale>
+      <YawRotation>1.57079637</YawRotation>
     </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
       <Enabled>true</Enabled>
