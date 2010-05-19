@@ -58,13 +58,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cube.x">
-      <Name>cube</Name>
-      <Importer>XImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="font.spritefont">
       <Name>font</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -369,7 +362,7 @@
     <Compile Include="mesh\box.fbx">
       <Name>box</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>NormalProcessor</Processor>
     </Compile>
     <Compile Include="Levels\test.lvl">
       <Name>test</Name>
@@ -379,7 +372,7 @@
     <Compile Include="mesh\tent.fbx">
       <Name>tent</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>NormalProcessor</Processor>
     </Compile>
     <Compile Include="mesh\Final_terrian _Y _X _Half.fbx">
       <Name>Final_terrian _Y _X _Half</Name>

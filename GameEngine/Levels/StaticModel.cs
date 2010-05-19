@@ -409,7 +409,7 @@ namespace Gdd.Game.Engine.Levels
                     }
 
                     if(effect == ShaderManager.EFFECT_ID.STATICMODEL)
-                        ShaderManager.SetValue("isGround", true);
+                        ShaderManager.SetValue("isGround", this is Ground);
 
                     ShaderManager.SetValue("life", Hero.GetHeroLife());
                     ShaderManager.SetValue("World", this.World);
