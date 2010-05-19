@@ -311,6 +311,21 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </Content>
+    <Compile Include="Textures\iconcubebutton.png">
+      <Name>iconcubebutton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\iconprismbutton.png">
+      <Name>iconprismbutton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\iconspherebutton.png">
+      <Name>iconspherebutton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Textures\plant texture.jpg">
       <Name>plant texture</Name>
       <Importer>TextureImporter</Importer>

@@ -9,14 +9,14 @@
         <X>0</X>
         <Y>-30</Y>
       </Position2D>
-      <Scale>
-        <X>0.5</X>
-        <Y>0.5</Y>
-      </Scale>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh/terrain</ModelName>
+      <Scale>
+        <X>0.5</X>
+        <Y>0.5</Y>
+      </Scale>
     </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
       <Enabled>true</Enabled>
@@ -46,60 +46,12 @@
         <Y>20</Y>
       </TextBoxSize>
     </LevelEntity>
-    <LevelEntity xsi:type="BunnyEntity">
-      <Enabled>true</Enabled>
-      <Name>enemyTut1Bun1</Name>
-      <Position2D>
-        <X>-343.18457</X>
-        <Y>-7.290039</Y>
-      </Position2D>
-      <Scale>
-        <X>1.0</X>
-        <Y>1.0</Y>
-      </Scale>
-      <Visible>true</Visible>
-      <GeometryType>Polygon</GeometryType>
-      <ModelDirection>Right</ModelDirection>
-      <ModelName>mesh//rabbit</ModelName>
-    </LevelEntity>
-    <LevelEntity xsi:type="BunnyEntity">
-      <Enabled>true</Enabled>
-      <Name>enemyTut1Bun2</Name>
-      <Position2D>
-        <X>-330.0713</X>
-        <Y>-14.9082079</Y>
-      </Position2D>
-      <Scale>
-        <X>1.0</X>
-        <Y>1.0</Y>
-      </Scale>
-      <Visible>true</Visible>
-      <GeometryType>Polygon</GeometryType>
-      <ModelDirection>Right</ModelDirection>
-      <ModelName>mesh//rabbit</ModelName>
-    </LevelEntity>
-    <LevelEntity xsi:type="BunnyEntity">
-      <Enabled>true</Enabled>
-      <Name>enemyTut1Bun3</Name>
-      <Position2D>
-        <X>-318.390137</X>
-        <Y>-22.3491211</Y>
-      </Position2D>
-      <Scale>
-        <X>1.0</X>
-        <Y>1.0</Y>
-      </Scale>
-      <Visible>true</Visible>
-      <GeometryType>Polygon</GeometryType>
-      <ModelDirection>Right</ModelDirection>
-      <ModelName>mesh//rabbit</ModelName>
-    </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
       <Enabled>true</Enabled>
       <Name>boundsTut1</Name>
       <Position2D>
-        <X>-343.020264</X>
-        <Y>16.8413086</Y>
+        <X>-411.2461</X>
+        <Y>13.1411133</Y>
       </Position2D>
       <Visible>true</Visible>
       <Size>
@@ -161,22 +113,6 @@
         <Y>10</Y>
       </Size>
     </LevelEntity>
-    <LevelEntity xsi:type="BunnyEntity">
-      <Enabled>true</Enabled>
-      <Name>pitBunnieh</Name>
-      <Position2D>
-        <X>-187.6813</X>
-        <Y>-30.2773438</Y>
-      </Position2D>
-      <Scale>
-        <X>1.0</X>
-        <Y>1.0</Y>
-      </Scale>
-      <Visible>true</Visible>
-      <GeometryType>Polygon</GeometryType>
-      <ModelDirection>Right</ModelDirection>
-      <ModelName>mesh//rabbit</ModelName>
-    </LevelEntity>
     <LevelEntity xsi:type="TutorialTextEntity">
       <Enabled>true</Enabled>
       <Name>tutorialText3</Name>
@@ -205,8 +141,322 @@
         <Y>10</Y>
       </Size>
     </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut4Txt</Name>
+      <Position2D>
+        <X>-144.790161</X>
+        <Y>4.99182129</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="TutorialTextEntity">
+      <Enabled>true</Enabled>
+      <Name>tutorialText4</Name>
+      <Position2D>
+        <X>-119.997559</X>
+        <Y>18.4946289</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <BodyText>Triangles are used with spheres\nto make them roll faster to catch up\nwith fleeing bunnies.</BodyText>
+      <HeaderText>Tutorial 4</HeaderText>
+      <TextBoxSize>
+        <X>20</X>
+        <Y>10</Y>
+      </TextBoxSize>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower1</Name>
+      <Position2D>
+        <X>-195.432465</X>
+        <Y>-17.4464989</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower2</Name>
+      <Position2D>
+        <X>-341.3783</X>
+        <Y>-8.373285</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower3</Name>
+      <Position2D>
+        <X>-327.282837</X>
+        <Y>-16.6247559</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower4</Name>
+      <Position2D>
+        <X>-311.230469</X>
+        <Y>-25.6738281</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>bunny1</Name>
+      <Position2D>
+        <X>-59.9461136</X>
+        <Y>-20.0147247</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>staticModel1</Name>
+      <Position2D>
+        <X>-4.385803</X>
+        <Y>-30.66504</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//candy</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower5</Name>
+      <Position2D>
+        <X>-4.00216627</X>
+        <Y>-2.17749047</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>staticModel2</Name>
+      <Position2D>
+        <X>22.64087</X>
+        <Y>-22.3918457</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rock</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>bunny2</Name>
+      <Position2D>
+        <X>70.9832458</X>
+        <Y>-30.2590332</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>staticModel3</Name>
+      <Position2D>
+        <X>100.0542</X>
+        <Y>-29.8754883</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//lollypop</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>staticModel4</Name>
+      <Position2D>
+        <X>108.39856</X>
+        <Y>-29.6835938</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//lollypop</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower6</Name>
+      <Position2D>
+        <X>119.812744</X>
+        <Y>-30.1630859</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower7</Name>
+      <Position2D>
+        <X>133.721191</X>
+        <Y>-29.9711914</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower8</Name>
+      <Position2D>
+        <X>165.249634</X>
+        <Y>-11.6408234</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>staticModel5</Name>
+      <Position2D>
+        <X>250.523438</X>
+        <Y>-9.806091</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//candy</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower9</Name>
+      <Position2D>
+        <X>287.730225</X>
+        <Y>-30.3330078</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>bunny3</Name>
+      <Position2D>
+        <X>318.557861</X>
+        <Y>-20.0693359</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndEnd</Name>
+      <Position2D>
+        <X>391.985352</X>
+        <Y>-24.76941</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
   </LevelEntityCollection>
   <Script>
+    <string>using Gdd.Game.Engine;</string>
     <string>using Gdd.Game.Engine.Levels;</string>
     <string>using Gdd.Game.Engine.Levels.Information;</string>
     <string>using Gdd.Game.Engine.Scenes;</string>
@@ -218,6 +468,8 @@
     <string />
     <string>public class MyLevel : LevelScript</string>
     <string>{</string>
+    <string>    private bool introductionPlayed;</string>
+    <string>    private bool endDialogPlayed;</string>
     <string>    private bool[] tutComplete;</string>
     <string />
     <string>    public MyLevel() {</string>
@@ -233,25 +485,37 @@
     <string />
     <string>    public override void Update(GameTime gameTime)</string>
     <string>    {</string>
+    <string>        if (!this.introductionPlayed) {</string>
+    <string>            Audio.PlayIntroductionDialogue();</string>
+    <string>            this.introductionPlayed = true;</string>
+    <string>        }</string>
+    <string />
+    <string>        if (!this.endDialogPlayed &amp;&amp; ((Bounds)this.Level.Components["bndEnd"]).IsColliding) {</string>
+    <string>            Audio.PlayEndDialogue();</string>
+    <string>            this.endDialogPlayed = true;</string>
+    <string>        }</string>
+    <string />
     <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText1"]).Visible = </string>
     <string>            ((Bounds)this.Level.Components["bndTut1Txt"]).IsColliding;</string>
     <string />
     <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText2"]).Visible = </string>
     <string>            ((Bounds)this.Level.Components["bndTut2Txt"]).IsColliding &amp;&amp; !this.tutComplete[2];</string>
     <string />
-    <string>        if (this.tutComplete[2] == false &amp;&amp; ((Bounds)this.Level.Components["bndTut2Goal"]).IsColliding)</string>
+    <string>        if (this.tutComplete[1] == false &amp;&amp; ((Bounds)this.Level.Components["bndTut2Goal"]).IsColliding)</string>
     <string>        {</string>
-    <string>            this.tutComplete[2] = true;</string>
+    <string>            this.tutComplete[1] = true;</string>
     <string>        }</string>
     <string />
     <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText3"]).Visible = </string>
     <string>            ((Bounds)this.Level.Components["bndTut3Txt"]).IsColliding &amp;&amp; !this.tutComplete[3];</string>
     <string />
-    <string>        if (this.tutComplete[3] == false &amp;&amp; ((Bounds)this.Level.Components["bndTut3Goal"]).IsColliding)</string>
+    <string>        if (this.tutComplete[2] == false &amp;&amp; ((Bounds)this.Level.Components["bndTut3Goal"]).IsColliding)</string>
     <string>        {</string>
-    <string>            this.tutComplete[3] = true;</string>
+    <string>            this.tutComplete[2] = true;</string>
     <string>        }</string>
     <string />
+    <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText4"]).Visible = </string>
+    <string>            ((Bounds)this.Level.Components["bndTut4Txt"]).IsColliding &amp;&amp; !this.tutComplete[3];</string>
     <string />
     <string>    } </string>
     <string>}</string>

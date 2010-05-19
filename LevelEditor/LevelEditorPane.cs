@@ -14,6 +14,7 @@ namespace Gdd.Game.LevelEditor
     using System.Reflection;
     using System.Windows.Forms;
 
+    using Gdd.Game.Engine.Common;
     using Gdd.Game.Engine.Input;
     using Gdd.Game.Engine.Levels;
     using Gdd.Game.Engine.Scenes;
@@ -123,6 +124,7 @@ namespace Gdd.Game.LevelEditor
             Control.FromHandle(this.Window.Handle).VisibleChanged += this.GameLevelEditor_VisibleChanged;
 
             SceneManager.Construct(this);
+            Globals.displayState = DISPLAY_STATE.BOTH;
         }
 
         #endregion

@@ -241,19 +241,7 @@ namespace Gdd.Game
             this.heroCamera = new CharacterFollowCamera(this, new Vector3(-10.0f, 0.0f, 20.0f));
 
             this.hero = new Hero(this) { Position2D = new Vector2(-8.0f, -13.0f) };
-            var lollypop = new StaticModel(this)
-                {
-                    ModelName = "mesh//lollypop", 
-                    Position2D = new Vector2(-20.0f, 0.0f), 
-                    YawRotation = 0.0f, 
-                    PitchRotation = 0.0f, 
-                    RollRotation = MathHelper.PiOver4
-                };
-            var rock = new StaticModel(this) { ModelName = "mesh//rock", Position2D = new Vector2(10.0f, 10.0f) };
-            var candy = new StaticModel(this) { ModelName = "mesh//candy", Position2D = new Vector2(-10.0f, 10.0f) };
-
             var dl1 = new DirectionalLight(this) { Direction = new Vector3(-0.5f, -0.5f, 0.0f), Color = Color.White };
-
             var scene1 = new MyScene(this) { EnableAI = true, EnableScripts = true, MainGameScene = true };
 
             // this camera is movable
@@ -263,19 +251,6 @@ namespace Gdd.Game
             scene1.LoadContent("levels/test");
             scene1.AddComponent(this.hero);
             this.hero.Position2D = scene1.CurrentLevel.StartPosition;
-
-            // Testing bunny AI
-            var bunny = new Bunny(this) { Position2D = new Vector2(-10.0f, -10.0f) };
-            var secondBunny = new Bunny(this) { Position2D = new Vector2(-20.0f, 40.0f) };
-            this.monster = bunny;
-
-            // bunny.Debug = true;
-            //scene1.AIManager.objectList.Add(bunny);
-            scene1.AddComponent(bunny);
-            scene1.AddComponent(secondBunny);
-            scene1.AddComponent(lollypop);
-            scene1.AddComponent(rock);
-            scene1.AddComponent(candy);
 
             scene1.AddComponent(new HeroHealthBar(this) { DrawOrder = int.MaxValue });
 
