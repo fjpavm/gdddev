@@ -17,8 +17,8 @@ namespace Gdd.Game.Engine.AI.StateMachines
         }
 
         public override void OnEnter() 
-        { 
-            Console.WriteLine(name + ".OnEnter()"); 
+        {
+            base.OnEnter(); 
             Message m = new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, animationCommand);
             AIManager.messageQueue.sendMessage(m);
         }
@@ -44,7 +44,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
 
         public override void OnEnter()
         {
-            Console.WriteLine(name + ".OnEnter()");
+            base.OnEnter();
             Message m = new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, animationCommand);
             AIManager.messageQueue.sendMessage(m);
         }
@@ -69,7 +69,7 @@ namespace Gdd.Game.Engine.AI.StateMachines
 
         public override void OnEnter()
         {
-            Console.WriteLine(name + ".OnEnter()");
+            base.OnEnter();
             Message m = new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, animationCommand);
             AIManager.messageQueue.sendMessage(m);
             Audio.PlayAttackingFlower();
@@ -86,9 +86,9 @@ namespace Gdd.Game.Engine.AI.StateMachines
     public class AliveFlowerState : StateMachine
     {
         DistanceTest idleToEvil, evilToIdle, evilToAttack, attackToEvil;
-        const float idleToEvilDist = 5.0f;
+        const float idleToEvilDist = 20.0f;
         const float idleToEvilHisteresis = 0.2f;
-        const float evilToAttackDist = 0.5f;
+        const float evilToAttackDist = 5.0f;
         const float evilToAttackHisteresis = 0.2f;
 
         public AliveFlowerState(object thisObject)
@@ -141,14 +141,14 @@ namespace Gdd.Game.Engine.AI.StateMachines
         int animationCommand;
 
         public DeadFlowerState()
-            : base()
+            : base("DeadFlowerState")
         {
             animationCommand = AnimationCommandDictionary.lookUp("DyingFlower");
         }
 
         public override void OnEnter()
         {
-            Console.WriteLine(name + ".OnEnter()");
+            base.OnEnter();
             Message m = new AnimationCommandMessage(thisObject as IMessageProcessor, thisObject as IMessageProcessor, animationCommand);
             AIManager.messageQueue.sendMessage(m);
             Audio.PlayDyingFlower();
@@ -195,6 +195,8 @@ namespace Gdd.Game.Engine.AI.StateMachines
             t.nextState = alive;
             t.transitionTest = AlwaysTrueTest.alwaysTrue;
             dead.addTransition(MessageTypes.resurect, t);
+
+            InitialState = alive;
             
         }
 

@@ -113,7 +113,7 @@ namespace Gdd.Game.Engine.Levels.Characters
             }
             else 
             {
-                return false;
+                return true;
             }
 
         }
