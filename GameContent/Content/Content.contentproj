@@ -396,6 +396,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>AnimatedModelProcessor</Processor>
     </Compile>
+    <Compile Include="mesh\cube_test.x">
+      <Name>cube_test</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Textures\lollypop.jpg">
       <Name>lollypop</Name>
       <Importer>TextureImporter</Importer>
@@ -428,7 +433,7 @@
     <Compile Include="mesh\terrain.fbx">
       <Name>terrain</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>GroundProcessor</Processor>
+      <Processor>ModelProcessor</Processor>
     </Compile>
     <Compile Include="mesh\lollypop.fbx">
       <Name>lollypop</Name>

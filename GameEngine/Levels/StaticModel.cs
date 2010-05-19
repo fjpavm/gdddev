@@ -408,6 +408,9 @@ namespace Gdd.Game.Engine.Levels
                         ShaderManager.SetValue("Texture", this.ModelTextures[count++]);
                     }
 
+                    if(effect == ShaderManager.EFFECT_ID.STATICMODEL)
+                        ShaderManager.SetValue("isGround", true);
+
                     ShaderManager.SetValue("life", Hero.GetHeroLife());
                     ShaderManager.SetValue("World", this.World);
 
