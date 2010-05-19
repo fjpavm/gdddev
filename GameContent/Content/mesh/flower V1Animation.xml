@@ -1,0 +1,27 @@
+﻿<info>
+  <animation>
+    <name>Idle</name>
+    <startframe>0</startframe>
+    <endframe>300</endframe>
+  </animation>
+  <animation>
+    <name>Attack</name>
+    <startframe>0</startframe>
+    <endframe>300</endframe>
+  </animation>
+  <animation>
+    <name>Evil</name>
+    <startframe>0</startframe>
+    <endframe>300</endframe>
+  </animation>
+  <animation>
+    <name>Die</name>
+    <startframe>0</startframe>
+    <endframe>300</endframe>
+  </animation>
+
+  <shader>
+    Effects\\ShadowMap.fx
+  </shader>
+</info>
+

@@ -301,6 +301,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Content Include="mesh\flower V1Animation.xml">
+      <Name>flower V1Animation</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
     <Content Include="mesh\rabbitAnimation.xml">
       <Name>rabbitAnimation</Name>
       <Importer>XmlImporter</Importer>
@@ -371,6 +376,11 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
+    <Compile Include="mesh\flower V1.fbx">
+      <Name>flower V1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>AnimatedModelProcessor</Processor>
+    </Compile>
     <None Include="Textures\lollypop.jpg">
       <Name>lollypop</Name>
       <Importer>TextureImporter</Importer>
@@ -403,7 +413,7 @@
     <Compile Include="mesh\terrain.fbx">
       <Name>terrain</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>GroundProcessor</Processor>
     </Compile>
     <Compile Include="mesh\lollypop.fbx">
       <Name>lollypop</Name>
