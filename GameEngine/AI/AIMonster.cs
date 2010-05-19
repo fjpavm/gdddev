@@ -51,7 +51,8 @@ namespace Gdd.Game.Engine.AI
 
         public AIMonster(Game game) : base(game)
         {
-            debug = false;  
+            debug = false;
+            hasPaint = true;
         }
 
         public bool OnCollision(DrawableSceneComponent dsc) 
