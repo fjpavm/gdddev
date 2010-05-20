@@ -9,6 +9,8 @@
 
 namespace Gdd.Game.Engine.Levels.Entities
 {
+    using Microsoft.Xna.Framework;
+
     /// <summary>
     /// The bunny entity.
     /// </summary>
@@ -16,5 +18,15 @@ namespace Gdd.Game.Engine.Levels.Entities
     [LevelEntityCategory("Characters")]
     public class BunnyEntity : AnimatedModelEntity
     {
+        /// <summary>
+        /// Patrol point to the left of the bunny
+        /// </summary>
+        public Vector2 PatrolPointLeft { get; set; }
+
+        /// <summary>
+        /// Patrol point to the right of the bunny
+        /// </summary>
+        public Vector2 PatrolPointRight { get; set; }
+
     }
 }

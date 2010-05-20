@@ -252,8 +252,8 @@
       <Enabled>true</Enabled>
       <Name>bunny1</Name>
       <Position2D>
-        <X>-59.7781258</X>
-        <Y>-8.860052</Y>
+        <X>-59.6183434</X>
+        <Y>-23.6763077</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
@@ -266,20 +266,28 @@
         <Y>1</Y>
       </Scale>
       <YawRotation>1.57079637</YawRotation>
+      <PatrolPointLeft>
+        <X>-75.88452</X>
+        <Y>-26.2436523</Y>
+      </PatrolPointLeft>
+      <PatrolPointRight>
+        <X>-40.39502</X>
+        <Y>-27.0107422</Y>
+      </PatrolPointRight>
     </LevelEntity>
     <LevelEntity xsi:type="StaticModelEntity">
       <Enabled>true</Enabled>
       <Name>candy1</Name>
       <Position2D>
-        <X>-1.67855835</X>
-        <Y>-29.97754</Y>
+        <X>7.66601563</X>
+        <Y>-29.8486328</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
       <ModelDirection>Right</ModelDirection>
       <ModelName>mesh//candy</ModelName>
       <PitchRotation>0</PitchRotation>
-      <RollRotation>-0.6981317</RollRotation>
+      <RollRotation>-0.85</RollRotation>
       <Scale>
         <X>1</X>
         <Y>1</Y>
@@ -290,8 +298,8 @@
       <Enabled>true</Enabled>
       <Name>flower5</Name>
       <Position2D>
-        <X>4.3989563</X>
-        <Y>-29.89795</Y>
+        <X>-7.5423584</X>
+        <Y>-14.6467285</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
@@ -328,8 +336,8 @@
       <Enabled>true</Enabled>
       <Name>bunny2</Name>
       <Position2D>
-        <X>70.9832458</X>
-        <Y>-30.2590332</Y>
+        <X>66.36035</X>
+        <Y>-30.059082</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
@@ -342,6 +350,14 @@
         <Y>1</Y>
       </Scale>
       <YawRotation>1.57079637</YawRotation>
+      <PatrolPointLeft>
+        <X>46.12146</X>
+        <Y>-30.15503</Y>
+      </PatrolPointLeft>
+      <PatrolPointRight>
+        <X>84.96875</X>
+        <Y>-30.2508545</Y>
+      </PatrolPointRight>
     </LevelEntity>
     <LevelEntity xsi:type="StaticModelEntity">
       <Enabled>true</Enabled>
@@ -480,8 +496,8 @@
       <Enabled>true</Enabled>
       <Name>bunny3</Name>
       <Position2D>
-        <X>318.557861</X>
-        <Y>-20.0693359</Y>
+        <X>313.515625</X>
+        <Y>-19.9897461</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
@@ -494,6 +510,14 @@
         <Y>1</Y>
       </Scale>
       <YawRotation>1.57079637</YawRotation>
+      <PatrolPointLeft>
+        <X>294.092773</X>
+        <Y>-19.7978516</Y>
+      </PatrolPointLeft>
+      <PatrolPointRight>
+        <X>340.3723</X>
+        <Y>-20.0855713</Y>
+      </PatrolPointRight>
     </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
       <Enabled>true</Enabled>
