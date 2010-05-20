@@ -53,8 +53,8 @@
       <Enabled>true</Enabled>
       <Name>boundsTut1</Name>
       <Position2D>
-        <X>-411.2461</X>
-        <Y>13.1411133</Y>
+        <X>-353.229126</X>
+        <Y>27.3922119</Y>
       </Position2D>
       <Visible>true</Visible>
       <Size>
@@ -176,8 +176,8 @@
       <Enabled>true</Enabled>
       <Name>flower1</Name>
       <Position2D>
-        <X>-195.432465</X>
-        <Y>-17.4464989</Y>
+        <X>-183.388153</X>
+        <Y>-30.58738</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>
@@ -252,8 +252,8 @@
       <Enabled>true</Enabled>
       <Name>bunny1</Name>
       <Position2D>
-        <X>-59.8901176</X>
-        <Y>-16.2965012</Y>
+        <X>-59.7781258</X>
+        <Y>-8.860052</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>

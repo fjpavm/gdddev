@@ -236,8 +236,8 @@ namespace Gdd.Game.Engine.Levels.Information
             ShaderManager.Begin();
             ShaderManager.GetCurrentEffect().Techniques["TextureTechnique"].Passes[0].Begin();
 
-            this.Game.GraphicsDevice.VertexDeclaration = TextureSpriteVertexDeclaration;
-            this.Game.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, this.textSprite, 0, 2);
+            this.GraphicsDevice.VertexDeclaration = TextureSpriteVertexDeclaration;
+            this.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, this.textSprite, 0, 2);
 
             ShaderManager.GetCurrentEffect().Techniques["TextureTechnique"].Passes[0].End();
 
@@ -297,7 +297,7 @@ namespace Gdd.Game.Engine.Levels.Information
 
             var spriteBatch = (SpriteBatch)this.scene.Game.Services.GetService(typeof(SpriteBatch));
 
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.SaveState);
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
 
             spriteBatch.Draw(
                 this.DialogTexture, 
