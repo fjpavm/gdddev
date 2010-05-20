@@ -146,7 +146,13 @@ namespace Gdd.Game.LevelEditor
         /// </param>
         private void ComboBoxLevelComponents_SelectedValueChanged(object sender, EventArgs e)
         {
-            this.levelEditorPane.SelectedComponent = this.comboBoxLevelComponents.SelectedItem as SceneComponent;
+            var sceneComponent = this.comboBoxLevelComponents.SelectedItem as SceneComponent;
+            this.levelEditorPane.SelectedComponent = sceneComponent;
+            if (sceneComponent != null)
+            {
+                this.levelEditorPane.SetCameraPosition(sceneComponent.Position2D);
+                this.xnaRenderTarget.Focus();
+            }
         }
 
         /// <summary>

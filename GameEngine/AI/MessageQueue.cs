@@ -44,7 +44,10 @@ namespace Gdd.Game.Engine.AI
                     break;
                 }
                 Message m = queue.Dequeue();
-                m.to.ProcessMessage(m);
+                if (m.to != null)
+                {
+                    m.to.ProcessMessage(m);
+                }
             }
         }
 

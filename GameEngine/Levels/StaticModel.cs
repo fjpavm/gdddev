@@ -545,7 +545,7 @@ namespace Gdd.Game.Engine.Levels
         protected override void LoadContent()
         {
             this.offset = Vector2.Zero;
-            GddModel gddModel = ModelManager.LoadModel(this.modelName, this.Game, this.ScaleMatrix * this.Rotation);
+            GddModel gddModel = ModelManager.LoadModel(this.modelName, this.Game, this.ScaleMatrix * Matrix.CreateFromYawPitchRoll(this.YawRotation, 0.0f, 0.0f));
             this.ObjectModel = gddModel.Model;
             this.ModelTextures.Clear();
             this.ModelTextures.AddRange(gddModel.Textures);
@@ -557,6 +557,7 @@ namespace Gdd.Game.Engine.Levels
             if (this.GeometryType == GeometryType.Polygon)
             {
                 this.PhysicsVertices = new Vertices(gddModel.Vertices.Select(v => new Vector2(v.X, v.Y)).ToArray());
+                this.physicsVertices.Rotate(-this.RollRotation);
                 this.mass = gddModel.Mass * 100.0f;
             }
 
