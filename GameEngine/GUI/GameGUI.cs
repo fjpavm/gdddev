@@ -15,6 +15,7 @@ namespace Gdd.Game.Engine.GUI
 
     using Gdd.Game.Engine.Input;
     using Gdd.Game.Engine.Levels;
+    using Gdd.Game.Engine.Levels.Characters;
     using Gdd.Game.Engine.Scenes;
 
     using Microsoft.Xna.Framework;
@@ -286,6 +287,7 @@ namespace Gdd.Game.Engine.GUI
                     this.model.PhysicsBody.IsStatic = false;
                     this.model.PhysicsGeometry.CollisionEnabled = true;
                     this.model = null;
+                    Hero.DecreaseLife();
                 }
                 else
                 {

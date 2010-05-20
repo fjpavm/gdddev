@@ -264,11 +264,6 @@ namespace Gdd.Game
 
             scene1.Light = dl1;
 
-            scene1.AddComponent(
-                new PointLight(this) { Position2D = new Vector2(-10.0f, 0.0f), Radius = 10.0f, Color = Color.White });
-            scene1.AddComponent(
-                new PointLight(this) { Position2D = new Vector2(10.0f, 0.0f), Radius = 10.0f, Color = Color.Yellow });
-
             this.IsMouseVisible = true;
             var gameGui = new GameGUI(this) { DrawOrder = int.MaxValue - 1 };
             scene1.AddComponent(gameGui);
