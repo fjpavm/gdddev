@@ -94,7 +94,7 @@ namespace Gdd.Game
 
             this.graphics.MinimumPixelShaderProfile = ShaderProfile.PS_2_0;
             this.graphics.MinimumVertexShaderProfile = ShaderProfile.VS_2_0;
-
+            this.graphics.IsFullScreen = true;
             SceneManager.Construct(this);
         }
 
