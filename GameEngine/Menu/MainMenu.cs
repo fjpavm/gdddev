@@ -152,8 +152,9 @@ namespace Gdd.Game.Engine.Menu
             spriteBatch = new SpriteBatch(this.Game.GraphicsDevice);
 
             // Loading pictures(载入图片)
-            backgroundTexture = this.Game.Content.Load<Texture2D>("MenuContent\\MainMenuBackground");
-            //backgroundTexture = this.Game.Content.Load<Texture2D>("MenuContent\\MainMenuBackgroundLowRes");
+            //backgroundTexture = this.Game.Content.Load<Texture2D>("MenuContent\\MainMenuBackground");
+            backgroundTexture = this.Game.Content.Load<Texture2D>("MenuContent\\MainMenuBackgroundLowRes");
+
             menuTexture = this.Game.Content.Load<Texture2D>("MenuContent\\MainMenu");
 
         }
@@ -207,7 +208,8 @@ namespace Gdd.Game.Engine.Menu
 
             if (keyboard.IsKeyDown(Keys.Left) && remDownPressed == false)
             {
-                Audio.PlayHeroDying1();
+                //Audio.PlayHeroDying1();
+                Audio.PlayHeroDying();
             }
 
             if (keyboard.IsKeyDown(Keys.Right) && remDownPressed == false)
