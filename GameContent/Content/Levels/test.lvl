@@ -1,0 +1,605 @@
+<?xml version="1.0"?>
+<SerializableLevel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Author>GDD</Author>
+  <LevelEntityCollection>
+    <LevelEntity xsi:type="GroundEntity">
+      <Enabled>true</Enabled>
+      <Name>ground</Name>
+      <Position2D>
+        <X>0</X>
+        <Y>-30</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh/terrain</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>0.5</X>
+        <Y>0.5</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut1Txt</Name>
+      <Position2D>
+        <X>-358.624023</X>
+        <Y>-0.353027344</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>20</X>
+        <Y>20</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="TutorialTextEntity">
+      <Enabled>true</Enabled>
+      <Name>tutorialText1</Name>
+      <Position2D>
+        <X>-335.857422</X>
+        <Y>14.6225586</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <BodyText>Click and drag the sphere to paint it\ninto the world.\nSpheres can roll over flowers,\nbut are outrun by bunnies.\nPainting objects or getting injured\nremoves paint from your bar.\nIf this bar becomes empty,\nyou will have to restart the game.</BodyText>
+      <HeaderText>Tutorial 1</HeaderText>
+      <TextBoxSize>
+        <X>30</X>
+        <Y>30</Y>
+      </TextBoxSize>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>boundsTut1</Name>
+      <Position2D>
+        <X>-353.229126</X>
+        <Y>27.3922119</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>100</X>
+        <Y>100</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut2Txt</Name>
+      <Position2D>
+        <X>-261.021729</X>
+        <Y>-24.83496</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="TutorialTextEntity">
+      <Enabled>true</Enabled>
+      <Name>tutorialText2</Name>
+      <Position2D>
+        <X>-266.5652</X>
+        <Y>-4.310669</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <BodyText>Cubes can be used to block bunnies\nfrom charging, dropping on enemies\nand to reach otherwise unaccesible\nplaces. You can push the cube a short\ndistance, or stack them to create\na staircase.</BodyText>
+      <HeaderText>Tutorial 2</HeaderText>
+      <TextBoxSize>
+        <X>30</X>
+        <Y>27</Y>
+      </TextBoxSize>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut2Goal</Name>
+      <Position2D>
+        <X>-225.890137</X>
+        <Y>3.7980957</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut3Txt</Name>
+      <Position2D>
+        <X>-199.7771</X>
+        <Y>4.002075</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="TutorialTextEntity">
+      <Enabled>true</Enabled>
+      <Name>tutorialText3</Name>
+      <Position2D>
+        <X>-179.220062</X>
+        <Y>16.0168457</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <BodyText>Ledges can act as bridges across\notherwise incrossable terrain.\nLedges cannot be pushed, so be\ncareful about placing them.</BodyText>
+      <HeaderText>Tutorial 3</HeaderText>
+      <TextBoxSize>
+        <X>30</X>
+        <Y>25</Y>
+      </TextBoxSize>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut3Goal</Name>
+      <Position2D>
+        <X>-176.674316</X>
+        <Y>4.88977051</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndTut4Txt</Name>
+      <Position2D>
+        <X>-144.790161</X>
+        <Y>4.99182129</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+    <LevelEntity xsi:type="TutorialTextEntity">
+      <Enabled>true</Enabled>
+      <Name>tutorialText4</Name>
+      <Position2D>
+        <X>-119.997559</X>
+        <Y>18.4946289</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <BodyText>Triangles are used with spheres\nto make them roll faster to catch up\nwith fleeing bunnies.</BodyText>
+      <HeaderText>Tutorial 4</HeaderText>
+      <TextBoxSize>
+        <X>30</X>
+        <Y>23</Y>
+      </TextBoxSize>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower1</Name>
+      <Position2D>
+        <X>-183.388153</X>
+        <Y>-30.58738</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower2</Name>
+      <Position2D>
+        <X>-341.3783</X>
+        <Y>-8.373285</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower3</Name>
+      <Position2D>
+        <X>-327.282837</X>
+        <Y>-16.6247559</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower4</Name>
+      <Position2D>
+        <X>-311.230469</X>
+        <Y>-25.6738281</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>bunny1</Name>
+      <Position2D>
+        <X>-59.53337</X>
+        <Y>-19.96196</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+      <PatrolPointLeft>
+        <X>-75.88452</X>
+        <Y>-26.2436523</Y>
+      </PatrolPointLeft>
+      <PatrolPointRight>
+        <X>-40.39502</X>
+        <Y>-27.0107422</Y>
+      </PatrolPointRight>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>candy1</Name>
+      <Position2D>
+        <X>7.66601563</X>
+        <Y>-29.8486328</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//candy</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>-0.85</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>3.14159274</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower5</Name>
+      <Position2D>
+        <X>-7.5423584</X>
+        <Y>-14.6467285</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>rock1</Name>
+      <Position2D>
+        <X>22.64087</X>
+        <Y>-22.3918457</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rock</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>bunny2</Name>
+      <Position2D>
+        <X>66.36035</X>
+        <Y>-30.059082</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+      <PatrolPointLeft>
+        <X>46.12146</X>
+        <Y>-30.15503</Y>
+      </PatrolPointLeft>
+      <PatrolPointRight>
+        <X>84.96875</X>
+        <Y>-30.2508545</Y>
+      </PatrolPointRight>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>lollypop1</Name>
+      <Position2D>
+        <X>91.00195</X>
+        <Y>-29.7202148</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//lollypop</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>0</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>lollypop2</Name>
+      <Position2D>
+        <X>104.022308</X>
+        <Y>-29.699707</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//lollypop</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>0</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower6</Name>
+      <Position2D>
+        <X>119.812744</X>
+        <Y>-30.1630859</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower7</Name>
+      <Position2D>
+        <X>133.721191</X>
+        <Y>-29.9711914</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower8</Name>
+      <Position2D>
+        <X>165.249634</X>
+        <Y>-11.6408234</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="StaticModelEntity">
+      <Enabled>true</Enabled>
+      <Name>candy2</Name>
+      <Position2D>
+        <X>246.918945</X>
+        <Y>-6.265259</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//candy</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>2.12</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>3.14159274</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="FlowerEntity">
+      <Enabled>true</Enabled>
+      <Name>flower9</Name>
+      <Position2D>
+        <X>287.730225</X>
+        <Y>-30.3330078</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//flower V1</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+    </LevelEntity>
+    <LevelEntity xsi:type="BunnyEntity">
+      <Enabled>true</Enabled>
+      <Name>bunny3</Name>
+      <Position2D>
+        <X>313.515625</X>
+        <Y>-19.9897461</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <GeometryType>Polygon</GeometryType>
+      <ModelDirection>Right</ModelDirection>
+      <ModelName>mesh//rabbit</ModelName>
+      <PitchRotation>0</PitchRotation>
+      <RollRotation>0</RollRotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <YawRotation>1.57079637</YawRotation>
+      <PatrolPointLeft>
+        <X>294.092773</X>
+        <Y>-19.7978516</Y>
+      </PatrolPointLeft>
+      <PatrolPointRight>
+        <X>340.3723</X>
+        <Y>-20.0855713</Y>
+      </PatrolPointRight>
+    </LevelEntity>
+    <LevelEntity xsi:type="BoundsEntity">
+      <Enabled>true</Enabled>
+      <Name>bndEnd</Name>
+      <Position2D>
+        <X>391.985352</X>
+        <Y>-24.76941</Y>
+      </Position2D>
+      <Visible>true</Visible>
+      <Size>
+        <X>10</X>
+        <Y>10</Y>
+      </Size>
+    </LevelEntity>
+  </LevelEntityCollection>
+  <Script>
+    <string>using Gdd.Game.Engine;</string>
+    <string>using Gdd.Game.Engine.Levels;</string>
+    <string>using Gdd.Game.Engine.Levels.Information;</string>
+    <string>using Gdd.Game.Engine.Scenes;</string>
+    <string />
+    <string>using System;</string>
+    <string>using System.Linq;</string>
+    <string />
+    <string>using Microsoft.Xna.Framework;</string>
+    <string />
+    <string>public class MyLevel : LevelScript</string>
+    <string>{</string>
+    <string>    private bool introductionPlayed;</string>
+    <string>    private bool endDialogPlayed;</string>
+    <string>    private bool[] tutComplete;</string>
+    <string />
+    <string>    public MyLevel() {</string>
+    <string>        this.tutComplete = new bool[4];</string>
+    <string>    }</string>
+    <string />
+    <string>    public override void Initialize()</string>
+    <string>    {</string>
+    <string>        foreach (TutorialText t in this.Level.Components.Where(c =&gt; c is TutorialText)) {</string>
+    <string>            t.Visible = false;</string>
+    <string>        }</string>
+    <string>    }</string>
+    <string />
+    <string>    public override void Update(GameTime gameTime)</string>
+    <string>    {</string>
+    <string>        if (!this.introductionPlayed) {</string>
+    <string>            Audio.PlayIntroductionDialogue();</string>
+    <string>            this.introductionPlayed = true;</string>
+    <string>        }</string>
+    <string />
+    <string>        if (!this.endDialogPlayed &amp;&amp; ((Bounds)this.Level.Components["bndEnd"]).IsColliding) {</string>
+    <string>            Audio.PlayEndDialogue();</string>
+    <string>            this.endDialogPlayed = true;</string>
+    <string>        }</string>
+    <string />
+    <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText1"]).Visible = </string>
+    <string>            ((Bounds)this.Level.Components["bndTut1Txt"]).IsColliding;</string>
+    <string />
+    <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText2"]).Visible = </string>
+    <string>            ((Bounds)this.Level.Components["bndTut2Txt"]).IsColliding &amp;&amp; !this.tutComplete[2];</string>
+    <string />
+    <string>        if (this.tutComplete[1] == false &amp;&amp; ((Bounds)this.Level.Components["bndTut2Goal"]).IsColliding)</string>
+    <string>        {</string>
+    <string>            this.tutComplete[1] = true;</string>
+    <string>        }</string>
+    <string />
+    <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText3"]).Visible = </string>
+    <string>            ((Bounds)this.Level.Components["bndTut3Txt"]).IsColliding &amp;&amp; !this.tutComplete[3];</string>
+    <string />
+    <string>        if (this.tutComplete[2] == false &amp;&amp; ((Bounds)this.Level.Components["bndTut3Goal"]).IsColliding)</string>
+    <string>        {</string>
+    <string>            this.tutComplete[2] = true;</string>
+    <string>        }</string>
+    <string />
+    <string>        ((DrawableSceneComponent)this.Level.Components["tutorialText4"]).Visible = </string>
+    <string>            ((Bounds)this.Level.Components["bndTut4Txt"]).IsColliding &amp;&amp; !this.tutComplete[3];</string>
+    <string />
+    <string>    } </string>
+    <string>}</string>
+  </Script>
+  <StartPosition>
+    <X>-380</X>
+    <Y>0</Y>
+  </StartPosition>
+</SerializableLevel>
