@@ -13,7 +13,7 @@ namespace Gdd.Game.Engine.AI
     {
         StateMachine stateMachine;
 
-        const float minMomentOfInertia = 10.0f;
+        const float minLinearMoment = 10.0f;
 
         public int life;
         public bool hasPaint = true;
@@ -83,7 +83,8 @@ namespace Gdd.Game.Engine.AI
             }
             if (h == null)
             {
-                if (dsc.PhysicsBody.MomentOfInertia > minMomentOfInertia) {
+                if (dsc.PhysicsBody.LinearVelocity.Length()*dsc.PhysicsBody.Mass > minLinearMoment)
+                {
                     life--;
                     if (life == 0) 
                     {
