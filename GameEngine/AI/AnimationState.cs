@@ -46,7 +46,7 @@ namespace Gdd.Game.Engine.AI
             base.OnEnter();
             AIMonster thisMonster = thisObject as AIMonster;
             bool playingPrevious = !thisMonster.Player.IsStopped;
-            if (playingPrevious) thisMonster.Player.RunUntilEnd();
+            //if (playingPrevious) thisMonster.Player.RunUntilEnd();
             first = true;
         }
 
@@ -54,7 +54,7 @@ namespace Gdd.Game.Engine.AI
         {
             base.Update(timeDiff);
             AIMonster thisMonster = thisObject as AIMonster;
-            if ( first && thisMonster.Player.IsStopped) 
+            if ( first /*&& thisMonster.Player.IsStopped*/) 
             {
                 thisMonster.Player.SetClip(animationClip);
                 first = false;
