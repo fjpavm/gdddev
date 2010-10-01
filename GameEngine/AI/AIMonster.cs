@@ -13,7 +13,7 @@ namespace Gdd.Game.Engine.AI
     {
         StateMachine stateMachine;
 
-        const float minLinearMoment = 10.0f;
+        const float minLinearMoment = 100.0f;
 
         public int life;
         public bool hasPaint = true;
