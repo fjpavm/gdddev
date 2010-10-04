@@ -212,8 +212,7 @@ namespace Gdd.Game.Engine.Scenes
                     /*this.renderTarget = GfxComponent.CreateRenderTarget(
                         this.Game.GraphicsDevice, 1, SurfaceFormat.Single);
                     */
-                    this.renderTarget = GfxComponent.CreateCustomRenderTarget(
-                        this.Game.GraphicsDevice, 1, SurfaceFormat.Single, MultiSampleType.None, 1500, 1500);
+                    this.renderTarget = GfxComponent.CreateCustomRenderTarget(this.Game.GraphicsDevice, 1, SurfaceFormat.Color, MultiSampleType.None, 512, 512);
 
                     // Create a depth stencil buffer to match our render target.
                     // The Xbox supports Depth24Stencil8Single but 
@@ -221,11 +220,9 @@ namespace Gdd.Game.Engine.Scenes
                     /*this.depthBuffer = GfxComponent.CreateDepthStencil(
                         this.renderTarget, DepthFormat.Depth24Stencil8Single);
                     */
-                    this.depthBuffer = GfxComponent.CreateDepthStencil(
-                        this.renderTarget, DepthFormat.Depth24Stencil8Single);
+                    this.depthBuffer = GfxComponent.CreateDepthStencil(this.renderTarget, DepthFormat.Depth24Stencil8);
 
                     ShaderManager.AddEffect(ShaderManager.EFFECT_ID.SHADOWMAP, "ShadowMap", this.Game);
-                    this.spriteBatch = new SpriteBatch(this.Game.GraphicsDevice);
 
                     this.PIPViewPort = this.Game.GraphicsDevice.Viewport;
                     this.PIPViewPort.Height /= 4;

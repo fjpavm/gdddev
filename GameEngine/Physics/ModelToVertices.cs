@@ -26,7 +26,7 @@ namespace Gdd.Game.Engine.Physics
         ///
         /// The width and height of the texture
         /// 
-        public static Vector2 TextureSize = new Vector2(512, 512);
+        public static Vector2 TextureSize = new Vector2(512/2, 512/2);
 
         /// <summary>
         /// The DepthBuffer
@@ -38,6 +38,14 @@ namespace Gdd.Game.Engine.Physics
 
         public static Vertices TransformStaticModel(Model model, Microsoft.Xna.Framework.Game game, Matrix worldMatrix, out float mass)
         {
+            if (renderTarget != null) if (!renderTarget.IsDisposed)
+            {
+                renderTarget.Dispose();
+            }
+            if (depthBuffer != null) if (!depthBuffer.IsDisposed)
+            {
+                depthBuffer.Dispose();
+            }
             renderTarget = GfxComponent.CreateCustomRenderTarget(game.GraphicsDevice, 1, SurfaceFormat.Color, MultiSampleType.None, (int)TextureSize.X, (int)TextureSize.Y);
             depthBuffer = GfxComponent.CreateDepthStencil(renderTarget);
             Texture2D tex;
@@ -54,7 +62,14 @@ namespace Gdd.Game.Engine.Physics
         public static void TransformAnimatedModel(Model model, Microsoft.Xna.Framework.Game game, Matrix world)
         {
             SkinningData skinningData = (SkinningData)model.Tag;
-
+            if(renderTarget!=null) if (!renderTarget.IsDisposed) 
+            {
+                renderTarget.Dispose();
+            }
+            if (depthBuffer != null) if (!depthBuffer.IsDisposed) 
+            {
+                depthBuffer.Dispose();
+            }
             renderTarget = GfxComponent.CreateCustomRenderTarget(game.GraphicsDevice, 1, SurfaceFormat.Color, MultiSampleType.None, (int)TextureSize.X, (int)TextureSize.Y);
             depthBuffer = GfxComponent.CreateDepthStencil(renderTarget);
             Texture2D tex;            
