@@ -69,6 +69,32 @@ Global Settings
             }
         }
     }
+    
+    Category
+    {
+        Name = Dialogue;
+        Public = 1;
+        Background Music = 0;
+        Volume = 1200;
+
+        Category Entry
+        {
+            Name = Global;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 255;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
 
     Category
     {
@@ -623,7 +649,7 @@ Sound Bank
 
         Category Entry
         {
-            Name = Default;
+            Name = Music;
         }
 
         Track
@@ -685,13 +711,13 @@ Sound Bank
     Sound
     {
         Name = EndDialogue;
-        Volume = -1200;
+        Volume = 0;
         Pitch = 0;
         Priority = 0;
 
         Category Entry
         {
-            Name = Default;
+            Name = Dialogue;
         }
 
         Track
@@ -826,13 +852,13 @@ Sound Bank
     Sound
     {
         Name = IntroductionDialogue;
-        Volume = -1200;
+        Volume = 0;
         Pitch = 0;
         Priority = 0;
 
         Category Entry
         {
-            Name = Default;
+            Name = Dialogue;
         }
 
         Track

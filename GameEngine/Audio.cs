@@ -20,6 +20,9 @@ namespace Gdd.Game.Engine
         /// </summary>
         static Random randomGenerator = new Random();
 
+        static AudioCategory musicCategory;
+        static AudioCategory dialogueCategory;
+
         /// <summary>
         /// Sound stuff for XAct
         /// </summary>
@@ -118,8 +121,17 @@ namespace Gdd.Game.Engine
             waveBank    = new WaveBank(audioEngine, "Content\\Audio\\Wave Bank.xwb");
             soundBank   = new SoundBank(audioEngine, "Content\\Audio\\Sound Bank.xsb");
 
+
+
+            musicCategory = audioEngine.GetCategory("Music");
+            musicCategory.SetVolume(0.5f);
+
+            dialogueCategory = audioEngine.GetCategory("Dialogue");
+
+
             // Get music cues
             backgroundMusic = soundBank.GetCue("GameBackgroundMusic");
+
             menuClick = soundBank.GetCue("MenuClick");
 
             endDialogue = soundBank.GetCue("EndDialogue");
