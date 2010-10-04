@@ -45,8 +45,8 @@
       <BodyText>Click and drag the sphere to paint it\ninto the world.\nSpheres can roll over flowers,\nbut are outrun by bunnies.\nPainting objects or getting injured\nremoves paint from your bar.\nIf this bar becomes empty,\nyou will have to restart the game.</BodyText>
       <HeaderText>Tutorial 1</HeaderText>
       <TextBoxSize>
-        <X>20</X>
-        <Y>20</Y>
+        <X>30</X>
+        <Y>30</Y>
       </TextBoxSize>
     </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
@@ -79,15 +79,15 @@
       <Enabled>true</Enabled>
       <Name>tutorialText2</Name>
       <Position2D>
-        <X>-263.384766</X>
-        <Y>-9.722473</Y>
+        <X>-266.5652</X>
+        <Y>-4.310669</Y>
       </Position2D>
       <Visible>true</Visible>
       <BodyText>Cubes can be used to block bunnies\nfrom charging, dropping on enemies\nand to reach otherwise unaccesible\nplaces. You can push the cube a short\ndistance, or stack them to create\na staircase.</BodyText>
       <HeaderText>Tutorial 2</HeaderText>
       <TextBoxSize>
-        <X>20</X>
-        <Y>15</Y>
+        <X>30</X>
+        <Y>27</Y>
       </TextBoxSize>
     </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
@@ -120,15 +120,15 @@
       <Enabled>true</Enabled>
       <Name>tutorialText3</Name>
       <Position2D>
-        <X>-181.926147</X>
-        <Y>12.6938477</Y>
+        <X>-179.220062</X>
+        <Y>16.0168457</Y>
       </Position2D>
       <Visible>true</Visible>
       <BodyText>Ledges can act as bridges across\notherwise incrossable terrain.\nLedges cannot be pushed, so be\ncareful about placing them.</BodyText>
       <HeaderText>Tutorial 3</HeaderText>
       <TextBoxSize>
-        <X>20</X>
-        <Y>13</Y>
+        <X>30</X>
+        <Y>25</Y>
       </TextBoxSize>
     </LevelEntity>
     <LevelEntity xsi:type="BoundsEntity">
@@ -168,8 +168,8 @@
       <BodyText>Triangles are used with spheres\nto make them roll faster to catch up\nwith fleeing bunnies.</BodyText>
       <HeaderText>Tutorial 4</HeaderText>
       <TextBoxSize>
-        <X>20</X>
-        <Y>10</Y>
+        <X>30</X>
+        <Y>23</Y>
       </TextBoxSize>
     </LevelEntity>
     <LevelEntity xsi:type="FlowerEntity">
@@ -252,8 +252,8 @@
       <Enabled>true</Enabled>
       <Name>bunny1</Name>
       <Position2D>
-        <X>-59.6183434</X>
-        <Y>-23.6763077</Y>
+        <X>-59.53337</X>
+        <Y>-19.96196</Y>
       </Position2D>
       <Visible>true</Visible>
       <GeometryType>Polygon</GeometryType>

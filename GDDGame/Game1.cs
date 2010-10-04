@@ -94,7 +94,7 @@ namespace Gdd.Game
 
             this.graphics.MinimumPixelShaderProfile = ShaderProfile.PS_2_0;
             this.graphics.MinimumVertexShaderProfile = ShaderProfile.VS_2_0;
-            this.graphics.IsFullScreen = true;
+            this.graphics.IsFullScreen = false;
             SceneManager.Construct(this);
         }
 
@@ -252,16 +252,13 @@ namespace Gdd.Game
             scene1.AddComponent(this.hero);
             this.hero.Position2D = scene1.CurrentLevel.StartPosition;
 
+//            scene1.AddComponent(secondBunny);
             scene1.AddComponent(new HeroHealthBar(this) { DrawOrder = int.MaxValue });
 
-            scene1.AddComponent(
-                new TutorialText(this)
-                    {
-                        HeaderText = "Drawing effects", 
-                        BodyText = "Use F12 to switch through the\n drawing effects (3D, 2D or Both)", 
-                        Position2D = new Vector2(0.0f, 0.0f), 
-                        TextBoxSize = new Vector2(30.0f, 25.0f) });
+//            scene1.AddComponent(new TutorialText(this, new Vector2(30.0f, 25.0f)) { HeaderText = "Disable normal drawing", BodyText = "Put SHOW_ONLY_PHYSICS into the \n conditional compilation symbols \n To disable normal drawing", Position2D = new Vector2(0.0f, 0.0f) });
+//            scene1.AddComponent(new TutorialText(this, new Vector2(15.0f, 15.0f)) { HeaderText = "Enable physics drawing", BodyText = "Put SHOW_PHYSICS into the \n conditional compilation symbols \n To enable physics drawing", Position2D = new Vector2(5.0f, 10.0f) });
 
+            
             scene1.Light = dl1;
 
             this.IsMouseVisible = true;

@@ -282,14 +282,14 @@ namespace Gdd.Game.Engine.Levels.Information
             // create the texture that will be shown
             var renderTarget = new RenderTarget2D(
                 this.Game.GraphicsDevice, 
-                512, 
-                (int)(512 * (this.TextBoxSize.Y / this.TextBoxSize.X)), 
+                256, 
+                (int)(256 * (this.TextBoxSize.Y / this.TextBoxSize.X)), 
                 1, 
                 SurfaceFormat.Color);
             var depthBuffer = new DepthStencilBuffer(
                 this.Game.GraphicsDevice, 
-                512, 
-                (int)(512 * (this.TextBoxSize.Y / this.TextBoxSize.X)), 
+                256, 
+                (int)(256 * (this.TextBoxSize.Y / this.TextBoxSize.X)), 
                 DepthFormat.Depth16);
 
             DepthStencilBuffer old = ShadowMapManager.SetupShadowMap(
@@ -300,8 +300,8 @@ namespace Gdd.Game.Engine.Levels.Information
             spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
 
             spriteBatch.Draw(
-                this.DialogTexture, 
-                new Rectangle(0, 0, 512, (int)(512 * (this.TextBoxSize.Y / this.TextBoxSize.X))), 
+                this.DialogTexture,
+                new Rectangle(0, 0, renderTarget.Width, (int)(renderTarget.Height * (this.TextBoxSize.Y / this.TextBoxSize.X))), 
                 Color.White);
 
             string header = this.HeaderText.Replace("\\n", "\n");
@@ -333,7 +333,9 @@ namespace Gdd.Game.Engine.Levels.Information
 
             ShadowMapManager.ResetGraphicsDevice(this.Game.GraphicsDevice, old);
             this.TextTexture = renderTarget.GetTexture();
-            
+            renderTarget.Dispose();
+            depthBuffer.Dispose();
+
             var halfTextBoxSizeHeight = new Vector3(0.0f, this.TextBoxSize.Y / 2.0f, 0.0f);
             var halfTextBoxSizeWidth = new Vector3(this.TextBoxSize.X / 2.0f, 0.0f, 0.0f);
 
